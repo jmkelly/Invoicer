@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Invoicer.Web", "Invoicer.Web\Invoicer.Web.csproj", "{BDF073D2-9427-4C37-944C-012B60C5BB4B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Invoicer.Tests", "Invoicer.Tests\Invoicer.Tests.csproj", "{397CB57C-DA72-4421-AAB5-A18B320065E2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BDF073D2-9427-4C37-944C-012B60C5BB4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDF073D2-9427-4C37-944C-012B60C5BB4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDF073D2-9427-4C37-944C-012B60C5BB4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDF073D2-9427-4C37-944C-012B60C5BB4B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{397CB57C-DA72-4421-AAB5-A18B320065E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{397CB57C-DA72-4421-AAB5-A18B320065E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{397CB57C-DA72-4421-AAB5-A18B320065E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{397CB57C-DA72-4421-AAB5-A18B320065E2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
