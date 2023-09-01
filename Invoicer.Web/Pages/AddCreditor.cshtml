@@ -1,0 +1,46 @@
+﻿@page
+@model Invoicer.Web.Pages.AddCreditorModel
+@{
+}
+<h1>Add Creditor</h1>
+<form>
+  <div class="form-group">
+    <label for="Model_CompanyName">Company Name</label>
+    <input class="form-control" type="text" asp-for="@Model.Model.CompanyName" />
+  </div>
+  <div class="form-group">
+    <label for="Model_Name">Name</label>
+    <input class="form-control" type="text" asp-for="@Model.Model.Name" />
+  </div>
+  <div class="form-group">
+    <label for="ModeL_BSB">BSB</label>
+    <input class="form-control" type="text" asp-for="@Model.Model.BSB" />
+  </div>
+  <div class="input-group">
+    <label for="Model_AccountNo">AccountNo</label>
+    <input class="form-control" type="text" asp-for="@Model.Model.AccountNo" />
+  </div>
+  <div class="input-group">
+    <label for="Model_StreetNumber">Street Number</label>
+    <input class="form-control" type="text" asp-for="@Model.Model.StreetNumber" />
+  </div>
+  <div class="input-group">
+    <label for="Model_Street">Street</label>
+    <input class="form-control" type="text" asp-for="@Model.Model.Street" />
+  </div>
+  <div class="input-group">
+    <label for="Model_City">City</label>
+    <input class="form-control" type="text" asp-for="@Model.Model.City" />
+  </div>
+  <div class="input-group">
+    <label for="Model_State">State</label>
+    <input class="form-control" type="text" asp-for="@Model.Model.State" />
+  </div>
+  <div class="input-group">
+    <label for="Model_Postcode">Postcode</label>
+    <input class="form-control" type="text" asp-for="@Model.Model.Postcode" />
+  </div>
+  <div class="input-group">
+    <input class="btn btn-primary" type="submit" value="Add">
+  </div>
+</form>
