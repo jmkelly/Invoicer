@@ -1,30 +1,5 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-
-namespace Invoicer.Web.Pages
+namespace Invoicer.Web.Pages.Creditors.Models
 {
-    public class AddCreditorModel : PageModel
-    {
-        public AddCreditorModel()
-        {
-        }
-
-        [BindProperty]
-        public CreditorAddModel Model { get; set; }
-
-        public void OnGet()
-        {
-        }
-
-        public IActionResult OnPost()
-        {
-
-            return RedirectToPage("/Creditors");
-        }
-
-    }
-
-
     public class CreditorAddModel
     {
 
