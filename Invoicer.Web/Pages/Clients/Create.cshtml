@@ -1,8 +1,8 @@
 ﻿@page
-@model Invoicer.Web.Pages.Creditors.Create
+@model Invoicer.Web.Pages.Clients.Create
 @{
 }
-<h1>Create Creditor</h1>
+<h1>Create Client</h1>
 <form method="post">
   <div class="form-group">
     <label for="Model_CompanyName">Company Name</label>
@@ -11,6 +11,7 @@
   <div class="form-group">
     <label for="Model_Name">Name</label>
     <input class="form-control" type="text" asp-for="@Model.Model.Name" />
+    <span asp-validation-for="Model.Name" class="text-danger"></span>
   </div>
   <div class="form-group">
     <label for="Model_BSB">BSB</label>

@@ -1,10 +1,10 @@
-using Invoicer.Web.Pages.Creditors.Models;
+using Invoicer.Web.Pages.Clients.Models;
 using Mapster;
 using MassTransit;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Invoicer.Web.Pages.Creditors
+namespace Invoicer.Web.Pages.Clients
 {
     public class Create : PageModel
     {
@@ -16,7 +16,7 @@ namespace Invoicer.Web.Pages.Creditors
         }
 
         [BindProperty]
-        public CreditorAddModel Model { get; set; }
+        public ClientAddModel Model { get; set; }
 
         public void OnGet()
         {
@@ -24,14 +24,17 @@ namespace Invoicer.Web.Pages.Creditors
 
         public async Task<IActionResult> OnPost()
         {
-            var creditor = Model.Adapt<Creditor>();
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+            var Client = Model.Adapt<Client>();
             //create a sequential uuid
-            creditor.Id = NewId.NextSequentialGuid();
-            context.Add(creditor);
+            Client.Id = NewId.NextSequentialGuid();
+            context.Add(Client);
             await context.SaveChangesAsync();
 
-
-            return RedirectToPage("/Creditors");
+            return RedirectToPage("Index");
         }
 
     }

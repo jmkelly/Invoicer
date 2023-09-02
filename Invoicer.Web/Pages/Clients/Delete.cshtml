@@ -1,0 +1,24 @@
+﻿@page
+@model Invoicer.Web.Pages.Clients.Delete
+@{
+}
+<div class="alert alert-danger">
+<h1>Delete Client?</h1>
+<form method="post">
+  <div class="form-group">
+    <label for="Model_Name">Name</label>
+    <input class="form-control" type="text" asp-for="@Model.Model.Name" />
+    <span asp-validation-for="Model.Name" class="text-danger"></span>
+  </div>
+  <div class="form-group">
+    <label for="Model_CompanyName">Company Name</label>
+    <input class="form-control" type="text" asp-for="@Model.Model.CompanyName" />
+  </div>
+  <hr/>
+  <div class="form-group">
+    <input class="btn btn-danger" type="submit" value="Delete">
+    <a class="btn btn-secondary"  asp-page="Index">Back</a>
+  </div>
+  @Html.AntiForgeryToken()
+</form>
+</div>

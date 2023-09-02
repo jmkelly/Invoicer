@@ -1,8 +1,7 @@
-namespace Invoicer.Web.Pages.Creditors.Models
+namespace Invoicer.Web.Pages.Clients.Models
 {
-    public class CreditorAddModel
+    public class Client : Entity
     {
-
         public string? CompanyName { get; set; }
         public required string Name { get; set; }
         public string? BSB { get; set; }

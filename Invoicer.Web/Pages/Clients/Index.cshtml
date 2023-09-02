@@ -1,0 +1,29 @@
+﻿@page
+@model Invoicer.Web.Pages.Clients.IndexModel 
+@{
+}
+
+<a class="btn btn-secondary" asp-page="Create">Create Client</a>
+<a class="btn btn-secondary" asp-page="/Index">Back</a>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Company Name</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var Client in Model.Clients)
+        {
+            <tr>
+                <td>@Client.Name</td>
+                <td>@Client.CompanyName</td>
+                <td>
+                    <a class="btn" asp-page="Delete" asp-route-id="@Client.Id"><i class="bi bi-trash"></i></a></td>
+            </tr>
+        }
+    </tbody>
+</table>
