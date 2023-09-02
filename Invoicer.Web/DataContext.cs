@@ -1,5 +1,6 @@
 namespace Invoicer.Web;
-using Invoicer.Web.Pages.Creditors.Models;
+using Invoicer.Web.Pages.Clients.Models;
+using Invoicer.Web.Pages.MyAccount;
 using Microsoft.EntityFrameworkCore;
 
 public class DataContext : DbContext
@@ -17,5 +18,6 @@ public class DataContext : DbContext
         options.UseNpgsql(Configuration.GetConnectionString("Default"));
     }
 
-    public DbSet<Creditor> Creditors { get; set; }
+    public DbSet<Client> Clients { get; set; }
+    public DbSet<MyAccount> MyAccounts { get; set; }
 }
