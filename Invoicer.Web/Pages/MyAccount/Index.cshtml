@@ -1,0 +1,41 @@
+﻿@page
+@model Invoicer.Web.Pages.MyAccount.Index
+@{
+}
+
+
+<h3>My Accounts</h3>
+
+<a class="btn btn-primary" asp-page="Create">Create Account</a>
+<a class="btn btn-secondary" asp-page="/Index">Back</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Company Name</th>
+            <th>Name</th>
+            <th>BSB</th>
+            <th>Account No</th>
+            <th>Street Number</th>
+            <th>Street</th>
+            <th>City</th>
+            <th>State</th>
+            <th>Postcode</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var myAccount in @Model.MyAccounts) {
+            <tr>
+                <td>@myAccount.CompanyName</td>
+                <td>@myAccount.Name</td>
+                <td>@myAccount.BSB</td>
+                <td>@myAccount.AccountNo</td>
+                <td>@myAccount.StreetNumber</td>
+                <td>@myAccount.Street</td>
+                <td>@myAccount.City</td>
+                <td>@myAccount.State</td>
+                <td>@myAccount.Postcode</td>
+            </tr>
+        }
+    </tbody>
+</table>
