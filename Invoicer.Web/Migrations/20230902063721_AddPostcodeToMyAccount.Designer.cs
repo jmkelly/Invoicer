@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Invoicer.Web.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230902031627_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20230902063721_AddPostcodeToMyAccount")]
+    partial class AddPostcodeToMyAccount
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -47,6 +47,9 @@ namespace Invoicer.Web.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("Postcode")
+                        .HasColumnType("text");
+
                     b.Property<string>("State")
                         .HasColumnType("text");
 
@@ -59,6 +62,52 @@ namespace Invoicer.Web.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Clients");
+                });
+
+            modelBuilder.Entity("Invoicer.Web.Pages.MyAccount.MyAccount", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("AccountNo")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("BSB")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("CompanyName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Postcode")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("State")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Street")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("StreetNumber")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MyAccounts");
                 });
 #pragma warning restore 612, 618
         }

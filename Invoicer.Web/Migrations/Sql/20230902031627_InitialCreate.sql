@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS "__EFMigrationsHistory" (
 );
 
 
-CREATE TABLE "Creditors" (
+CREATE TABLE "Clients" (
     "Id" uuid NOT NULL,
     "CompanyName" text NULL,
     "Name" text NOT NULL,
@@ -18,7 +18,7 @@ CREATE TABLE "Creditors" (
     "Street" text NULL,
     "City" text NULL,
     "State" text NULL,
-    CONSTRAINT "PK_Creditors" PRIMARY KEY ("Id")
+    CONSTRAINT "PK_Clients" PRIMARY KEY ("Id")
 );
 
 INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")

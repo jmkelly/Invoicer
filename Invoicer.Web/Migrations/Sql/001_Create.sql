@@ -1,1 +1,1 @@
-create database Invoicer;
+create database invoicer;
