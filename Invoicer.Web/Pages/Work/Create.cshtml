@@ -1,0 +1,37 @@
+﻿@page
+@model Invoicer.Web.Pages.Work.Create
+@{
+}
+
+<h2>Add</h2>
+<form>
+  <div class="form-group">
+    <label for="Model_date">Date</label>
+    <input class="form-control" type="date" id="date" />
+  </div>
+  <div class="form-group">
+    <label for="Model_hours">Hours</label>
+  <input class="form-control" type="text" id="hours" />
+  </div>
+  <div class="form-group">
+    <label for="Model_description">Hours</label>
+  <input class="form-control" type="text" id="description" />
+  </div>
+  <div class="form-group">
+    <label for="Model_rate">Hours</label>
+  <input class="form-control" type="text" id="rate" />
+  </div>
+  <!-- select from creditors -->
+  <div class="form-group">
+    <label for="Model_creditors">Creditors</label>
+    <select class="form-control">
+      <option>select:</option>
+    </select>
+  </div>
+  <hr/>
+  <div class="form-group">
+    <input type="submit" class="btn btn-primary" value="Save"/>
+    <a class="btn btn-secondary" asp-page="/Index">Back</a>
+  </div>
+</form>
+
