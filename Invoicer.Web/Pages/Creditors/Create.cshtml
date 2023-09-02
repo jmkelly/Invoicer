@@ -1,9 +1,9 @@
 ﻿@page
-@model Invoicer.Web.Pages.Creditors.AddCreditorModel
+@model Invoicer.Web.Pages.Creditors.Create
 @{
 }
-<h1>Add Creditor</h1>
-<form>
+<h1>Create Creditor</h1>
+<form method="post">
   <div class="form-group">
     <label for="Model_CompanyName">Company Name</label>
     <input class="form-control" type="text" asp-for="@Model.Model.CompanyName" />
@@ -42,6 +42,8 @@
   </div>
   <hr/>
   <div class="form-group">
-    <input class="btn btn-primary" type="submit" value="Add">
+    <input class="btn btn-primary" type="submit" value="Create">
+    <a class="btn btn-secondary"  asp-page="Index">Back</a>
   </div>
+  @Html.AntiForgeryToken()
 </form>

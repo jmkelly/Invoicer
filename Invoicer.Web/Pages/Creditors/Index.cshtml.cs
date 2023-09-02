@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Invoicer.Web.Pages.Creditors
 {
-    public class CreditorsModel : PageModel
+    public class IndexModel : PageModel
     {
         public void OnGet()
         {
