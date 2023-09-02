@@ -57,3 +57,10 @@ body {
     transform: rotate(360deg);
   }
 }
+
+#panel-button {
+  position: fixed;
+  left: 10px;
+  top: 80px;
+  z-index: 1;
+}
