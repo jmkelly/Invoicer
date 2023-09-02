@@ -1,5 +1,4 @@
-namespace WebApi.Helpers;
-
+namespace Invoicer.Web;
 using Invoicer.Web.Pages.Creditors.Models;
 using Microsoft.EntityFrameworkCore;
 
