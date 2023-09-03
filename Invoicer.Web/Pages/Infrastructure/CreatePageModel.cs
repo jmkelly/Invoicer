@@ -12,11 +12,11 @@ namespace Invoicer.Web.Pages
     where TEntity : Entity
     where TModel : IModel
     {
-        private readonly DataContext context;
+        public readonly DataContext Context;
 
         public CreatePageModel(DataContext context, ILogger<CreatePageModel<TModel, TEntity>> logger)
         {
-            this.context = context;
+            Context = context;
             Logger = logger;
         }
 
@@ -26,7 +26,7 @@ namespace Invoicer.Web.Pages
 
         public virtual async Task<IActionResult> OnGet(Guid id)
         {
-            var entity = await context.Set<TEntity>().FirstOrDefaultAsync(c => c.Id == id);
+            var entity = await Context.Set<TEntity>().FirstOrDefaultAsync(c => c.Id == id);
             Logger.LogInformation("{entity}", entity);
 
             if (entity == null)
@@ -46,8 +46,8 @@ namespace Invoicer.Web.Pages
             TEntity entity = Model.Adapt<TEntity>(); 
             //create a sequential uuid
             entity.Id = NewId.NextSequentialGuid();   
-            context.Add(entity);
-            await context.SaveChangesAsync();
+            Context.Add(entity);
+            await Context.SaveChangesAsync();
 
             return RedirectToPage("Index");
         }
