@@ -1,0 +1,25 @@
+﻿@page
+@model Invoicer.Web.Pages.Settings.Index
+@{
+}
+
+<h2>Settings</h2>
+
+<form method="post">
+  <div class="form-group">
+    <label for="Model_AddTax">Add Tax</label>
+    @Html.CheckBoxFor(model => model.Model.AddTax)
+    <span asp-validation-for="Model.AddTax" class="text-danger"></span>
+  </div>
+  <div class="form-group">
+    <label for="Model_TaxRate">Tax Rate (%)</label>
+    <input class="form-control" type="number" asp-for="@Model.Model.TaxRate" />
+    <span asp-validation-for="Model.AddTax" class="text-danger"></span>
+  </div>
+
+  <div class="form-group">
+    <input class="btn btn-primary" type="submit" value="Save"/>
+    <a class="btn btn-secondary" asp-page="/Index">Back</a>
+    </div>
+  @Html.AntiForgeryToken()
+</form>

@@ -1,7 +1,5 @@
-using Humanizer;
-using Invoicer.Web.Pages.Clients;
-using Invoicer.Web.Pages.Clients.Models;
-using Mapster;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -63,6 +61,8 @@ public class Work : Entity
 
 public enum RateUnits
 {
+    [Display(Name = "Per Hour")]
     PerHour,
+    [Display(Name = "Per Day")]
     PerDay
 }
