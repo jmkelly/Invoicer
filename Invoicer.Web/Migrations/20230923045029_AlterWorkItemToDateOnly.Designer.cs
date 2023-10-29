@@ -3,6 +3,7 @@ using System;
 using Invoicer.Web;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Invoicer.Web.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230923045029_AlterWorkItemToDateOnly")]
+    partial class AlterWorkItemToDateOnly
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -59,35 +62,6 @@ namespace Invoicer.Web.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Clients");
-                });
-
-            modelBuilder.Entity("Invoicer.Web.Pages.Invoices.Invoice", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("ClientId")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("InvoiceCode")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("InvoiceStatus")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("UpddatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ClientId");
-
-                    b.ToTable("Invoices");
                 });
 
             modelBuilder.Entity("Invoicer.Web.Pages.MyAccount.MyAccount", b =>
@@ -172,9 +146,6 @@ namespace Invoicer.Web.Migrations
                     b.Property<decimal>("Hours")
                         .HasColumnType("numeric");
 
-                    b.Property<Guid?>("InvoiceId")
-                        .HasColumnType("uuid");
-
                     b.Property<decimal>("Rate")
                         .HasColumnType("numeric");
 
@@ -185,20 +156,7 @@ namespace Invoicer.Web.Migrations
 
                     b.HasIndex("ClientId");
 
-                    b.HasIndex("InvoiceId");
-
                     b.ToTable("WorkItems");
-                });
-
-            modelBuilder.Entity("Invoicer.Web.Pages.Invoices.Invoice", b =>
-                {
-                    b.HasOne("Invoicer.Web.Pages.Clients.Models.Client", "Client")
-                        .WithMany()
-                        .HasForeignKey("ClientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Client");
                 });
 
             modelBuilder.Entity("Invoicer.Web.Pages.WorkItems.WorkItem", b =>
@@ -209,18 +167,7 @@ namespace Invoicer.Web.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Invoicer.Web.Pages.Invoices.Invoice", "Invoice")
-                        .WithMany("WorkItems")
-                        .HasForeignKey("InvoiceId");
-
                     b.Navigation("Client");
-
-                    b.Navigation("Invoice");
-                });
-
-            modelBuilder.Entity("Invoicer.Web.Pages.Invoices.Invoice", b =>
-                {
-                    b.Navigation("WorkItems");
                 });
 #pragma warning restore 612, 618
         }
