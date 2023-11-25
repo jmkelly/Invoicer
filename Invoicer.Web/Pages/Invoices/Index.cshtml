@@ -1,0 +1,31 @@
+﻿@page
+@model Invoicer.Web.Pages.Invoices.IndexModel
+@{
+}
+
+<h1>Invoices</h1>
+
+<a asp-page="./Create" class="btn btn-primary">Create</a>
+
+<table class="table table-striped">
+    <thead>
+        <th>Invoice Code</th>
+        <th>Client</th>
+        <th>Created At</th>
+        <th>Status</th>
+        <th></th>
+    </thead>
+    <tbody>
+        @foreach (var invoice in Model.Invoices) {
+            <tr>
+                <td>@invoice.InvoiceCode</td>
+                <td>@invoice.Client.Name</td>
+                <td>@invoice.CreatedAt.ToShortDateString()</td>
+                <td>@invoice.InvoiceStatus</td>
+                <td>
+                    <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@invoice.Id"><i class="bi bi-trash"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,41 @@
+﻿@page
+@using Humanizer;
+@model IndexModel
+@{
+ViewData["Title"] = "Home page";
+}
+
+
+
+<form class="form-inline">
+  <div class="input-group">
+    <input type="text" class="form-control" />
+    <input type="submit" value="Search" class="btn btn-primary" />
+    <a class="btn btn-secondary" asp-page="Work/Create">Create Work</a>
+    <a class="btn btn-secondary" asp-page="Invoices/Create">Create Invoice</a>
+  </div>
+</form>
+
+<table class="table" id="table">
+  <thead>
+    <th>Client</th>
+    <th>Date</th>
+    <th>Description</th>
+    <th>Hours</th>
+    <th>Rate</th>
+    <th>Amount</th>
+    </thead> 
+  <tbody>
+    @foreach (var item in Model.WorkItems)
+    {
+      <tr>
+        <td>@item.Client.Name</td>
+        <td>@item.Date</td>
+        <td>@item.Description</td>
+        <td>@item.Hours</td>
+        <td>@item.Rate @item.RateUnits.Humanize()</td>
+        <td>$@item.Total()</td>
+      </tr>
+    }
+  </tbody>
+</table>

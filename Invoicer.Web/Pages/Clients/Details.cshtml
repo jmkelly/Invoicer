@@ -1,0 +1,8 @@
+﻿@page
+@model Invoicer.Web.Pages.Clients.DetailsModel 
+@{
+    Layout = null;
+}
+
+<input type="hidden" asp-for="@Model.Client.Id"/>
+<h3>@Model.Client.Name (@Model.Client.CompanyName)</h3>

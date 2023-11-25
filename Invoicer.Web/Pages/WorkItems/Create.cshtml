@@ -1,10 +1,10 @@
 ﻿@page
-@model Invoicer.Web.Pages.Work.Create
+@model Invoicer.Web.Pages.WorkItems.Create
 @{
 }
 
 <h2>Add</h2>
-<form>
+<form method="post">
   <div class="form-group">
     <label for="Model_date">Date</label>
     <input class="form-control" type="date" asp-for="@Model.Model.Date" />
@@ -14,25 +14,29 @@
   <input class="form-control" type="text" asp-for="@Model.Model.Hours"/>
   </div>
   <div class="form-group">
-    <label for="Model_description">Rate</label>
+    <label for="Model_Rate">Rate</label>
   <input class="form-control" type="text" asp-for="@Model.Model.Rate"/>
+  </div>
+  <div class="form-group">
+    <label for="Model_Description">Description</label>
+    <input class="form-control" type="text" asp-for="@Model.Model.Description"/>
   </div>
   <div class="form-group">
     <label for="Model_rate">Rate Units</label>
   <select class="form-control" 
-    type="text" 
     asp-for="@Model.Model.RateUnits" 
     asp-items="Html.GetEnumSelectList<RateUnits>()" ></select>
   </div>
   <!-- select from Clients -->
   <div class="form-group">
     <label for="Model_Clients">Clients</label>
-    <select class="form-control" asp-for="@Model.ClientId" asp-items="Model.Options"></select>
+    <select class="form-control" asp-for="@Model.Model.ClientId" asp-items="Model.Options"></select>
   </div>
   <hr/>
   <div class="form-group">
     <input type="submit" class="btn btn-primary" value="Save"/>
     <a class="btn btn-secondary" asp-page="/Index">Back</a>
   </div>
+  @Html.AntiForgeryToken()
 </form>
 
