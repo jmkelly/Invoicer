@@ -1,6 +1,3 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-
 namespace Invoicer.Web.Pages.MyAccount
 {
     public class Create : CreatePageModel<MyAccountCreateModel, MyAccount>

@@ -1,0 +1,22 @@
+@model Invoicer.Web.Pages.Invoices.InvoicesIndexModel
+<h2>Outstanding Uninvoiced Work</h2>
+
+<table class="table">
+<thead>
+	<th>Client</th>
+	<th>Description</th>
+	<th>Total</th>
+	<th></th>
+</thead>
+<tbody>
+	@foreach (var workItem in Model.OutstandingWorkItems)
+	{
+	<tr>
+		<td>@workItem.Client.Name</td>
+		<td>@workItem.Description</td>
+		<td>@workItem.Total().ToString("0.00")</td>
+		<td><a class="btn btn-primary" asp-page="/Invoices/Create">Create Invoice</td>
+	</tr>
+	}
+</tbody>
+<table>

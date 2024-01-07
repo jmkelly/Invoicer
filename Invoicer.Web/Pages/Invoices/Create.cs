@@ -1,12 +1,10 @@
-using System.Runtime.Intrinsics.X86;
-using Invoicer.Web.Pages.Clients.Models;
-using Invoicer.Web.Pages.Invoices;
-using Invoicer.Web.Pages.WorkItems;
-using Mapster;
 using MassTransit;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Invoicer.Web.Extensions;
+using Invoicer.Web.Pages.WorkItems;
 
 namespace Invoicer.Web.Pages.Invoices
 {
@@ -22,7 +20,15 @@ namespace Invoicer.Web.Pages.Invoices
         }
 
         public InvoiceAddModel Model { get; set; }
+
+        [BindProperty]
+
         public List<WorkItemInvoiceModel> OutStandingWorkItems { get; set; }
+
+        public List<SelectListItem> Accounts { get; set; }
+
+		[BindProperty]
+		public Guid SelectedAccountId {get;set;}
 
         public async Task<IActionResult> OnGet()
         {
@@ -32,7 +38,8 @@ namespace Invoicer.Web.Pages.Invoices
 
             logger.LogInformation("outstanding work items {OutStandingWorkItems}", outStandingWorkItems.Count);
 
-            OutStandingWorkItems = outStandingWorkItems.Select(o => new WorkItemInvoiceModel{
+            OutStandingWorkItems = outStandingWorkItems.Select(o => new WorkItemInvoiceModel
+            {
                 Id = o.Id,
                 Description = o.Description,
                 Total = o.Total(),
@@ -41,11 +48,20 @@ namespace Invoicer.Web.Pages.Invoices
                 IsSelected = true //set selected by default
             }).ToList();
 
+			var accounts = await context.MyAccounts.ToListAsync();
+
+			Accounts = accounts.Select(a => new SelectListItem{Text = a.Label(),Value=a.Id.ToString()}).ToList();
+			logger.LogInformation("got {count} accounts", Accounts.Count);
+
             return Page();
         }
 
-        public async Task<IActionResult> OnPost(List<WorkItemAddModel> workItems)
+        public async Task<IActionResult> OnPost()
         {
+            //log stuff
+            logger.LogInformation("outstanding work items {@outstandingWorkItems}", OutStandingWorkItems);
+            logger.LogInformation("post data {@form}", this.Request.Form);
+            var workItems = OutStandingWorkItems.Where(w => w.IsSelected).Select(c => new WorkItemAddModel { Id = c.Id }).ToList();
             logger.LogInformation("getting into post");
             if (!ModelState.IsValid)
             {
@@ -57,21 +73,59 @@ namespace Invoicer.Web.Pages.Invoices
                 return await OnGet();
             }
 
-            //get the selected work items from database
-            workItems = workItems.Where(c => c.IsSelected).ToList();
-            var selectedWorkItems = await context.WorkItems.Where(c => workItems.Any(w => w.Id  == c.Id)).ToListAsync();
-            //Model.SelectedWorkItems = workItems;
-
-            //get the client
-            var client = await context.Clients.FirstOrDefaultAsync(c => c.Id == Model.ClientId);
-            if (client == null)
+            if (workItems == null || !workItems.Any())
             {
-                logger.LogWarning("No client found iwth id {clientId}", Model.ClientId);
-                TempData.AddMessage($"No client found with id {Model.ClientId}");
+
+                logger.LogWarning("no workitem selected");
+                TempData.AddMessage("No items selected");
                 return RedirectToPage("Create");
             }
 
-            logger.LogInformation("getting into post");
+            logger.LogInformation("works items selected {@workItems}", workItems.ToJson());
+
+            //brute force this, refactor to linq later for some reason I couldn't get the commented very below to work
+            //var selectedWorkItems = await context.WorkItems.Where(c => workItems.All(w => w.Id == c.Id)).ToListAsync();
+            //
+            var allworkItems = await context.WorkItems
+            .Include(c => c.Client)
+            .Where(c => c.Invoice == null).ToListAsync();
+
+            logger.LogInformation("got {count} workitems", allworkItems.Count());
+
+            List<WorkItem> selectedWorkItems = (from i in workItems
+                                                let wi = allworkItems.FirstOrDefault(w => w.Id == i.Id)
+                                                where wi != null
+                                                select wi).ToList();
+            logger.LogInformation("got {count} selected work items", selectedWorkItems.Count());
+            //check that there are not muliple clients because an invoice can only apply to one client
+            var clientIds = selectedWorkItems.Select(c => c.ClientId).Distinct().ToList();
+            if (clientIds.Count() > 1)
+            {
+                logger.LogWarning("muliple client ids selected for invoice.  ClientIds of {clientIds}", string.Join(',', clientIds));
+                //FIX: These messages are not showing in the razor page
+                TempData.AddMessage($"Multiple clients selected.  An invoice can only be created for one client at a time.");
+                return RedirectToPage("Create");
+            }
+
+            var clientId = clientIds.First();
+
+            //get the client
+            var client = await context.Clients.FirstOrDefaultAsync(c => c.Id == clientId);
+            if (client == null)
+            {
+                logger.LogWarning("No client found iwth id {clientId}", clientId);
+                TempData.AddMessage($"No client found with id {clientId}");
+                return RedirectToPage("Create");
+            }
+
+
+			var account = await context.MyAccounts.FirstOrDefaultAsync(a => a.Id == SelectedAccountId);
+			if (account == null)
+			{
+                logger.LogWarning("account with id of {accountId} no longer exists", SelectedAccountId);
+                return RedirectToPage("Create");
+			}
+
             var createdAt = DateTime.UtcNow;
             var invoice = new Invoice
             {
@@ -81,23 +135,17 @@ namespace Invoicer.Web.Pages.Invoices
                 CreatedAt = createdAt,
                 InvoiceStatus = InvoiceStatus.Created,
                 InvoiceCode = Invoice.CreateInvoiceCode(
-                    client.Name, 
+                    client.Name,
                     createdAt
-                )
+                ),
+				Account = account
             };
 
-            foreach (var wi in Model.SelectedWorkItems)
+            foreach (var wi in selectedWorkItems)
             {
                 //add work to invoice
                 //get the work item from the db
-                var item = await context.WorkItems.FirstOrDefaultAsync(w => w.Id == wi.Id);
-                if (item == null)
-                {
-                    logger.LogWarning("No client found with id {clientId}", Model.ClientId);
-                    TempData.AddMessage("No Work item found...");
-                    return RedirectToPage("Create");
-                }
-                var result = invoice.AddWorkItem(item);
+                var result = invoice.AddWorkItem(wi);
                 if (!result.IsSuccess)
                 {
                     TempData.Add("error", result.Error);
@@ -106,39 +154,7 @@ namespace Invoicer.Web.Pages.Invoices
             }
             context.Add(invoice);
             await context.SaveChangesAsync();
-
             return RedirectToPage("Index");
         }
-
-
-    }
-
-    public class WorkItemAddModel
-    {
-        public Guid Id {get;set;}
-        public bool IsSelected {get;set;}
-    }
-    public class WorkItemInvoiceModel 
-    {
-        public Guid Id {get;set;}
-        public string? Description {get;set;}
-        public decimal Total {get;set;}
-        public string? ClientName {get;set;}
-        public Guid ClientId {get;set;}
- 
-        public string Label()
-        {
-            return $"{ClientName} - {Description} (${Total})";
-        }
-
-        public bool IsSelected {get;set;}
-    }
-
-    public class InvoiceAddModel
-    { 
-        public Guid ClientId {get;set;}
-        public DateTime CreatedAt {get;set;}
-        public DateTime UpddatedAt {get;set;}
-        public required List<WorkItemInvoiceModel> SelectedWorkItems {get;set;}
     }
 }

@@ -1,4 +1,5 @@
 ﻿@page
+@using Invoicer.Web.Pages.Invoices
 @model IndexModel
 @{
 ViewData["Title"] = "Home page";
@@ -6,14 +7,9 @@ ViewData["Title"] = "Home page";
 
 
 
-<form class="form-inline">
-  <div class="input-group">
-    <input type="text" class="form-control" />
-    <input type="submit" value="Search" class="btn btn-primary" />
-    <a class="btn btn-secondary" asp-page="/WorkItems/Create">Create Work</a>
-  </div>
-</form>
+<a class="btn btn-primary" asp-page="/WorkItems/Create">Record Work</a>
 
-<div class="table" id="table">
+<partial name="_InvoicesTable" model="Model.InvoicesIndexModel" /> 
+<partial name="_WorkItemsTable" model="Model.InvoicesIndexModel" />
  
 </div>

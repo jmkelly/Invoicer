@@ -6,33 +6,34 @@
 
 @if(TempData["errors"] != null) 
 {
-  <div class="alert alert-danger">
-    @Html.Raw(TempData.GetErrorsAsHtml())
-  </div>
+<div class="alert alert-danger">
+	@Html.Raw(TempData.GetErrorsAsHtml())
+</div>
 }
 
 <form method="post">
-    <div class="form-group">
-      @foreach (var item in Model.OutStandingWorkItems)
-      {
-        <div hx-trigger="change" hx-get="/Clients/Details?id=@item.ClientId" hx-target="#client">
-          <input hidden asp-for="@item.Id"/> 
-          @Html.CheckBoxFor(model => @item.IsSelected)
-          <label>@item.Label()</label>
-        </div>
-      }
-    </div>
+	<div class="form-group">
+		@for (int i=0;i < @Model.OutStandingWorkItems.Count;i++)
+		{
+		<div class="input-group">
+			<input hidden asp-for=@Model.OutStandingWorkItems[i].Id/>  
+			<input type="checkbox" asp-for=@Model.OutStandingWorkItems[i].IsSelected/>
+			<label>@Model.OutStandingWorkItems[i].Label()</label>
+		</div>
+		}
+	</div>
 
-    <!--only show the clients that are on outstanding work items -->
-    <div id="client">
-      <!-- input for the client-->
-    </div>
+	<div class="form-group">
+		<div class="from-control">
+			<label>Select Account</label>
+			<select asp-for="@Model.SelectedAccountId" asp-items="@Model.Accounts"></select>  
+		</div>
+	</div>
 
-<div class="form-group">
-    <input class="btn btn-primary" type="submit" value="Save"/>
-    <a class="btn btn-secondary" asp-page="Index">Cancel</a>
-</div>
+	<div class="form-group">
+		<input class="btn btn-primary" type="submit" value="Save"/>
+		<a class="btn btn-secondary" asp-page="Index">Cancel</a>
+	</div>
 
-  
-  @Html.AntiForgeryToken()
+	@Html.AntiForgeryToken()
 </form>

@@ -3,6 +3,7 @@ using System;
 using Invoicer.Web;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Invoicer.Web.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240106045054_AddMyAccountToInvoice")]
+    partial class AddMyAccountToInvoice
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -101,19 +104,11 @@ namespace Invoicer.Web.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<string>("ABN")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<string>("AccountNo")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("BSB")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("BankName")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -125,10 +120,6 @@ namespace Invoicer.Web.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("PayId")
                         .IsRequired()
                         .HasColumnType("text");
 

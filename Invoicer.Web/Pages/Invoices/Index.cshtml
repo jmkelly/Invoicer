@@ -10,6 +10,7 @@
 <table class="table table-striped">
     <thead>
         <th>Invoice Code</th>
+				<th>Total</th>
         <th>Client</th>
         <th>Created At</th>
         <th>Status</th>
@@ -19,11 +20,14 @@
         @foreach (var invoice in Model.Invoices) {
             <tr>
                 <td>@invoice.InvoiceCode</td>
+                <td>@invoice.Total</td>
                 <td>@invoice.Client.Name</td>
                 <td>@invoice.CreatedAt.ToShortDateString()</td>
                 <td>@invoice.InvoiceStatus</td>
+                <td>@invoice.AccountLabel</td>
                 <td>
                     <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@invoice.Id"><i class="bi bi-trash"></i></a>
+                    <a class="btn btn-primary" asp-page="./Details" asp-route-id="@invoice.Id"><i class="bi bi-printer"></i></a>
                 </td>
             </tr>
         }

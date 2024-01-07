@@ -18,8 +18,7 @@ namespace Invoicer.Web.Pages.Invoices
             var sb = new StringBuilder();
             foreach (var message in messages)
             {
-                sb.Append(message);
-                sb.Append("<br/>");
+                sb.Append($"<p>{message}</p>");
             }
 
             return sb.ToString();

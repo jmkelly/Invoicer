@@ -1,82 +1,48 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>@ViewData["Title"] - Invoicer.Web</title>
+		<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+		<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+		<link rel="stylesheet" href="~/Invoicer.Web.styles.css" asp-append-version="true" />
+	</head>
+	<body hx-boost="true">
+		<header>
+			<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+				<div class="container">
+					<a class="navbar-brand" asp-area="" asp-page="/Index">Invoicer</a>
+				</div>
+			</nav>
+		</header>
+		<div class="container-fluid">
+			<div class="row">
 
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>@ViewData["Title"] - Invoicer.Web</title>
-  <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-  <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-  <link rel="stylesheet" href="~/Invoicer.Web.styles.css" asp-append-version="true" />
-</head>
+			<div class="col-md-2">
+				<partial name="_Navigation" />
+			</div>
+			<main role="main" class="col-lg-8">
+				@RenderBody()
+			</main>
+			</div>
+		</div>
 
-<body hx-boost="true">
-  <header>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-      <div class="container">
-        <a class="navbar-brand" asp-area="" asp-page="/Index">Invoicer</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
-          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-      </div>
-    </nav>
-  </header>
-  <div class="container">
-      <a id="panel-button" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
-        <i class="bi bi-arrow-bar-right"></i>
-      </a>
-<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
-  <div class="offcanvas-header">
-    <h5 class="offcanvas-title" id="offcanvasExampleLabel">Invoicer</h5>
-    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-  </div>
-  <div class="offcanvas-body">
-        <ul>
-          <li>
-          <i class="bi bi-house">
-            <a asp-page="/Index">Home</a>
-          </i>
-        </li>
-        <li>
-          <i class="bi bi-bank">
-            <a asp-page="/MyAccount/Index">My Accounts</a>
-          </i>
-        </li>
-        <li>
-          <i class="bi bi-at">
-            <a asp-page="/Clients/Index">Clients</a>
-          </i>
-        </li>
-        <li>
-          <i class="bi bi-gear">
-            <a asp-page="/Settings/Index">Settings</a>
-        </i>
-        </li>
-        <ul>
-  </div>
-</div>
-    <main role="main" class="col-md-10">
-      @RenderBody()
-    </main>
-    </div>
-  </div>
+		<footer class="border-top footer text-muted">
+			<div class="container">
+				&copy; 2023 - Invoicer.Web - <a asp-area="" asp-page="/Privacy">Privacy</a>
+			</div>
+		</footer>
 
-  <footer class="border-top footer text-muted">
-    <div class="container">
-      &copy; 2023 - Invoicer.Web - <a asp-area="" asp-page="/Privacy">Privacy</a>
-    </div>
-  </footer>
+		<script src="https://unpkg.com/htmx.org@1.9.5"
+		integrity="sha384-xcuj3WpfgjlKF+FXhSQFQ0ZNr39ln+hwjN3npfM9VBnUskLolQAcN80McRIVOPuO"
+		crossorigin="anonymous"></script>
+		<script src="~/lib/jquery/dist/jquery.min.js"></script>
+		<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+		<script src="~/js/site.js" asp-append-version="true"></script>
 
-  <script src="https://unpkg.com/htmx.org@1.9.5"
-    integrity="sha384-xcuj3WpfgjlKF+FXhSQFQ0ZNr39ln+hwjN3npfM9VBnUskLolQAcN80McRIVOPuO"
-    crossorigin="anonymous"></script>
-  <script src="~/lib/jquery/dist/jquery.min.js"></script>
-  <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="~/js/site.js" asp-append-version="true"></script>
-
-  @await RenderSectionAsync("Scripts", required: false)
-</body>
+		@await RenderSectionAsync("Scripts", required: false)
+	</body>
 
 </html>

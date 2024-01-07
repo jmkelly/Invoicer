@@ -1,0 +1,30 @@
+@model Invoicer.Web.Pages.Invoices.InvoicesIndexModel
+<h2>Invoices</h2>
+<table class="table">
+<thead>
+	<th>Client
+	</th>
+	<th>Created
+	</th>
+	<th>
+		Status
+	</th>
+	<th>
+		Total
+	</th>
+	<th>
+	</th>
+</thead>
+<tbody>
+	@foreach (var invoice in Model.Invoices)
+	{
+		<tr>
+			<td>@invoice.Client.Name</td>
+			<td>@invoice.CreatedAt</td>
+			<td>@invoice.InvoiceStatus</td>
+			<td>@invoice.Total().ToString("0.00")</td>
+			<td><a class="btn btn-primary" asp-page="/Invoices/Details" asp-route-id="@invoice.Id">Details</td>
+		</tr>
+	}
+</tbody>
+<table>

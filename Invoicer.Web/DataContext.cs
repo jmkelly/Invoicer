@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 public class DataContext : DbContext
 {
-    protected readonly IConfiguration Configuration;
+		protected readonly IConfiguration Configuration;
 
     public DataContext(IConfiguration configuration)
     {
@@ -23,7 +23,7 @@ public class DataContext : DbContext
 
     public DbSet<Client> Clients { get; set; }
     public DbSet<MyAccount> MyAccounts { get; set; }
-    public DbSet<Setting> Settings { get; set; }
+	public DbSet<Setting> Settings { get; set; }
     public DbSet<WorkItem> WorkItems { get; set; }
     public DbSet<Invoice> Invoices { get; set; }
 }

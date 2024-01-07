@@ -1,0 +1,94 @@
+﻿@page
+@using System
+@model Invoicer.Web.Pages.Invoices.DetailsModel
+@{
+Layout="_Print";
+}
+
+<div class="text-center">
+	<h1>INVOICE</h1>
+</div>
+<hr/>
+<div class="text-end">
+	<h4>Invoice No: @Model.Invoice.InvoiceCode</h4>
+</div>
+<br/>
+<div class="text-end">
+	<p>
+		<i>Invoice Date @Model.Invoice.CreatedAt.ToShortDateString()</i>
+	</p>
+
+	<address>
+		@Model.Invoice.Account.Name<br/>
+		@Model.Invoice.Account.CompanyName<br/>
+		@Model.Invoice.Account.StreetNumber @Model.Invoice.Account.Street<br/>
+		@Model.Invoice.Account.City @Model.Invoice.Account.State @Model.Invoice.Account.Postcode<br/>
+		ABN: 11650 073 561<br/>
+	</address>
+	<p>Email: james@locationsolve.com</p>
+</div>
+
+<div>
+	<address>
+		MATTHEW POPE<br/>
+		@Model.Invoice.Client.Name.ToUpper()<br/>
+	</address>
+</div>
+
+
+<table class="table">
+	<thead>
+		<td>Description</td>
+		<td>Quantity</td>
+		<td>Unit Price</td>
+		<td>Amount</td>
+	</thead>
+	<tbody>
+		@foreach (var wi in @Model.Invoice.WorkItems) {
+		<tr>
+			<td>
+				@wi.Description
+			</td>
+			<td>
+				@wi.Hours
+			</td>
+			<td>
+				$@wi.Rate
+			</td>
+			<td>
+				$@wi.Total().ToString("###0.00")
+			</td>
+		</tr>
+		}
+		<tr>
+		<th>
+				Total Amount Payable
+		</th>
+		<th>
+		</th>
+		<th>
+		</th>
+		<th>$@Model.Invoice.Total.ToString("###0.00")</th>
+		</tr>
+	</tbody>
+</table>
+<div id="payment-info">
+	<p class="fw-bold">
+		No GST has been charged
+	</p>
+	<p class="fw-bold">
+		Payment Terms: 14 days.
+	</p>
+</div>
+
+ <address class="text-end">
+	<p class="fw-bold">
+		Payment By EFT:
+	</p>
+<br/>
+	Financial Institution Name: <span class="fw-bold">@Model.Invoice.Account.BankName</span><br/>
+	BSB: <span class="fw-bold">@Model.Invoice.Account.BSB</span><br/>
+	Account No: <span class="fw-bold">@Model.Invoice.Account.AccountNo</span><br/>
+	Account Holder: <span class="fw-bold">@Model.Invoice.Account.Name</span><br/>
+	PayID: <span class="fw-bold">@Model.Invoice.Account.PayId</span><br/>
+</address>
