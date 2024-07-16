@@ -10,7 +10,7 @@ Layout="_Print";
 </div>
 <hr/>
 <div class="text-end">
-	<h4>Invoice No: @Model.Invoice.InvoiceCode</h4>
+	<h4>Invoice Code: @Model.Invoice.InvoiceCode.Replace(" ", "")</h4>
 </div>
 <br/>
 <div class="text-end">
@@ -19,19 +19,12 @@ Layout="_Print";
 	</p>
 
 	<address>
-		@Model.Invoice.Account.Name<br/>
-		@Model.Invoice.Account.CompanyName<br/>
-		@Model.Invoice.Account.StreetNumber @Model.Invoice.Account.Street<br/>
-		@Model.Invoice.Account.City @Model.Invoice.Account.State @Model.Invoice.Account.Postcode<br/>
-		ABN: 11650 073 561<br/>
-	</address>
-	<p>Email: james@locationsolve.com</p>
-</div>
-
-<div>
+		@Model.Invoice.Account.Name.ToUpper()<br/>
+		@Model.Invoice.Account.CompanyName.ToUpper()<br/>
+		@Model.Invoice.Account.StreetNumber @Model.Invoice.Account.Street.ToUpper()<br/> @Model.Invoice.Account.City @Model.Invoice.Account.State @Model.Invoice.Account.Postcode<br/> ABN: @Model.Invoice.Account.ABN<br/> </address> <p>Email: james@locationsolve.com</p> </div> <div>
 	<address>
-		MATTHEW POPE<br/>
 		@Model.Invoice.Client.Name.ToUpper()<br/>
+		@Model.Invoice.Client.CompanyName.ToUpper()<br/>
 	</address>
 </div>
 
@@ -92,3 +85,15 @@ Layout="_Print";
 	Account Holder: <span class="fw-bold">@Model.Invoice.Account.Name</span><br/>
 	PayID: <span class="fw-bold">@Model.Invoice.Account.PayId</span><br/>
 </address>
+
+
+
+
+
+
+
+
+
+
+
+<i>Invoice Printed At @DateTime.Now.ToString("F")</i>

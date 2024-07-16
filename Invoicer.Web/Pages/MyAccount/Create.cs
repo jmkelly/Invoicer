@@ -4,6 +4,7 @@ namespace Invoicer.Web.Pages.MyAccount
     {
         public Create(DataContext context, ILogger<CreatePageModel<MyAccountCreateModel, MyAccount>> logger) : base(context, logger)
         {
+			logger.LogInformation("Create Account");
         }
     }
 }

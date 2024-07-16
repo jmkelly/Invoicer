@@ -35,7 +35,7 @@ public class Invoice : Entity
     public static string CreateInvoiceCode(string clientName, DateTime dateTime)
     {
         //create a code based on the year, date, day
-        return $"{clientName}:{dateTime.Year:D2}{dateTime.Month:D2}{dateTime.Day:D2}-{dateTime.Hour:D2}{dateTime.Minute:D2}{dateTime.Second:D2}";
+        return $"{clientName}:{dateTime.Year:D2}{dateTime.Month:D2}{dateTime.Day:D2}";
     }
 
     public void RemoveAllWorkItems()

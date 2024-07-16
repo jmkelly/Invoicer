@@ -12,8 +12,8 @@ namespace Invoicer.Web.Pages.MyAccount
         public required string State { get; set; }
         public required string Postcode { get; set; }
         public required string BankName { get; set; }
-        public string PayId { get; set; }
-		public string ABN {get;set;}
+        public string? PayId { get; set; }
+		public string? ABN {get;set;}
 
 		public string Label()
 		{

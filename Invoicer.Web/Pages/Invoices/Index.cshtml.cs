@@ -7,6 +7,7 @@ namespace Invoicer.Web.Pages.Invoices
     public class ClientIndexModel
     {
         public required string Name { get; set; }
+		public required string CompanyName {get;set;}
 
     }
     public class InvoiceIndexModel
@@ -17,7 +18,7 @@ namespace Invoicer.Web.Pages.Invoices
         public required DateTime CreatedAt { get; set; }
         public required InvoiceStatus InvoiceStatus { get; set; }
         public required decimal Total { get; set; }
-		public string AccountLabel {get;set;}
+		public string? AccountLabel {get;set;}
     }
     public class IndexModel : PageModel
     {

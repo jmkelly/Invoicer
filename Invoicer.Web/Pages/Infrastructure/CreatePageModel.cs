@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Mapster;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MassTransit;
+using Invoicer.Web.Extensions;
 
 namespace Invoicer.Web.Pages
 {
@@ -27,7 +28,7 @@ namespace Invoicer.Web.Pages
         public virtual async Task<IActionResult> OnGet(Guid id)
         {
             var entity = await Context.Set<TEntity>().FirstOrDefaultAsync(c => c.Id == id);
-            Logger.LogInformation("{entity}", entity);
+            Logger.LogInformation("Get {entity}", entity);
 
             if (entity == null)
                 return Page();
@@ -37,9 +38,12 @@ namespace Invoicer.Web.Pages
 
         public virtual async Task<IActionResult> OnPost()
         {
+			Logger.LogInformation("Create {json}", Model.ToJson());
+			Logger.LogInformation("Create {entity}", Model);
 
             if (!ModelState.IsValid)
             {
+				Logger.LogWarning("Model {@Model} not valid", Model);
                 return Page();
             }
             //convert to an new entity

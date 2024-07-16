@@ -23,7 +23,7 @@
 			<td>@invoice.CreatedAt</td>
 			<td>@invoice.InvoiceStatus</td>
 			<td>@invoice.Total().ToString("0.00")</td>
-			<td><a class="btn btn-primary" asp-page="/Invoices/Details" asp-route-id="@invoice.Id">Details</td>
+		<td><a class="btn btn-primary" asp-page="/Invoices/Details" asp-route-id="@invoice.Id">Details</a></td>
 		</tr>
 	}
 </tbody>
