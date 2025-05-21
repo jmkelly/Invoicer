@@ -6,16 +6,18 @@
 4. [x] add payment terms
 5. [x] select address for invoice from 
 6. [x] Add contact name for client and show on invoice
-7. [] Handle Gst / No Gst on invoice 
+7. [ ] Handle Gst / No Gst on invoice 
 8. [x] show selected account details on invoice
 9. [x] Create a pdf from invoice information
 
-11. [] Add ability to edit and delete unsent invoice
-12. [] Add ability to update sent invoice to paid
-13. [] Sqlite backend
-        1. [] Add migrations for sqlite
+11. [ ] Add ability to edit and delete unsent invoice
+12. [ ] Add ability to update sent invoice to paid
+13. [ ] Sqlite backend
+    1. [ ] Add migrations for sqlite
 
 ## Nice to haves
-1. [] Make site look nicer
+1. [ ] Make site look nicer
+2. [ ] Make a docs markdown folder
+3. [ ] Make docs
 
 
