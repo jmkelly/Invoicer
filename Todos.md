@@ -9,6 +9,7 @@
 7. [ ] Handle Gst / No Gst on invoice 
 8. [x] show selected account details on invoice
 9. [x] Create a pdf from invoice information
+10. [ ] Add sql script to auto initalise database with realistic values
 
 11. [ ] Add ability to edit and delete unsent invoice
 12. [ ] Add ability to update sent invoice to paid
@@ -18,6 +19,6 @@
 ## Nice to haves
 1. [ ] Make site look nicer
 2. [ ] Make a docs markdown folder
-3. [ ] Make docs
+    1. [ ] Make docs
 
 
