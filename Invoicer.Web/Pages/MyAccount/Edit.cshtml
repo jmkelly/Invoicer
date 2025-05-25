@@ -1,0 +1,76 @@
+﻿@page
+@model Invoicer.Web.Pages.MyAccount.Edit
+@{
+}
+
+<h2>Edit My Account</h2>
+
+<form method="post">
+	@Html.AntiForgeryToken()
+	<p>@Html.ValidationSummary(false)</p>
+	<div class="form-group">
+		<label for="Model_CompanyName">Company Name</label>
+		<input class="form-control" type="text" asp-for="@Model.Model.CompanyName">
+	</div>
+	<div class="form-group">
+		<label for="Model_Name">Name</label>
+		<input class="form-control" type="text" asp-for="@Model.Model.Name">
+		<span asp-validation-for="@Model.Model.Name" class="text-danger"></span>
+	</div>
+	<div class="form-group">
+		<label for="Model_ABN">ABN</label>
+		<input class="form-control" type="text" asp-for="@Model.Model.ABN">
+		<span asp-validation-for="@Model.Model.ABN" class="text-danger"></span>
+	</div>
+	<div class="form-group">
+		<label for="Model_BSB">BSB</label>
+		<input class="form-control" type="text" asp-for="@Model.Model.BSB">
+		<span asp-validation-for="@Model.Model.BSB" class="text-danger"></span>
+	</div>
+	<div class="form-group">
+		<label for="Model_AccountNo">Account No.</label>
+		<input class="form-control" type="text" asp-for="@Model.Model.AccountNo">
+		<span asp-validation-for="@Model.Model.AccountNo" class="text-danger"></span>
+	</div>
+	<div class="form-group">
+		<label for="Model_StreetNumber">Street Number</label>
+		<input class="form-control" type="text" asp-for="@Model.Model.StreetNumber">
+		<span asp-validation-for="@Model.Model.StreetNumber" class="text-danger"></span>
+	</div>
+	<div class="form-group">
+		<label for="Model_Street">Street</label>
+		<input class="form-control" type="text" asp-for="@Model.Model.Street">
+		<span asp-validation-for="@Model.Model.Street" class="text-danger"></span>
+	</div>
+	<div class="form-group">
+		<label for="Model_City">City</label>
+		<input class="form-control" type="text" asp-for="@Model.Model.City">
+		<span asp-validation-for="@Model.Model.City" class="text-danger"></span>
+	</div>
+	<div class="form-group">
+		<label for="Model_State">State</label>
+		<input class="form-control" type="text" asp-for="@Model.Model.State">
+		<span asp-validation-for="@Model.Model.State" class="text-danger"></span>
+	</div>
+	<div class="form-group">
+		<label for="Model_Postcode">Postcode</label>
+		<input class="form-control" type="text" asp-for="@Model.Model.Postcode">
+		<span asp-validation-for="@Model.Model.Postcode" class="text-danger"></span>
+	</div>
+	<div class="form-group">
+		<label for="Model_BankName">Bank Name</label>
+		<input class="form-control" type="text" asp-for="@Model.Model.BankName">
+		<span asp-validation-for="@Model.Model.BankName" class="text-danger"></span>
+	</div>
+	<div class="form-group">
+		<label for="Model_PayId">PayId</label>
+		<input class="form-control" type="text" asp-for="@Model.Model.PayId">
+		<span asp-validation-for="@Model.Model.PayId" class="text-danger"></span>
+	</div>
+	<hr/>
+	<input type="hidden" asp-for="@Model.Model.Id"/>
+	<div class="form-group">
+		<input class="btn btn-primary" type="submit" value="Edit">
+		<a class="btn btn-secondary"  asp-page="Index">Back</a>
+	</div>
+</form>
