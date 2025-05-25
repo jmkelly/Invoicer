@@ -6,36 +6,31 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Invoicer.Web.Pages.Clients
 {
-    public class Create : PageModel
-    {
-        private readonly DataContext context;
+	public class Create(DataContext context) : PageModel
+	{
+		private readonly DataContext context = context;
 
-        public Create(DataContext context)
-        {
-            this.context = context;
-        }
+		[BindProperty]
+		public required ClientAddModel Model { get; set; }
 
-        [BindProperty]
-        public ClientAddModel Model { get; set; }
+		public void OnGet()
+		{
+		}
 
-        public void OnGet()
-        {
-        }
+		public async Task<IActionResult> OnPost()
+		{
+			if (!ModelState.IsValid)
+			{
+				return Page();
+			}
+			var Client = Model.Adapt<Client>();
+			//create a sequential uuid
+			Client.Id = NewId.NextSequentialGuid();
+			context.Add(Client);
+			await context.SaveChangesAsync();
 
-        public async Task<IActionResult> OnPost()
-        {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-            var Client = Model.Adapt<Client>();
-            //create a sequential uuid
-            Client.Id = NewId.NextSequentialGuid();
-            context.Add(Client);
-            await context.SaveChangesAsync();
+			return RedirectToPage("Index");
+		}
 
-            return RedirectToPage("Index");
-        }
-
-    }
+	}
 }

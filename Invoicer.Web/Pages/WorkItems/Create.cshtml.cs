@@ -10,52 +10,52 @@ namespace Invoicer.Web.Pages.WorkItems;
 
 public class Create : PageModel
 {
-    private readonly DataContext context;
-    private readonly ILogger<Create> logger;
+	private readonly DataContext context;
+	private readonly ILogger<Create> logger;
 
-    public Create(DataContext context, ILogger<Create> logger)
-    {
-        this.context = context;
-        this.logger = logger;
-    }
+	public Create(DataContext context, ILogger<Create> logger)
+	{
+		this.context = context;
+		this.logger = logger;
+	}
 
-    [BindProperty]
-    public Guid ClientId { get; set; }
+	[BindProperty]
+	public Guid ClientId { get; set; }
 
-    [BindProperty]
-    public CreateWorkItemModel Model { get; set; }
+	[BindProperty]
+	public required CreateWorkItemModel Model { get; set; }
 
-    public List<SelectListItem> Options { get; set; }
-    public async Task OnGet()
-    {
-        logger.LogInformation("getting clients");
-        var clients = await context.Clients.ToListAsync();
-        Options = clients.Select(c => new SelectListItem
-        {
-            Value = c.Id.ToString(),
-            Text = c.Name
-        }).ToList();
+	public required List<SelectListItem> Options { get; set; }
+	public async Task OnGet()
+	{
+		logger.LogInformation("getting clients");
+		var clients = await context.Clients.ToListAsync();
+		Options = clients.Select(c => new SelectListItem
+		{
+			Value = c.Id.ToString(),
+			Text = c.Name
+		}).ToList();
 
-    }
+	}
 
-    public async Task<IActionResult> OnPost()
-    {
-        logger.LogInformation("{model}", Model.ToJson());
-        if (!ModelState.IsValid)
-        {
-            logger.LogWarning("invalid model {@model}", Model);
-            return Page();
-        }
+	public async Task<IActionResult> OnPost()
+	{
+		logger.LogInformation("{model}", Model.ToJson());
+		if (!ModelState.IsValid)
+		{
+			logger.LogWarning("invalid model {@model}", Model);
+			return Page();
+		}
 
-        //convert the work
-        logger.LogInformation("converting {@}", Model);
-        var item = Model.Adapt<WorkItem>();
-        item.Id = NewId.NextSequentialGuid();
-        logger.LogInformation("item {@}", item);
-        context.WorkItems.Add(item);
+		//convert the work
+		logger.LogInformation("converting {@}", Model);
+		var item = Model.Adapt<WorkItem>();
+		item.Id = NewId.NextSequentialGuid();
+		logger.LogInformation("item {@}", item);
+		context.WorkItems.Add(item);
 
-        await context.SaveChangesAsync();
+		await context.SaveChangesAsync();
 
-        return RedirectToPage("Index");
-    }
+		return RedirectToPage("Index");
+	}
 }

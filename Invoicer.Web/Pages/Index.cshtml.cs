@@ -7,18 +7,18 @@ namespace Invoicer.Web.Pages;
 
 public class IndexModel : PageModel
 {
-    private readonly ILogger<IndexModel> _logger;
-    private readonly DataContext context;
-	public InvoicesIndexModel InvoicesIndexModel {get;set;}
+	private readonly ILogger<IndexModel> _logger;
+	private readonly DataContext context;
+	public required InvoicesIndexModel InvoicesIndexModel { get; set; }
 
-    public IndexModel(ILogger<IndexModel> logger, DataContext context)
-    {
-        _logger = logger;
-        this.context = context;
-    }
+	public IndexModel(ILogger<IndexModel> logger, DataContext context)
+	{
+		_logger = logger;
+		this.context = context;
+	}
 
-    public async Task OnGet()
-    {
+	public async Task OnGet()
+	{
 		var invoices = await context
 			.Invoices
 			.Include(c => c.Client)
@@ -45,5 +45,5 @@ public class IndexModel : PageModel
 		}
 
 		InvoicesIndexModel = model;
-    }
+	}
 }

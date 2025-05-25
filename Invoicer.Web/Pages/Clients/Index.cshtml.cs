@@ -4,20 +4,20 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Invoicer.Web.Pages.Clients
 {
-    public class IndexModel : PageModel
-    {
-        private readonly DataContext context;
+	public class IndexModel : PageModel
+	{
+		private readonly DataContext context;
 
-        public IndexModel(DataContext context)
-        {
-            this.context = context;
-        }
+		public IndexModel(DataContext context)
+		{
+			this.context = context;
+		}
 
-        public List<ClientIndexModel> Clients { get; set; }
-        public async Task OnGet()
-        {
-            var clients = await context.Clients.ToListAsync();
-            Clients = clients.Adapt<List<ClientIndexModel>>();
-        }
-    }
+		public required List<ClientIndexModel> Clients { get; set; }
+		public async Task OnGet()
+		{
+			var clients = await context.Clients.ToListAsync();
+			Clients = clients.Adapt<List<ClientIndexModel>>();
+		}
+	}
 }

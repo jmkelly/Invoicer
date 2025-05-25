@@ -3,8 +3,11 @@
 @{
 }
 
-<a class="btn btn-secondary" asp-page="Create">Create Client</a>
-<a class="btn btn-secondary" asp-page="/Index">Back</a>
+<section>
+<form>
+		<button class="btn btn-primary" asp-page="Create"><i data-lucide="user-plus"></i>New Client</button>
+</form>
+</section>
 
 
 <table class="table">
@@ -22,7 +25,7 @@
                 <td>@Client.Name</td>
                 <td>@Client.CompanyName</td>
                 <td>
-                    <a class="btn" asp-page="Delete" asp-route-id="@Client.Id"><i class="bi bi-trash"></i></a></td>
+                    <a class="btn btn-delete" asp-page="Delete" asp-route-id="@Client.Id"><i data-lucide="trash-2" ></i></a></td>
             </tr>
         }
     </tbody>

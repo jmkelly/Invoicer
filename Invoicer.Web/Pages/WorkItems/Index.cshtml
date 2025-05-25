@@ -7,11 +7,17 @@ ViewData["Title"] = "Home page";
 
 
 
-<form class="form-inline">
-    <a class="btn btn-primary" asp-page="Work/Create">Create Work</a>
-    <a class="btn btn-primary" asp-page="Invoices/Create">Create Invoice</a>
-</form>
-
+<section>
+	<form class="inline-button-bar">
+	<button class="btn btn-primary" asp-page="/WorkItems/Create" title="Log Hours" aria-label="Log Hours">
+		<i data-lucide="clock"></i>
+		<span>Log Hours</span>
+	</button>
+	<button class="btn btn-primary" asp-page="/Invoices/Create" aria-label="Create new invoice" title="Create new invoice"><i data-lucide="file-plus-2"></i>
+		<span>Create Invoice</span>
+	</button>
+	</form>
+</section>
 <table class="table" id="table">
   <thead>
     <th>Client</th>
