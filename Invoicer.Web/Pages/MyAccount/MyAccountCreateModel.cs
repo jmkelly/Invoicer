@@ -1,7 +1,7 @@
 namespace Invoicer.Web.Pages.MyAccount
 {
-    public class MyAccountCreateModel  : MyAccount, IModel
-    {
+	public class MyAccountCreateModel : MyAccount, IModel
+	{
 
-    }
+	}
 }
