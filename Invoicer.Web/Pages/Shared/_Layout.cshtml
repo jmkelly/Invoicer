@@ -1,48 +1,35 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>@ViewData["Title"] - Invoicer.Web</title>
-		<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-		<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-		<link rel="stylesheet" href="~/Invoicer.Web.styles.css" asp-append-version="true" />
-	</head>
-	<body hx-boost="true">
-		<header>
-			<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-				<div class="container">
-					<a class="navbar-brand" asp-area="" asp-page="/Index">Invoicer</a>
-				</div>
-			</nav>
-		</header>
-		<div class="container-fluid">
-			<div class="row">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Invoicer</title>
+  <link rel="stylesheet" href="/css/modern.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <h1 class="logo">Invoicer</h1>
+    </div>
+  </header>
 
-			<div class="col-md-2">
-				<partial name="_Navigation" />
-			</div>
-			<main role="main" class="col-lg-8">
-				@RenderBody()
-			</main>
-			</div>
-		</div>
+  <div class="layout">
+    <aside class="sidebar">
+				<partial name = "_Navigation"/>
+    </aside>
 
-		<footer class="border-top footer text-muted">
-			<div class="container">
-				&copy; 2023 - Invoicer.Web - <a asp-area="" asp-page="/Privacy">Privacy</a>
-			</div>
-		</footer>
+    <main class="main">
+		@RenderBody()
+    </main>
+  </div>
 
-		<script src="https://unpkg.com/htmx.org@1.9.5"
-		integrity="sha384-xcuj3WpfgjlKF+FXhSQFQ0ZNr39ln+hwjN3npfM9VBnUskLolQAcN80McRIVOPuO"
-		crossorigin="anonymous"></script>
-		<script src="~/lib/jquery/dist/jquery.min.js"></script>
-		<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-		<script src="~/js/site.js" asp-append-version="true"></script>
-
-		@await RenderSectionAsync("Scripts", required: false)
-	</body>
-
+  <footer class="footer">
+    &copy; 2023 - Invoicer.Web - <a href="#">Privacy</a>
+  </footer>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+	lucide.createIcons();
+  </script>
+</body>
 </html>
+
