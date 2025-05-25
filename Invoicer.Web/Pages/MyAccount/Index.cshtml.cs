@@ -5,21 +5,21 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Invoicer.Web.Pages.MyAccount
 {
-    public class Index: PageModel
-    {
-        private readonly DataContext context;
+	public class Index : PageModel
+	{
+		private readonly DataContext context;
 
-        public Index(DataContext context)
-        {
-            this.context = context;
-        }
+		public Index(DataContext context)
+		{
+			this.context = context;
+		}
 
-        public List<MyAccountIndexModel> MyAccounts { get; set; }
+		public required List<MyAccountIndexModel> MyAccounts { get; set; }
 
-        public async Task OnGet()
-        {
-            var myaccounts = await context.MyAccounts.ToListAsync();
-            MyAccounts = myaccounts.Adapt<List<MyAccountIndexModel>>();
-        }
-    }
+		public async Task OnGet()
+		{
+			var myaccounts = await context.MyAccounts.ToListAsync();
+			MyAccounts = myaccounts.Adapt<List<MyAccountIndexModel>>();
+		}
+	}
 }
