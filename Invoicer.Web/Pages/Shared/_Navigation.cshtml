@@ -1,46 +1,8 @@
-<table class="table table-striped">
-	<tbody>
-		<tr>
-			<td>
-				<i class="bi">
-					<a asp-page="/Index">Home</a>
-				</i>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<i class="bi">
-					<a asp-page="/WorkItems/Index">Recorded Work</a>
-				</i>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<i class="bi">
-					<a asp-page="/Invoices/Index">Invoices</a>
-				</i>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<i class="bi">
-					<a asp-page="/MyAccount/Index">My Accounts</a>
-				</i>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<i class="bi">
-					<a asp-page="/Clients/Index">Clients</a>
-				</i>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<i class="bi">
-					<a asp-page="/Settings/Index">Settings</a>
-				</i>
-			</td>
-		</tr>
-	</tbody>
-</table>
+<nav>
+	<a asp-page="/Index">Overview</a>
+	<a asp-page="/WorkItems/Index">Hours Logged</a>
+	<a asp-page="/Invoices/Index">Invoices</a>
+	<a asp-page="/Clients/Index">Clients</a>
+	<a asp-page="/MyAccount/Index">Accounts</a>
+	<a asp-page="/Settings/Index">Settings</a>
+</nav>
