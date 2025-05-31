@@ -1,35 +1,39 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Invoicer</title>
-  <link rel="stylesheet" href="/css/modern.css" />
-</head>
-<body>
-  <header class="header">
-    <div class="container">
-      <h1 class="logo">Invoicer</h1>
-    </div>
-  </header>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Invoicer</title>
+		<link rel="stylesheet" href="/css/modern.css" />
+	</head>
+	<body>
+		<header class="header">
+			<section> 
+				<h1 class="logo">Invoicer</h1>
+			</section>
+			<section>
+				<partial name="_LoginPartial" />
+			</section>
+			</div>
+		</header>
 
-  <div class="layout">
-    <aside class="sidebar">
+		<div class="layout">
+			<aside class="sidebar">
 				<partial name = "_Navigation"/>
-    </aside>
+			</aside>
 
-    <main class="main">
-		@RenderBody()
-    </main>
-  </div>
+			<main class="main">
+				@RenderBody()
+			</main>
+		</div>
 
-  <footer class="footer">
-    &copy; 2023 - Invoicer.Web - <a href="#">Privacy</a>
-  </footer>
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <script>
-	lucide.createIcons();
-  </script>
-</body>
+		<footer class="footer">
+			&copy; 2023 - Invoicer.Web - <a href="#">Privacy</a>
+		</footer>
+		<script src="https://unpkg.com/lucide@latest"></script>
+		<script>
+		lucide.createIcons();
+		</script>
+		@RenderSection("scripts", false)
+	</body>
 </html>
-
