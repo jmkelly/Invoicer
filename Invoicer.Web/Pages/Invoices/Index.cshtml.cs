@@ -20,11 +20,11 @@ namespace Invoicer.Web.Pages.Invoices
         public required decimal Total { get; set; }
 		public string? AccountLabel {get;set;}
     }
-    public class IndexModel : PageModel
+    public class IndexViewModel : PageModel
     {
         private readonly DataContext context;
 
-        public IndexModel(DataContext context)
+        public IndexViewModel(DataContext context)
         {
             this.context = context;
             Invoices = new List<InvoiceIndexModel>();
