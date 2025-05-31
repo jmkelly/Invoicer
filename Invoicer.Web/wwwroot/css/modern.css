@@ -12,6 +12,7 @@
 	--btn-hover-bg: #2563eb;
 	--btn-text: #ffffff;
 	--card-shadow: rgba(0, 0, 0, 0.05);
+	--bg-color-light: color-mix(in srgb, var(--bg-color) 98%, white);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -49,30 +50,79 @@ body {
 a {
 	color: var(--link-color);
 	text-decoration: none;
-}
+}/
 
 a:hover {
 	text-decoration: underline;
 	color: var(--link-hover);
 }
 
-.container {
-	max-width: 1200px;
-	margin: 0 auto;
-	padding: 0 1rem;
+header section {
+	flex: 1;
+	text-align: center;
+	margin-bottom: 0px;
 }
 
-.header {
+header section h1 {
+	font-size: 1.5rem;
+	color: var(--link-color);
+	text-align: left;
+	margin-left: 1rem;
+}
+
+.flex-container {
+	display: flex;
+	gap: 2rem;
+}
+
+.column {
+	flex: 1;
+	padding: 1rem;
+	border: 1px solid var(--header-bg); 
+	border-radius: 1rem;
+	background: var(--bg-color-light);
+	padding-bottom: 5rem;
+	padding-top: 2rem;
+	padding-left: 2rem;
+	padding-right: 2rem;
+}
+
+.column h2 {
+	font-size: 1.25rem;
+	margin-bottom: 2rem;
+	color: var(--text-color);
+	text-align: center;
+}
+
+
+header section ul {
+	list-style: none;
+	display: flex;
+	justify-content: right;
+}
+
+header section ul li.nav-item {
+	margin-right: 20px;
+	padding-right: 2rem;
+}
+
+
+header {
 	background: var(--header-bg);
 	border-bottom: 1px solid var(--table-border);
 	padding: 1rem 0;
 	box-shadow: 0 2px 4px var(--card-shadow);
 	transition: background 0.3s, border-color 0.3s;
+	display: flex;
+	width: 100%;
+	justify-content: space-between;
+	align-items: center;
 }
 
 .logo {
 	font-size: 1.5rem;
 	color: var(--link-color);
+	justify-content: left;
 }
 
 .layout {
