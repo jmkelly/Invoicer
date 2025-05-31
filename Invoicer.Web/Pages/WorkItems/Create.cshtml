@@ -1,4 +1,5 @@
 ﻿@page
+@using Invoicer.Web.Pages.WorkItems
 @model Invoicer.Web.Pages.WorkItems.Create
 @{
 }
@@ -25,12 +26,12 @@
     <label for="Model_rate">Rate Units</label>
   <select class="form-control" 
     asp-for="@Model.Model.RateUnits" 
-    asp-items="Html.GetEnumSelectList<RateUnits>()" ></select>
+    asp-items="Html.GetEnumSelectList<RateUnits>()"></select>
   </div>
   <!-- select from Clients -->
   <div class="form-group">
     <label for="Model_Clients">Clients</label>
-    <select class="form-control" asp-for="@Model.Model.ClientId" asp-items="Model.Options"></select>
+    <select class="form-control" asp-for="@Model.Model.ClientId" asp-items="@Model.Model.Clients.ToSelectListItem()"></select>
   </div>
   <hr/>
   <div class="form-group">

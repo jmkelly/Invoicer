@@ -2,7 +2,6 @@ using Mapster;
 using MassTransit;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Invoicer.Web.Extensions;
 
@@ -25,16 +24,17 @@ public class Create : PageModel
 	[BindProperty]
 	public required CreateWorkItemModel Model { get; set; }
 
-	public required List<SelectListItem> Options { get; set; }
+	//public required List<SelectListItem> Options { get; set; }
 	public async Task OnGet()
 	{
 		logger.LogInformation("getting clients");
 		var clients = await context.Clients.ToListAsync();
-		Options = clients.Select(c => new SelectListItem
-		{
-			Value = c.Id.ToString(),
-			Text = c.Name
-		}).ToList();
+		// Options = clients.Select(c => new SelectListItem
+		// {
+		// 	Value = c.Id.ToString(),
+		// 	Text = c.Name
+		// }).ToList();
+		Model.Clients = clients;
 
 	}
 
