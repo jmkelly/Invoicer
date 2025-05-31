@@ -1,21 +1,19 @@
 ﻿@page
-@using Invoicer.Web.Pages.Invoices
+@using Invoicer.Web.Pages
 @model IndexModel
 @{
 ViewData["Title"] = "Home page";
 }
 
-<section>
-	<form>
-	<button class="btn btn-primary btn-log-hours" asp-page="/WorkItems/Create" title="Log Hours" aria-label="Log Hours">
-		<i data-lucide="clock"></i>
-		<span>Log Hours</span>
-	</button>
-	</form>
-</section>
-<section>
-	<partial name="_InvoicesTable" model="Model.InvoicesIndexModel"> 
-</section>
-<section>
-	<partial name="_WorkItemsTable" model="Model.InvoicesIndexModel">
-</section>
+
+<div class="flex-container">
+	<div class="column">
+		<partial name="_WorkItemsCreate" model="Model.IndexViewModel">
+	</div>
+	<div class="column">
+		<partial name="_WorkItemsTable" model="Model.IndexViewModel">
+	</div>
+	<div class="column">
+		<partial name="_InvoicesTable" model="Model.IndexViewModel"> 
+	</div>
+</div>
