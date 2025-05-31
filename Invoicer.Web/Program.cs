@@ -1,6 +1,7 @@
 using Invoicer.Web;
 using Invoicer.Web.Pages.Invoices;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,17 +13,13 @@ builder.Services.AddDbContext<DataContext>(options =>
 			options.UseNpgsql(builder.Configuration.GetConnectionString("Default"));
 		});
 
-builder.Services.AddDbContext<AppDbContext>(options =>
+builder.Services.AddDbContext<UserContext>(options =>
 		{
-
+			options.EnableSensitiveDataLogging();
 			options.UseNpgsql(builder.Configuration.GetConnectionString("Default"));
 		});
 
-builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
-	{
-		options.SignIn.RequireConfirmedAccount = false;
-	})
-	.AddEntityFrameworkStores<AppDbContext>();
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<UserContext>();
 
 builder.Services.AddRazorPages();
 
@@ -30,6 +27,8 @@ builder.Services.AddScoped<IInvoiceRepository, InvoiceRepository>();
 
 
 var app = builder.Build();
+
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -44,6 +43,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();
