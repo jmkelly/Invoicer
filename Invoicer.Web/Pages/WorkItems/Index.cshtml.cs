@@ -1,4 +1,5 @@
 ﻿using Mapster;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
@@ -24,6 +25,18 @@ public class IndexModel : PageModel
 		.Include(w => w.Client)
 		.ToListAsync();
 		WorkItems = workitems.Adapt<List<WorkItemIndexModel>>();
+	}
+
+	public async Task<ActionResult> OnGetDelete(Guid id)
+	{
+		var wi = await context.WorkItems.FirstOrDefaultAsync(w => w.Id == id);
+		if (wi is null)
+		{
+			return new NoContentResult();
+		}
+		context.WorkItems.Remove(wi);
+		await context.SaveChangesAsync();
+		return new OkResult();
 	}
 
 }
