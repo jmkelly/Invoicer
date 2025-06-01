@@ -50,7 +50,13 @@ body {
 a {
 	color: var(--link-color);
 	text-decoration: none;
-}/
+}
+
+button {
+	background: none;
+	border: none;
+	color: var(--link-color);
+}
 
 a:hover {
 	text-decoration: underline;
@@ -279,5 +285,53 @@ td {
 	display: flex;
 	align-items: center;
 	gap: 20px;
+}
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.5rem;
+  background-color: #111827;
+  border-radius: 0.75rem;
+  color: #fff;
+  max-width: 400px;
+  margin: 2rem auto;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.form-container h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.form-group label {
+  margin-bottom: 0.25rem;
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.5rem 0.75rem;
+  border-radius: 4px;
+  border: none;
+  background-color: #1f2937;
+  color: #fff;
+}
+
+.form-container button {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  color: white;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  align-self: flex-start;
 }
 
