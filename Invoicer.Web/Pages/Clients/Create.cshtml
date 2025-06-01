@@ -2,49 +2,48 @@
 @model Invoicer.Web.Pages.Clients.Create
 @{
 }
-<h1>Create Client</h1>
-<form method="post">
-  <div class="form-group">
-    <label for="Model_CompanyName">Company Name</label>
-    <input class="form-control" type="text" asp-for="@Model.Model.CompanyName" />
-  </div>
-  <div class="form-group">
-    <label for="Model_Name">Name</label>
-    <input class="form-control" type="text" asp-for="@Model.Model.Name" />
-    <span asp-validation-for="Model.Name" class="text-danger"></span>
-  </div>
-  <div class="form-group">
-    <label for="Model_BSB">BSB</label>
-    <input class="form-control" type="text" asp-for="@Model.Model.BSB" />
-  </div>
-  <div class="form-group">
-    <label for="Model_AccountNo">Account No.</label>
-    <input class="form-control" type="text" asp-for="@Model.Model.AccountNo" />
-  </div>
-  <div class="form-group">
-    <label for="Model_StreetNumber">Street Number</label>
-    <input class="form-control" type="text" asp-for="@Model.Model.StreetNumber" />
-  </div>
-  <div class="form-group">
-    <label for="Model_Street">Street</label>
-    <input class="form-control" type="text" asp-for="@Model.Model.Street" />
-  </div>
-  <div class="form-group">
-    <label for="Model_City">City</label>
-    <input class="form-control" type="text" asp-for="@Model.Model.City" />
-  </div>
-  <div class="form-group">
-    <label for="Model_State">State</label>
-    <input class="form-control" type="text" asp-for="@Model.Model.State" />
-  </div>
-  <div class="form-group">
-    <label for="Model_Postcode">Postcode</label>
-    <input class="form-control" type="text" asp-for="@Model.Model.Postcode" />
-  </div>
-  <hr/>
-  <div class="form-group">
-    <input class="btn btn-primary" type="submit" value="Create">
-    <a class="btn btn-secondary"  asp-page="Index">Back</a>
-  </div>
-  @Html.AntiForgeryToken()
+<form class="form-container" method="post">
+	<h2>Create Client</h2>
+	<div class="form-group">
+		<label for="Model_CompanyName">Company Name</label>
+		<input type="text" asp-for="@Model.Model.CompanyName" />
+	</div>
+	<div class="form-group">
+		<label for="Model_Name">Name</label>
+		<input type="text" asp-for="@Model.Model.Name" />
+		<span asp-validation-for="Model.Name" class="text-danger"></span>
+	</div>
+	<div class="form-group">
+		<label for="Model_BSB">BSB</label>
+		<input type="text" asp-for="@Model.Model.BSB" />
+	</div>
+	<div class="form-group">
+		<label for="Model_AccountNo">Account No.</label>
+		<input type="text" asp-for="@Model.Model.AccountNo" />
+	</div>
+	<div class="form-group">
+		<label for="Model_StreetNumber">Street Number</label>
+		<input type="text" asp-for="@Model.Model.StreetNumber" />
+	</div>
+	<div class="form-group">
+		<label for="Model_Street">Street</label>
+		<input type="text" asp-for="@Model.Model.Street" />
+	</div>
+	<div class="form-group">
+		<label for="Model_City">City</label>
+		<input type="text" asp-for="@Model.Model.City" />
+	</div>
+	<div class="form-group">
+		<label for="Model_State">State</label>
+		<input type="text" asp-for="@Model.Model.State" />
+	</div>
+	<div class="form-group">
+		<label for="Model_Postcode">Postcode</label>
+		<input type="text" asp-for="@Model.Model.Postcode" />
+	</div>
+	<div class="form-group">
+		<button class="btn btn-primary">Create</button>
+		<a class="btn btn-secondary"  asp-page="Index">Back</a>
+	</div>
+	@Html.AntiForgeryToken()
 </form>
