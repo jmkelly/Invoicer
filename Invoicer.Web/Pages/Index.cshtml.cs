@@ -1,19 +1,25 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Invoicer.Web.Pages.WorkItems;
+using Invoicer.Web.Pages.Invoices;
+using Microsoft.AspNetCore.Mvc;
+using Invoicer.Web.Extensions;
+using Mapster;
+using MassTransit;
 
 
 namespace Invoicer.Web.Pages;
 
 public class IndexModel : PageModel
 {
-	private readonly ILogger<IndexModel> _logger;
+	private readonly ILogger<IndexModel> logger;
 	private readonly DataContext context;
-	public IndexViewModel IndexViewModel { get; set; }
+	[BindProperty]
+	public required IndexViewModel IndexViewModel { get; set; }
 
 	public IndexModel(ILogger<IndexModel> logger, DataContext context)
 	{
-		_logger = logger;
+		this.logger = logger;
 		this.context = context;
 	}
 
@@ -46,14 +52,50 @@ public class IndexModel : PageModel
 			RateUnits = RateUnits.PerHour,
 		};
 
+
+		var outStandingWorkItems = await context.WorkItems
+			.Include(c => c.Client)
+			.Where(c => c.Invoice == null).ToListAsync();
+
+		var OutStandingWorkItems = outStandingWorkItems.Select(o => new WorkItemInvoiceModel
+		{
+			Id = o.Id,
+			Description = o.Description,
+			Total = o.Total(),
+			ClientName = o.Client?.Name ?? "Unknown",
+			ClientId = o.Client?.Id,
+			IsSelected = true //set selected by default
+		}).ToList();
+
+		var inv = new InvoiceAddModel
+		{
+			ClientId = default,
+			Accounts = (await context.MyAccounts.ToListAsync()),
+			OutStandingWorkItems = OutStandingWorkItems,
+			SelectedWorkItems = []
+		};
+
 		var model = new IndexViewModel
 		{
 			Invoices = invoices,
 			OutstandingWorkItems = workItems,
-			NewWorkItem = wi
+			NewWorkItem = wi,
+			NewInvoice = inv
 		};
 
 
 		IndexViewModel = model;
+	}
+
+	public async Task<ActionResult> OnPostAddHours()
+	{
+		logger.LogInformation(IndexViewModel.ToJson());
+		var hours = IndexViewModel.NewWorkItem;
+
+		var wi = hours.Adapt<WorkItem>();
+		wi.Id = NewId.NextSequentialGuid();
+		context.WorkItems.Add(wi);
+		await context.SaveChangesAsync();
+		return RedirectToPage("Index");
 	}
 }
