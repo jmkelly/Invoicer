@@ -1,44 +1,27 @@
-@page
 @using Invoicer.Web.Pages.WorkItems
 @model Invoicer.Web.Pages.IndexViewModel
 
 @{
 }
 
-<h2>Add</h2>
-<form method="post">
-  <div class="form-group">
-    <label for="Model_date">Date</label>
-    <input class="form-control" type="date" asp-for="@Model.NewWorkItem.Date" />
-  </div>
-  <div class="form-group">
-    <label for="Model_hours">Hours</label>
-  <input class="form-control" type="text" asp-for="@Model.NewWorkItem.Hours"/>
-  </div>
-  <div class="form-group">
-    <label for="Model_Rate">Rate</label>
-  <input class="form-control" type="text" asp-for="@Model.NewWorkItem.Rate"/>
-  </div>
-  <div class="form-group">
-    <label for="Model_Description">Description</label>
-    <input class="form-control" type="text" asp-for="@Model.NewWorkItem.Description"/>
-  </div>
-  <div class="form-group">
-    <label for="Model_rate">Rate Units</label>
-  <select class="form-control" 
-    asp-for="@Model.NewWorkItem.RateUnits" 
-    asp-items="Html.GetEnumSelectList<RateUnits>()"></select>
-  </div>
-  <!-- select from Clients -->
-  <div class="form-group">
-    <label for="Model_Clients">Clients</label>
-    <select class="form-control" asp-for="@Model.NewWorkItem.ClientId" asp-items="@Model.NewWorkItem.Clients.ToSelectListItem()"></select>
-  </div>
-  <hr/>
-  <div class="form-group">
-    <input type="submit" class="btn btn-primary" value="Save"/>
-    <a class="btn btn-secondary" asp-page="/Index">Back</a>
-  </div>
-  @Html.AntiForgeryToken()
+<form class="form-container" method="post" asp-page-handler="AddHours">
+	<label for="Model_date">Date</label>
+	<input class="" type="date" asp-for="@Model.NewWorkItem.Date" />
+	<label for="Model_Description">Description</label>
+	<input class="" type="text" asp-for="@Model.NewWorkItem.Description"/>
+	<label for="Model_Clients">Client</label>
+	<select class="" asp-for="@Model.NewWorkItem.ClientId" asp-items="@Model.NewWorkItem.Clients.ToSelectListItem()"></select>
+	<label for="Model_rate">Rate Units</label>
+	<select class="" 
+		asp-for="@Model.NewWorkItem.RateUnits" 
+		asp-items="Html.GetEnumSelectList<RateUnits>()"></select>
+	<label for="Model_Rate">Rate</label>
+	<input class="" type="text" asp-for="@Model.NewWorkItem.Rate"/>
+	<label for="Model_hours">Hours</label>
+	<input class="" type="text" asp-for="@Model.NewWorkItem.Hours"/>
+	<!-- select from Clients -->
+	<input type="submit" class="btn btn-primary" value="Save"/>
+	@Html.AntiForgeryToken()
 </form>
+
 
