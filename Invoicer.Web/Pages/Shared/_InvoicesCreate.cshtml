@@ -8,7 +8,7 @@
 	@Html.Raw(TempData.GetErrorsAsHtml())
 </div>
 }
-<form class="form-container" method="post">
+<form class="form-container" method="post" asp-page-handler="CreateInvoice">
 	<table>
 
 		<tbody>
@@ -23,21 +23,23 @@
 				<input type="checkbox" asp-for=@Model.NewInvoice.OutStandingWorkItems[i].IsSelected/>
 			</td>
 			<td>
-				<button class="btn btn-delete" 
+				<a class="btn btn-delete" 
 						hx-get="/WorkItems/?handler=Delete&id=@Model.NewInvoice.OutStandingWorkItems[i].Id" 
 						hx-confirm="Are you sure you wish to delete these hours?"
 						hx-target="closest tr"
-						hx-swap="outerHTML"><i data-lucide="trash"></i></button>
+						hx-swap="outerHTML"><i data-lucide="trash"></i></a>
 			</td>
 		</tr>
 			}
 			</tbody>
 	</table>
 
+	<div class="form-group">
 	<label>Select Account</label>
 	<select asp-for="@Model.NewInvoice.SelectedAccountId" asp-items="@Model.NewInvoice.Accounts.ToSelectItemList()"></select>  
+	</div>
 
-	<input class="btn btn-primary" type="submit" value="Save"/>
+	<button class="btn btn-primary" title="Save"><i data-lucide="save"></i></button>
 
 	@Html.AntiForgeryToken()
 </form>
