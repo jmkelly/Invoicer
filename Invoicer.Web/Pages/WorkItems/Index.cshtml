@@ -19,14 +19,15 @@ ViewData["Title"] = "Home page";
 	</form>
 </section>
 <table class="table" id="table">
-  <thead>
-    <th>Client</th>
-    <th>Date</th>
-    <th>Description</th>
-    <th>Hours</th>
-    <th>Rate</th>
-    <th>Amount</th>
-    </thead> 
+	<thead>
+		<th>Client</th>
+		<th>Date</th>
+		<th>Description</th>
+		<th>Hours</th>
+		<th>Rate</th>
+		<th>Amount</th>
+		<th></th>
+	</thead> 
   <tbody>
     @foreach (var item in Model.WorkItems)
     {
@@ -37,6 +38,13 @@ ViewData["Title"] = "Home page";
         <td>@item.Hours</td>
         <td>@item.Rate @item.RateUnits.Humanize()</td>
         <td>$@item.Total()</td>
+        <td>
+			<button class="btn btn-delete" 
+					hx-get="/WorkItems/?handler=Delete&id=@item.Id" 
+					hx-confirm="Are you sure you wish to delete these hours?"
+					hx-target="closest tr"
+					hx-swap="outerHTML"><i data-lucide="trash"></i></button>
+		</td>
       </tr>
     }
   </tbody>
