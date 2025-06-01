@@ -294,8 +294,9 @@ td {
   background-color: #111827;
   border-radius: 0.75rem;
   color: #fff;
-  max-width: 400px;
+  max-width: 720px;
   margin: 2rem auto;
+  font-size: 1rem;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
@@ -311,7 +312,7 @@ td {
 }
 
 .form-group label {
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.5rem;
   font-weight: 500;
 }
 
@@ -319,7 +320,7 @@ td {
 .form-group select {
   width: 100%;
   box-sizing: border-box;
-  padding: 0.5rem 0.75rem;
+  padding: 1rem 1rem;
   border-radius: 4px;
   border: none;
   background-color: #1f2937;
@@ -331,7 +332,10 @@ td {
   border: none;
   color: white;
   border-radius: 0.375rem;
+  background-color: var(--btn-bg);
   cursor: pointer;
+  width: 100%;
   align-self: flex-start;
+  justify-content: center;
 }
 
