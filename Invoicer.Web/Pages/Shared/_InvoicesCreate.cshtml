@@ -1,0 +1,43 @@
+@using Invoicer.Web.Pages.Invoices
+@model Invoicer.Web.Pages.IndexViewModel
+@{
+}
+@if(TempData["errors"] != null) 
+{
+<div class="alert alert-danger">
+	@Html.Raw(TempData.GetErrorsAsHtml())
+</div>
+}
+<form class="form-container" method="post">
+	<table>
+
+		<tbody>
+			@for (int i=0;i < @Model.NewInvoice.OutStandingWorkItems.Count;i++)
+			{
+		<tr>
+			<td>
+				<label>@Model.NewInvoice.OutStandingWorkItems[i].Label()</label>
+			</td>
+			<td>
+				<input hidden asp-for=@Model.NewInvoice.OutStandingWorkItems[i].Id/>  
+				<input type="checkbox" asp-for=@Model.NewInvoice.OutStandingWorkItems[i].IsSelected/>
+			</td>
+			<td>
+				<button class="btn btn-delete" 
+						hx-get="/WorkItems/?handler=Delete&id=@Model.NewInvoice.OutStandingWorkItems[i].Id" 
+						hx-confirm="Are you sure you wish to delete these hours?"
+						hx-target="closest tr"
+						hx-swap="outerHTML"><i data-lucide="trash"></i></button>
+			</td>
+		</tr>
+			}
+			</tbody>
+	</table>
+
+	<label>Select Account</label>
+	<select asp-for="@Model.NewInvoice.SelectedAccountId" asp-items="@Model.NewInvoice.Accounts.ToSelectItemList()"></select>  
+
+	<input class="btn btn-primary" type="submit" value="Save"/>
+
+	@Html.AntiForgeryToken()
+</form>
