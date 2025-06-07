@@ -23,7 +23,10 @@
 			<td title="@invoice.CreatedAt">@invoice.CreatedAt.Humanize()</td>
 			<td>@invoice.InvoiceStatus</td>
 			<td>@invoice.Total().ToString("0.00")</td>
-			<td><a class="btn" asp-page="/Invoices/Details" asp-route-id="@invoice.Id" aria-label="View printable invoice" title="View printable invoice"><i data-lucide="printer"></i></a></td>
+			<td>
+				<a class="btn" asp-page="/Invoices/Edit" asp-route-id="@invoice.Id" aria-label="Edit invoice" title="Edit invoice"><i data-lucide="edit"></i></a>
+				<a class="btn" asp-page="/Invoices/Details" asp-route-id="@invoice.Id" aria-label="View printable invoice" title="View printable invoice"><i data-lucide="printer"></i></a>
+			</td>
 		</tr>
 	}
 </tbody>
