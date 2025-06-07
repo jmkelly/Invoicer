@@ -8,12 +8,15 @@ public class Invoice : Entity
 {
 	public Invoice()
 	{
-		WorkItems = new List<WorkItem>();
+		WorkItems = [];
+		CreatedAt = DateTime.UtcNow;
+		InvoiceDate = DateTime.UtcNow;
 	}
 	public List<WorkItem> WorkItems { get; set; }
 	public required string InvoiceCode { get; set; }
 	public required Client Client { get; set; }
 	public required DateTime CreatedAt { get; set; }
+	public required DateTime InvoiceDate { get; set; }
 	public DateTime UpddatedAt { get; set; }
 
 	public required InvoiceStatus InvoiceStatus { get; set; }

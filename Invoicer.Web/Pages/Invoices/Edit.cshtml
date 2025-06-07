@@ -1,0 +1,46 @@
+﻿@page
+@model Invoicer.Web.Pages.Invoices.EditModel
+@{
+}
+
+
+<form class="form-container" method="post">
+	<h2>Edit Invoice</h2>
+	<div class="form-group">
+		<label class="form-label" for="invoiceCodeInput">Invoice Code</label>
+		<input type="text" class="form-control" disabled id="invoiceCodeInput" value="@Model.Invoice.InvoiceCode" />
+	</div>
+	<div class="form-group">
+		<label for="invoiceTotalInput" class="form-label">Total</label>
+		<input type="text" class="form-control" disabled id="invoiceTotalInput" value="$@Model.Invoice.Total"/>
+	</div>
+	<div class="form-group">
+		<label for="clientNameInput">Client</label>
+		<input type="text" class="form-control" disabled id="clientNameInput" value="@Model.Invoice.Client.Name"/>
+	</div>
+	<div class="form-group">
+		<label class="form-label" for="createdAtInput">Invoice Date</label>
+		<input type="date" class="form-control" asp-for="@Model.Invoice.InvoiceDate"/>
+	</div>
+	<div class="form-group">
+		<label class="form-label" for="statusInput">Status</label>
+		<select asp-for="@Model.Invoice.InvoiceStatus" asp-items="@Model.Invoice.Statuses"></select>
+	</div>
+	<div class="form-group">
+		@foreach (var item in Model.Invoice.Hours)
+		{
+		<div class="column">
+			<label class="form-label" for="hours">Hours</label>
+			<input type="text" class="form-control" asp-for="@item.Hours"/>
+			<label class="form-label" for="description">Description</label>
+			<input type="text" class="form-control" asp-for="@item.Description"/>
+			<input type="hidden" asp-for="@item.Id"/>
+		</div>
+		}
+	</div>
+	<input type="hidden" asp-for="@Model.Invoice.Id"/>
+	<div class="form-group">
+		<button class="btn btn-danger" type="submit"><i data-lucide="save"></i></button>
+		<a asp-page="./Index" class="btn">Back</a>
+	</div>
+</form>

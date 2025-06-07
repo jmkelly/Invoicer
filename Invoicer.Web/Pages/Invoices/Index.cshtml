@@ -1,4 +1,5 @@
 ﻿@page
+@using Humanizer
 @model Invoicer.Web.Pages.Invoices.IndexViewModel
 @{
 }
@@ -27,10 +28,12 @@
                 <td>@invoice.InvoiceCode</td>
                 <td>@invoice.Total</td>
                 <td>@invoice.Client.Name</td>
-                <td>@invoice.CreatedAt.ToShortDateString()</td>
+                <td>@invoice.CreatedAt.Humanize()</td>
+                <td>@invoice.InvoiceDate.ToShortDateString()</td>
                 <td>@invoice.InvoiceStatus</td>
                 <td>@invoice.AccountLabel</td>
                 <td>
+                    <a class="btn" asp-page="./Edit" asp-route-id="@invoice.Id"><i data-lucide="edit"></i></a>
                     <a class="btn" asp-page="./Details" asp-route-id="@invoice.Id"><i data-lucide="printer"></i></a>
                     <a class="btn btn-delete" asp-page="./Delete" asp-route-id="@invoice.Id"><i data-lucide="trash"></i></a>
                 </td>

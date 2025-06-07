@@ -47,6 +47,7 @@ namespace Invoicer.Web.Pages.Invoices
 				Client = entity.Client.Adapt<ClientIndexModel>(),
 				Total = entity.Total(),
 				InvoiceStatus = entity.InvoiceStatus,
+				InvoiceDate = entity.InvoiceDate,
 				CreatedAt = entity.CreatedAt
 			};
 			return Page();

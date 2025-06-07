@@ -133,6 +133,7 @@ namespace Invoicer.Web.Pages.Invoices
 				Client = client,
 				Id = NewId.NextSequentialGuid(),
 				CreatedAt = createdAt,
+				InvoiceDate = createdAt,
 				InvoiceStatus = InvoiceStatus.Created,
 				InvoiceCode = Invoice.CreateInvoiceCode(
 					client.Name,
