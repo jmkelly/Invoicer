@@ -3,9 +3,8 @@
 @{
 }
 
-<h2>Edit My Account</h2>
-
-<form method="post">
+<form class="form-container" method="post">
+	<h2>Edit Account</h2>
 	@Html.AntiForgeryToken()
 	<p>@Html.ValidationSummary(false)</p>
 	<div class="form-group">
@@ -70,7 +69,7 @@
 	<hr/>
 	<input type="hidden" asp-for="@Model.Model.Id"/>
 	<div class="form-group">
-		<input class="btn btn-primary" type="submit" value="Edit">
-		<a class="btn btn-secondary"  asp-page="Index">Back</a>
+		<button class="btn btn-primary"><i data-lucide="save"></i></button>
+		<a class="btn"  asp-page="Index">Back</a>
 	</div>
 </form>

@@ -3,9 +3,9 @@
 @{
 }
 
-<h2>Create My Account</h2>
-<p>@Html.ValidationSummary(false)</p>
-<form method="post">
+<form class="form-container" method="post">
+	<h2>Create My Account</h2>
+	<p>@Html.ValidationSummary(false)</p>
 	@Html.AntiForgeryToken()
 	<div class="form-group">
 		<label for="Model_CompanyName">Company Name</label>
@@ -66,9 +66,8 @@
 		<input class="form-control" type="text" asp-for="@Model.Model.PayId">
 		<span asp-validation-for="@Model.Model.PayId" class="text-danger"></span>
 	</div>
-	<hr/>
 	<div class="form-group">
-		<input class="btn btn-primary" type="submit" value="Create">
-		<a class="btn btn-secondary"  asp-page="Index">Back</a>
+		<button class="btn btn-primary"><i data-lucide="save"></i></button>
+		<a class="btn" asp-page="Index">Back</a>
 	</div>
 </form>
