@@ -17,7 +17,7 @@ namespace Invoicer.Web.Pages.Clients
 		public async Task OnGet()
 		{
 			var clients = await context.Clients.ToListAsync();
-			Clients = clients.Adapt<List<ClientIndexModel>>();
+			Clients = clients.Select(c => ClientIndexModel.Create(c)).ToList();
 		}
 	}
 }

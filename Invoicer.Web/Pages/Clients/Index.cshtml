@@ -4,29 +4,29 @@
 }
 
 <section>
-<form>
-		<button class="btn btn-primary" asp-page="Create"><i data-lucide="user-plus"></i>New Client</button>
-</form>
+	<button class="btn btn-primary" asp-page="Create"><i data-lucide="user-plus"></i>New Client</button>
 </section>
 
 
 <table class="table">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Company Name</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var Client in Model.Clients)
-        {
-            <tr>
-                <td>@Client.Name</td>
-                <td>@Client.CompanyName</td>
-                <td>
-                    <a class="btn btn-delete" asp-page="Delete" asp-route-id="@Client.Id"><i data-lucide="trash-2" ></i></a></td>
-            </tr>
-        }
-    </tbody>
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Company Name</th>
+			<th>Address</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var Client in Model.Clients)
+		{
+		<tr>
+			<td>@Client.Name</td>
+			<td>@Client.CompanyName</td>
+			<td><address>@Client.Address</address></td>
+			<td>
+				<a class="btn btn-delete" asp-page="Delete" asp-route-id="@Client.Id"><i data-lucide="trash-2" ></i></a></td>
+		</tr>
+		}
+	</tbody>
 </table>
