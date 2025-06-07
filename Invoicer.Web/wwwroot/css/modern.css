@@ -307,16 +307,32 @@ td {
 
 .form-group {
   display: flex;
-  flex-direction: column;
-  width: 100%;
+  /* flex-direction: column; */
+  /* width: 100%; */
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
 }
 
 .form-group label {
-  margin-bottom: 0.5rem;
+  /* margin-bottom: 0.5rem; */
   font-weight: 500;
 }
 
-.form-group input,
+
+.form-group input[type="checkbox"] {
+  margin: 0;
+  width: auto;
+}
+
+.form-group .text-danger {
+  flex-basis: 100%;
+  margin-top: 0.25rem;
+}
+
+.form-group input:not([type="checkbox"]):not([type="radio"]),
 .form-group select {
   width: 100%;
   box-sizing: border-box;
