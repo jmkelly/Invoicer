@@ -13,6 +13,7 @@ public class WorkItem : Entity
     public decimal Rate { get; set; }
     public RateUnits RateUnits { get; set; }
     public Guid ClientId { get; set; }
+    public DateTime DateRecorded { get; set; }
     public Client? Client { get; set; }
     public decimal Total()
     {
