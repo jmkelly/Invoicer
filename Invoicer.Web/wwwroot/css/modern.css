@@ -166,8 +166,8 @@ header {
 
 /* Toggle bar (thin strip) when sidebar is closed) */
 .sidebar-toggle-bar {
-	background-color: #ddd;
 	padding-right: 0.5rem;
+	padding-left: 0.5rem;
 	background: var(--sidebar-bg);
 	border-right: 1px solid var(--table-border);
 	cursor: pointer;
