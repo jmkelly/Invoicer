@@ -33,8 +33,6 @@ namespace Invoicer.Web.Pages.Clients
 				clients = [.. clients.Where(c => c.SearchString.Contains(Search, StringComparison.InvariantCultureIgnoreCase))];
 			}
 
-			var isHtmx = HttpContext.Request.IsHtmx();
-
 			Clients = clients.Select(ClientIndexModel.Create).ToList();
 
 			return Request.IsHtmx()
