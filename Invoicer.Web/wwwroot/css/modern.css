@@ -5,6 +5,7 @@
 	--link-hover: #1d4ed8;
 	--header-bg: #ffffff;
 	--sidebar-bg: #ffffff;
+	--input-bg: #ffffff;
 	--table-header-bg: #f3f4f6;
 	--table-border: #e5e7eb;
 	--footer-bg: #ffffff;
@@ -23,6 +24,7 @@
 		--link-hover: #3b82f6;
 		--header-bg: #1f2937;
 		--sidebar-bg: #1f2937;
+		--input-bg: #1f2937;
 		--table-header-bg: #374151;
 		--table-border: #4b5563;
 		--footer-bg: #1f2937;
@@ -336,9 +338,9 @@ td {
   flex-direction: column;
   gap: 1rem;
   padding: 1.5rem;
-  background-color: #111827;
+  background: var(--bg-color);
   border-radius: 0.75rem;
-  color: #fff;
+  color: var(--text-color);
   max-width: 720px;
   margin: 2rem auto;
   font-size: 1rem;
@@ -384,8 +386,8 @@ td {
   padding: 1rem 1rem;
   border-radius: 4px;
   border: none;
-  background-color: #1f2937;
-  color: #fff;
+  background-color: var(--input-bg);
+  color: var(--text-color);
 }
 
 .form-container button {
