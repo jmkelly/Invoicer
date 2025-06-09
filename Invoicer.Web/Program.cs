@@ -24,9 +24,25 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 builder.Services.AddRazorPages();
 
 builder.Services.AddScoped<IInvoiceRepository, InvoiceRepository>();
-
+builder.Services.AddScoped<DatabaseSeeder>();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+	var services = scope.ServiceProvider;
+	try
+	{
+		var seeder = services.GetRequiredService<DatabaseSeeder>();
+		await seeder.SeedDataAsync();
+	}
+	catch (Exception ex)
+	{
+		var logger = services.GetRequiredService<ILogger<Program>>();
+		logger.LogError(ex, "An error occurred during database seeding.");
+		// Consider graceful shutdown or specific error handling here
+	}
+}
 
 
 
