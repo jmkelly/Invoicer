@@ -1,0 +1,23 @@
+@model Pages.Clients.IndexModel
+
+@{
+	int end = 0;
+	foreach (var Client in Model.Clients)
+	{
+	end++;
+	if (end == Model.Clients.Count) {
+	@:<tr hx-get="Clients?pageNum=@(Model.PageNum+1)&pageSize=@Model.PageSize"
+		@:hx-trigger="revealed"
+		@:hx-swap="afterend">
+		} else {
+			@:<tr>
+		}
+		<td>@Client.Name</td>
+		<td>@Client.CompanyName</td>
+		<td><address>@Client.Address</address></td>
+		<td>
+			<a class="btn btn-delete" asp-page="Delete" asp-route-id="@Client.Id"><i data-lucide="trash-2" ></i></a>
+		</td>
+		@:</tr>
+	}
+}
