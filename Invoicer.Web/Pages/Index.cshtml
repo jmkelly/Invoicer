@@ -4,19 +4,15 @@
 @{
 ViewData["Title"] = "Home page";
 }
-
-
-<div class="flex-container">
-	<div class="column">
-		<h2>Step 1. Record Hours</h2>
-		<partial name="_WorkItemsCreate" model="Model.IndexViewModel">
-	</div>
-	<div class="column">
-		<h2>Step 2. Create an Invoice</h2>
-		<partial name="_InvoicesCreate" model="Model.IndexViewModel">
-	</div>
-	<div class="column">
-		<h2>Step 3. Print and Track</h2>
-		<partial name="_InvoicesTable" model="Model.IndexViewModel"> 
-	</div>
+<div class="column">
+	<h2>Step 1. Record Hours</h2>
+	<partial name="_WorkItemsCreate" model="Model.IndexViewModel">
+</div>
+<div class="column">
+	<h2>Step 2. Create an Invoice</h2>
+	<partial name="_InvoicesCreate" model="Model.IndexViewModel">
+</div>
+<div class="column">
+	<h2>Step 3. Print and Track</h2>
+	<partial name="_InvoicesTable" model="Model.IndexViewModel"> 
 </div>
