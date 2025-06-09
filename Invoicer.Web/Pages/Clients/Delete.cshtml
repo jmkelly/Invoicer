@@ -14,9 +14,8 @@
     <label for="Model_CompanyName">Company Name</label>
     <input class="form-control" type="text" asp-for="@Model.Model.CompanyName" />
   </div>
-  <hr/>
   <div class="form-group">
-    <input class="btn btn-danger" type="submit" value="Delete">
+	<button class="btn btn-primary">Delete <i data-lucide="trash-2"></i></button>
     <a class="btn btn-secondary"  asp-page="Index">Back</a>
   </div>
   @Html.AntiForgeryToken()
