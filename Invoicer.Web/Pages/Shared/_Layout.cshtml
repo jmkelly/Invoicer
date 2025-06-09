@@ -6,6 +6,7 @@
 		<title>Invoicer</title>
 		<link rel="stylesheet" href="/css/modern.css" />
 		<script src="https://unpkg.com/htmx.org@2.0.4" integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+" crossorigin="anonymous"></script>
+		<script src="https://unpkg.com/hyperscript.org@0.9.14"></script>
 	</head>
 	<body>
 		<header class="header">
@@ -19,12 +20,18 @@
 		</header>
 
 		<div class="layout">
+
 			<aside class="sidebar">
 				<partial name = "_Navigation"/>
 			</aside>
+			<div class="sidebar-toggle-bar" _="on click toggle .sidebar-hidden on .sidebar">
+				<button class="open-button">☰</button>
+			</div>
 
 			<main class="main">
-				@RenderBody()
+				<div class="flex-container">
+					@RenderBody()
+				</div>
 			</main>
 		</div>
 
