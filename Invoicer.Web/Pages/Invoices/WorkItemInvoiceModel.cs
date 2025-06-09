@@ -10,7 +10,7 @@ namespace Invoicer.Web.Pages.Invoices
 
 		public string Label()
 		{
-			return $"{ClientName} - {Description} (${Total})";
+			return $"{ClientName} - {Description} (${Total:F2})";
 		}
 
 		public bool IsSelected { get; set; }

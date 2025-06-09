@@ -13,7 +13,7 @@
 	<tr>
 		<td>@workItem.Client.Name</td>
 		<td>@workItem.Description</td>
-		<td>@workItem.Total().ToString("0.00")</td>
+		<td>@($"{workItem.Total():F2}")</td>
 		<td><a class="btn" asp-page="/Invoices/Create" aria-label="Create new invoice" title="Create new invoice"><i data-lucide="file-plus-2"></i></a></td>
 	</tr>
 	}
