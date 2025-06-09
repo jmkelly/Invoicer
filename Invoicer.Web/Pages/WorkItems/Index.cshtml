@@ -7,7 +7,6 @@ ViewData["Title"] = "Home page";
 
 
 
-<section>
 	<form class="inline-button-bar">
 	<button class="btn btn-primary" asp-page="/WorkItems/Create" title="Log Hours" aria-label="Log Hours">
 		<i data-lucide="clock"></i>
@@ -17,7 +16,7 @@ ViewData["Title"] = "Home page";
 		<span>Create Invoice</span>
 	</button>
 	</form>
-</section>
+<h1>ADD SEARCH HERE</h1>
 <table class="table" id="table">
 	<thead>
 		<th>Client</th>
@@ -36,8 +35,8 @@ ViewData["Title"] = "Home page";
         <td>@item.Date</td>
         <td>@item.Description</td>
         <td>@item.Hours</td>
-        <td>@item.Rate @item.RateUnits.Humanize()</td>
-        <td>$@item.Total()</td>
+        <td>$@item.Rate @item.RateUnits.Humanize()</td>
+		<td>@($"${item.Total():F2}")</td>
         <td>
 			<button class="btn btn-delete" 
 					hx-get="/WorkItems/?handler=Delete&id=@item.Id" 
