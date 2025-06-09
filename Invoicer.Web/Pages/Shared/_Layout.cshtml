@@ -40,8 +40,14 @@
 		</footer>
 		<script src="https://unpkg.com/lucide@latest"></script>
 		<script>
-		lucide.createIcons();
+			lucide.createIcons();
 		</script>
+		<script>
+		  document.body.addEventListener('htmx:afterSwap', function(event) {
+			// Re-render Lucide icons in newly swapped content
+			lucide.createIcons();
+		  });
+</script>
 		@RenderSection("scripts", false)
 	</body>
 </html>
