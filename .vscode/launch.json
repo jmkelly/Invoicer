@@ -10,7 +10,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/Invoicer.Web/bin/Debug/net7.0/Invoicer.Web.dll",
+            "program": "${workspaceFolder}/Invoicer.Web/bin/Debug/net8.0/Invoicer.Web.dll",
             "args": [],
             "cwd": "${workspaceFolder}/Invoicer.Web",
             "stopAtEntry": false,
