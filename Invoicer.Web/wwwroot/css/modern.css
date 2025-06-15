@@ -390,6 +390,10 @@ td {
   color: var(--text-color);
 }
 
+.form-group inline {
+  gap: 0.5rem;
+}
+
 .form-container button {
   padding: 0.6rem 1.2rem;
   border: none;
