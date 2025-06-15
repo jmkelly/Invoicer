@@ -1,0 +1,31 @@
+@model Pages.WorkItems.IndexModel
+@using Humanizer;
+
+@{
+	int end = 0;
+	foreach (var item in Model.Hours)
+	{
+	end++;
+	if (end == Model.Hours.Count) {
+	@:<tr hx-get="WorkItems?pageNum=@(Model.PageNum+1)&pageSize=@Model.PageSize&search=@Model.Search"
+		@:hx-trigger="revealed"
+		@:hx-swap="afterend">
+		} else {
+			@:<tr>
+		}
+			<td>@item.Client.Name</td>
+			<td>@item.Date</td>
+			<td>@item.Description</td>
+			<td>@item.Hours</td>
+			<td>$@item.Rate @item.RateUnits.Humanize()</td>
+			<td>@($"${item.Total():F2}")</td>
+			<td>
+				<button class="btn btn-delete" 
+					hx-get="/WorkItems/?handler=Delete&id=@item.Id" 
+					hx-confirm="Are you sure you wish to delete these hours?"
+					hx-target="closest tr"
+					hx-swap="outerHTML"><i data-lucide="trash"></i></button>
+			</td>
+		@:</tr>
+	}
+}

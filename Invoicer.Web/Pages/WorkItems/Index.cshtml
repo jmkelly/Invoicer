@@ -7,16 +7,22 @@ ViewData["Title"] = "Home page";
 
 
 
-	<form class="inline-button-bar">
+<form class="inline-button-bar">
+	<div class="form-group inline">
 	<button class="btn btn-primary" asp-page="/WorkItems/Create" title="Log Hours" aria-label="Log Hours">
 		<i data-lucide="clock"></i>
 		<span>Log Hours</span>
 	</button>
+	</div>
+	<div class="form-group inline">
 	<button class="btn btn-primary" asp-page="/Invoices/Create" aria-label="Create new invoice" title="Create new invoice"><i data-lucide="file-plus-2"></i>
 		<span>Create Invoice</span>
 	</button>
-	</form>
-<h1>ADD SEARCH HERE</h1>
+	</div>
+	<div class="form-group inline">
+		<partial name="_WorkItemsSearch" model="Model"/>
+	</div>
+</form>
 <table class="table" id="table">
 	<thead>
 		<th>Client</th>
@@ -27,24 +33,7 @@ ViewData["Title"] = "Home page";
 		<th>Amount</th>
 		<th></th>
 	</thead> 
-  <tbody>
-    @foreach (var item in Model.WorkItems)
-    {
-      <tr>
-        <td>@item.Client.Name</td>
-        <td>@item.Date</td>
-        <td>@item.Description</td>
-        <td>@item.Hours</td>
-        <td>$@item.Rate @item.RateUnits.Humanize()</td>
-		<td>@($"${item.Total():F2}")</td>
-        <td>
-			<button class="btn btn-delete" 
-					hx-get="/WorkItems/?handler=Delete&id=@item.Id" 
-					hx-confirm="Are you sure you wish to delete these hours?"
-					hx-target="closest tr"
-					hx-swap="outerHTML"><i data-lucide="trash"></i></button>
-		</td>
-      </tr>
-    }
-  </tbody>
+	<tbody>
+		<partial name="_WorkItemsRows" model="Model"/>
+	</tbody>
 </table>

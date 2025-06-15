@@ -1,0 +1,6 @@
+@model Invoicer.Web.Pages.WorkItems.IndexModel
+
+		<input type="text" name="Search" class="form-control" placeholder="Search Work Items" asp-for="@Model.Search"
+			hx-get="WorkItems?pageNum=@Model.PageNum&pageSize=@Model.PageSize"
+			hx-trigger="input changed delay:200ms, keyup[key=='Enter'], load"
+			hx-target="next tbody">
