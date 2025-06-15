@@ -3,11 +3,13 @@
 @{
 }
 
-<form method="get">
-	<button class="btn btn-primary" asp-page="Create"><i data-lucide="user-plus"></i>New Client</button>
+<form method="get" class="inline-button-bar">
+	<div class="form-group inline">
+		<button class="btn btn-primary" asp-page="Create"><i data-lucide="user-plus"></i>New Client</button>
+	</div>
+		<partial name="_ClientSearchPartial" model="Model"/>
 </form>
 
-<partial name="_ClientSearchPartial" model="Model"/>
 
 <table class="table">
 	<thead>
