@@ -1,37 +1,19 @@
 ﻿using Htmx;
 using Mapster;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
 namespace Invoicer.Web.Pages.WorkItems;
 
-public class IndexModel : PageModel
+public class IndexModel(ILogger<IndexModel> logger, DataContext context) : PagedModel
 {
-	private readonly ILogger<IndexModel> _logger;
-	private readonly DataContext context;
-
-	public IndexModel(ILogger<IndexModel> logger, DataContext context)
-	{
-		_logger = logger;
-		this.context = context;
-	}
+	private readonly DataContext context = context;
 
 	public required List<WorkItemIndexModel> Hours { get; set; }
 
-	[BindProperty(SupportsGet = true)]
-	public string Search { get; set; }
-
-	public int PageNum { get; set; } = 1;
-	public int PageSize { get; set; } = 20;
-
-
 	public async Task<IActionResult> OnGet(string? search, int? pageNum, int? pageSize)
 	{
-		PageSize = pageSize ?? 20;
-		PageNum = pageNum ?? 1;
-		var skip = (PageNum - 1) * PageSize;
-		Search = search ?? string.Empty;
+		SetPaging(search, pageNum, pageSize);
 
 		var hours = context.WorkItems.Include(w => w.Client).AsQueryable();
 
@@ -45,7 +27,7 @@ public class IndexModel : PageModel
 				);
 		}
 
-		var hoursPaged = await hours.OrderBy(c => c.Date).Skip(skip).Take(PageSize).ToListAsync();
+		var hoursPaged = await hours.OrderBy(c => c.Date).Skip(Skip).Take(PageSize).ToListAsync();
 
 		Hours = hoursPaged.Adapt<List<WorkItemIndexModel>>();
 
