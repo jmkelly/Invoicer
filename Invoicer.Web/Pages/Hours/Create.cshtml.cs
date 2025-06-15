@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Invoicer.Web.Extensions;
 
-namespace Invoicer.Web.Pages.WorkItems;
+namespace Invoicer.Web.Pages.Hours;
 
 public class Create : PageModel
 {
@@ -22,18 +22,11 @@ public class Create : PageModel
 	public Guid ClientId { get; set; }
 
 	[BindProperty]
-	public required CreateWorkItemModel Model { get; set; }
+	public required CreateHoursModel Model { get; set; }
 
-	//public required List<SelectListItem> Options { get; set; }
 	public async Task OnGet()
 	{
-		logger.LogInformation("getting clients");
 		var clients = await context.Clients.ToListAsync();
-		// Options = clients.Select(c => new SelectListItem
-		// {
-		// 	Value = c.Id.ToString(),
-		// 	Text = c.Name
-		// }).ToList();
 		Model.Clients = clients;
 
 	}
@@ -49,10 +42,10 @@ public class Create : PageModel
 
 		//convert the work
 		logger.LogInformation("converting {@}", Model);
-		var item = Model.Adapt<WorkItem>();
+		var item = Model.Adapt<Entities.Hours>();
 		item.Id = NewId.NextSequentialGuid();
 		logger.LogInformation("item {@}", item);
-		context.WorkItems.Add(item);
+		context.Hours.Add(item);
 
 		await context.SaveChangesAsync();
 

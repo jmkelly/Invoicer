@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using Invoicer.Web.Pages.WorkItems;
+using Invoicer.Web.Pages.Hours;
 
 namespace Invoicer.Web.Pages.Invoices
 {
@@ -17,7 +17,7 @@ namespace Invoicer.Web.Pages.Invoices
 		public async Task<Invoice> Get(Guid id)
 		{
 			return await context.Invoices
-							.Include(wi => wi.WorkItems)
+							.Include(wi => wi.Hours)
 							.FirstAsync(i => i.Id == id);
 		}
 
@@ -30,7 +30,7 @@ namespace Invoicer.Web.Pages.Invoices
 				logger.LogWarning("invoice id {id} does not exists", id);
 				return;
 			}
-			invoice.WorkItems = new List<WorkItem>();
+			invoice.Hours = new List<Entities.Hours>();
 			context.Remove(invoice);
 		}
 		public async Task SaveChangesAsync()

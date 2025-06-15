@@ -2,7 +2,6 @@ using Mapster;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
-using Invoicer.Web.Pages.WorkItems;
 
 namespace Invoicer.Web.Pages.Invoices
 {
@@ -14,7 +13,7 @@ namespace Invoicer.Web.Pages.Invoices
 		public required DateTime CreatedAt { get; set; }
 		public required InvoiceStatus InvoiceStatus { get; set; }
 		public required decimal Total { get; set; }
-		public required List<WorkItem> WorkItems { get; set; }
+		public required List<Entities.Hours> Hours { get; set; }
 		public required MyAccount.MyAccount Account { get; set; }
 	}
 
@@ -34,7 +33,7 @@ namespace Invoicer.Web.Pages.Invoices
 		{
 			var entity = await context.Invoices
 							.Include(i => i.Client)
-							.Include(i => i.WorkItems)
+							.Include(i => i.Hours)
 							.Include(i => i.Account)
 							.FirstOrDefaultAsync(i => i.Id == id);
 
@@ -51,7 +50,7 @@ namespace Invoicer.Web.Pages.Invoices
 				Total = entity.Total(),
 				InvoiceStatus = entity.InvoiceStatus,
 				CreatedAt = entity.CreatedAt,
-				WorkItems = entity.WorkItems,
+				Hours = entity.Hours,
 				Account = entity.Account
 			};
 			return Page();

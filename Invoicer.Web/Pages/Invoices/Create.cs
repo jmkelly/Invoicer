@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Invoicer.Web.Extensions;
-using Invoicer.Web.Pages.WorkItems;
+using Invoicer.Web.Pages.Hours;
 
 namespace Invoicer.Web.Pages.Invoices
 {
@@ -23,7 +23,7 @@ namespace Invoicer.Web.Pages.Invoices
 
 		[BindProperty]
 
-		public required List<WorkItemInvoiceModel> OutStandingWorkItems { get; set; }
+		public required List<InvoiceHoursModel> OutStandingHours { get; set; }
 
 		public required List<SelectListItem> Accounts { get; set; }
 
@@ -32,13 +32,13 @@ namespace Invoicer.Web.Pages.Invoices
 
 		public async Task<IActionResult> OnGet()
 		{
-			var outStandingWorkItems = await context.WorkItems
+			var outStandingHours = await context.Hours
 			.Include(c => c.Client)
 			.Where(c => c.Invoice == null).ToListAsync();
 
-			logger.LogInformation("outstanding work items {OutStandingWorkItems}", outStandingWorkItems.Count);
+			logger.LogInformation("outstanding work items {OutStandingHours}", outStandingHours.Count);
 
-			OutStandingWorkItems = outStandingWorkItems.Select(o => new WorkItemInvoiceModel
+			OutStandingHours = outStandingHours.Select(o => new InvoiceHoursModel
 			{
 				Id = o.Id,
 				Description = o.Description,
@@ -59,9 +59,9 @@ namespace Invoicer.Web.Pages.Invoices
 		public async Task<IActionResult> OnPost()
 		{
 			//log stuff
-			logger.LogInformation("outstanding work items {@outstandingWorkItems}", OutStandingWorkItems);
+			logger.LogInformation("outstanding work items {@outstandingHours}", OutStandingHours);
 			logger.LogInformation("post data {@form}", this.Request.Form);
-			var workItems = OutStandingWorkItems.Where(w => w.IsSelected).Select(c => new WorkItemAddModel { Id = c.Id }).ToList();
+			var hours = OutStandingHours.Where(w => w.IsSelected).Select(c => new HoursAddModel { Id = c.Id }).ToList();
 			logger.LogInformation("getting into post");
 			if (!ModelState.IsValid)
 			{
@@ -73,7 +73,7 @@ namespace Invoicer.Web.Pages.Invoices
 				return await OnGet();
 			}
 
-			if (workItems == null || !workItems.Any())
+			if (hours == null || !hours.Any())
 			{
 
 				logger.LogWarning("no workitem selected");
@@ -81,24 +81,24 @@ namespace Invoicer.Web.Pages.Invoices
 				return RedirectToPage("Create");
 			}
 
-			logger.LogInformation("works items selected {@workItems}", workItems.ToJson());
+			logger.LogInformation("works items selected {@hours}", hours.ToJson());
 
 			//brute force this, refactor to linq later for some reason I couldn't get the commented very below to work
-			//var selectedWorkItems = await context.WorkItems.Where(c => workItems.All(w => w.Id == c.Id)).ToListAsync();
+			//var selectedHours = await context.Hours.Where(c => hours.All(w => w.Id == c.Id)).ToListAsync();
 			//
-			var allworkItems = await context.WorkItems
+			var allhours = await context.Hours
 			.Include(c => c.Client)
 			.Where(c => c.Invoice == null).ToListAsync();
 
-			logger.LogInformation("got {count} workitems", allworkItems.Count());
+			logger.LogInformation("got {count} workitems", allhours.Count());
 
-			List<WorkItem> selectedWorkItems = (from i in workItems
-												let wi = allworkItems.FirstOrDefault(w => w.Id == i.Id)
-												where wi != null
-												select wi).ToList();
-			logger.LogInformation("got {count} selected work items", selectedWorkItems.Count());
+			List<Entities.Hours> selectedHours = (from i in hours
+												  let wi = allhours.FirstOrDefault(w => w.Id == i.Id)
+												  where wi != null
+												  select wi).ToList();
+			logger.LogInformation("got {count} selected work items", selectedHours.Count());
 			//check that there are not muliple clients because an invoice can only apply to one client
-			var clientIds = selectedWorkItems.Select(c => c.ClientId).Distinct().ToList();
+			var clientIds = selectedHours.Select(c => c.ClientId).Distinct().ToList();
 			if (clientIds.Count() > 1)
 			{
 				logger.LogWarning("muliple client ids selected for invoice.  ClientIds of {clientIds}", string.Join(',', clientIds));
@@ -142,11 +142,11 @@ namespace Invoicer.Web.Pages.Invoices
 				Account = account
 			};
 
-			foreach (var wi in selectedWorkItems)
+			foreach (var wi in selectedHours)
 			{
 				//add work to invoice
 				//get the work item from the db
-				var result = invoice.AddWorkItem(wi);
+				var result = invoice.AddHours(wi);
 				if (!result.IsSuccess)
 				{
 					TempData.Add("error", result.Error);

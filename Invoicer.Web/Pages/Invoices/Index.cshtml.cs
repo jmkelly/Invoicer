@@ -37,7 +37,7 @@ namespace Invoicer.Web.Pages.Invoices
 		{
 			var entities = await context.Invoices
 							.Include(i => i.Client)
-							.Include(i => i.WorkItems)
+							.Include(i => i.Hours)
 							.Include(i => i.Account)
 							.ToListAsync();
 

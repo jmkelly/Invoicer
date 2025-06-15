@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Invoicer.Web.Pages.Clients.Models;
 
-namespace Invoicer.Web.Pages.WorkItems;
+namespace Invoicer.Web.Pages.Hours;
 
-public static class CreateWorkItemModelExtensions
+public static class CreateHoursModelExtensions
 {
 	public static List<SelectListItem> ToSelectListItem(this List<Client> clients)
 	{

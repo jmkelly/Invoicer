@@ -1,35 +1,32 @@
-@using Invoicer.Web.Pages.WorkItems
+@using Invoicer.Web.Pages.Hours
 @model Invoicer.Web.Pages.IndexViewModel
-
-@{
-}
 
 <form class="form-container" method="post" asp-page-handler="AddHours">
 	<div class="form-group">
 		<label for="Model_date">Date</label>
-		<input class="" type="date" asp-for="@Model.NewWorkItem.Date" />
+		<input class="" type="date" asp-for="@Model.NewHours.Date" />
 	</div>
 	<div class="form-group">
 		<label for="Model_Description">Description</label>
-		<input class="" type="text" asp-for="@Model.NewWorkItem.Description"/>
+		<input class="" type="text" asp-for="@Model.NewHours.Description"/>
 	</div>
 	<div class="form-group">
 		<label for="Model_Clients">Client</label>
-		<select class="" asp-for="@Model.NewWorkItem.ClientId" asp-items="@Model.NewWorkItem.Clients.ToSelectListItem()"></select>
+		<select class="" asp-for="@Model.NewHours.ClientId" asp-items="@Model.NewHours.Clients.ToSelectListItem()"></select>
 	</div>
 	<div class="form-group">
 		<label for="Model_rate">Rate Units</label>
 		<select class="" 
-			asp-for="@Model.NewWorkItem.RateUnits" 
+			asp-for="@Model.NewHours.RateUnits" 
 			asp-items="Html.GetEnumSelectList<RateUnits>()"></select>
 	</div>
 	<div class="form-group">
 		<label for="Model_Rate">Rate</label>
-		<input class="" type="text" asp-for="@Model.NewWorkItem.Rate"/>
+		<input class="" type="text" asp-for="@Model.NewHours.Rate"/>
 	</div>
 	<div class="form-group">
 		<label for="Model_hours">Hours</label>
-		<input class="" type="text" asp-for="@Model.NewWorkItem.Hours"/>
+		<input class="" type="text" asp-for="@Model.NewHours.NumberOfHours"/>
 	</div>
 	<div class="form-group">
 		<button class="btn btn-primary" title="Save"><i data-lucide="save"></i></button>

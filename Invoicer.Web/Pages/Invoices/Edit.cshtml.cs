@@ -30,7 +30,7 @@ namespace Invoicer.Web.Pages.Invoices
 			//remove all the work items
 			var invoice = await context.Invoices
 							.Include(i => i.Client)
-							.Include(i => i.WorkItems)
+							.Include(i => i.Hours)
 							.FirstOrDefaultAsync(i => i.Id == id);
 
 			if (invoice == null)
@@ -40,10 +40,10 @@ namespace Invoicer.Web.Pages.Invoices
 
 			invoice.InvoiceStatus = Invoice.InvoiceStatus;
 			invoice.InvoiceDate = Invoice.InvoiceDate;
-			foreach (var wi in invoice.WorkItems)
+			foreach (var wi in invoice.Hours)
 			{
 				wi.Description = Invoice.Hours.First(h => h.Id == wi.Id).Description;
-				wi.Hours = Invoice.Hours.First(h => h.Id == wi.Id).Hours;
+				wi.NumberOfHours = Invoice.Hours.First(h => h.Id == wi.Id).NumberOfHours;
 			}
 
 			await context.SaveChangesAsync();
@@ -56,7 +56,7 @@ namespace Invoicer.Web.Pages.Invoices
 		{
 			var entity = await context.Invoices
 							.Include(i => i.Client)
-							.Include(i => i.WorkItems)
+							.Include(i => i.Hours)
 							.FirstOrDefaultAsync(i => i.Id == id);
 
 			if (entity == null)
@@ -74,7 +74,7 @@ namespace Invoicer.Web.Pages.Invoices
 				Statuses = EnumHelper.ToSelectList<InvoiceStatus>(),
 				CreatedAt = entity.CreatedAt,
 				InvoiceDate = entity.InvoiceDate,
-				Hours = [.. entity.WorkItems]
+				Hours = [.. entity.Hours]
 			};
 			return Page();
 		}

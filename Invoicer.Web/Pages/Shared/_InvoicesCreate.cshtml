@@ -12,19 +12,19 @@
 	<table>
 
 		<tbody>
-			@for (int i=0;i < @Model.NewInvoice.OutStandingWorkItems.Count;i++)
+			@for (int i=0;i < @Model.NewInvoice.OutStandingHours.Count;i++)
 			{
 		<tr>
 			<td>
-				<label>@Model.NewInvoice.OutStandingWorkItems[i].Label()</label>
+				<label>@Model.NewInvoice.OutStandingHours[i].Label()</label>
 			</td>
 			<td>
-				<input hidden asp-for=@Model.NewInvoice.OutStandingWorkItems[i].Id/>  
-				<input type="checkbox" asp-for=@Model.NewInvoice.OutStandingWorkItems[i].IsSelected/>
+				<input hidden asp-for=@Model.NewInvoice.OutStandingHours[i].Id/>  
+				<input type="checkbox" asp-for=@Model.NewInvoice.OutStandingHours[i].IsSelected/>
 			</td>
 			<td>
 				<a class="btn btn-delete" 
-						hx-get="/WorkItems/?handler=Delete&id=@Model.NewInvoice.OutStandingWorkItems[i].Id" 
+						hx-get="/Hours/?handler=Delete&id=@Model.NewInvoice.OutStandingHours[i].Id" 
 						hx-confirm="Are you sure you wish to delete these hours?"
 						hx-target="closest tr"
 						hx-swap="outerHTML"><i data-lucide="trash"></i></a>

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Invoicer.Web.Pages.WorkItems;
+using Invoicer.Web.Pages.Hours;
 using Invoicer.Web.Pages.Invoices;
 using Microsoft.AspNetCore.Mvc;
 using Invoicer.Web.Extensions;
@@ -29,10 +29,10 @@ public class IndexModel : PageModel
 			.Invoices
 			.Include(c => c.Client)
 			.Include(c => c.Account)
-			.Include(c => c.WorkItems)
+			.Include(c => c.Hours)
 			.ToListAsync();
 
-		var workItems = (await context.WorkItems
+		var workItems = (await context.Hours
 			.Include(c => c.Client)
 			.Include(c => c.Invoice)
 			.ToListAsync())
@@ -41,10 +41,10 @@ public class IndexModel : PageModel
 
 		var clients = await context.Clients.ToListAsync();
 
-		var wi = new CreateWorkItemModel
+		var wi = new CreateHoursModel
 		{
 			Date = DateOnly.FromDateTime(DateTime.Now),
-			Hours = 0,
+			NumberOfHours = 0,
 			Description = string.Empty,
 			Rate = 0,
 			ClientId = default,
@@ -53,11 +53,11 @@ public class IndexModel : PageModel
 		};
 
 
-		var outStandingWorkItems = await context.WorkItems
+		var outStandingHours = await context.Hours
 			.Include(c => c.Client)
 			.Where(c => c.Invoice == null).ToListAsync();
 
-		var OutStandingWorkItems = outStandingWorkItems.Select(o => new WorkItemInvoiceModel
+		var OutStandingHours = outStandingHours.Select(o => new InvoiceHoursModel
 		{
 			Id = o.Id,
 			Description = o.Description,
@@ -71,15 +71,15 @@ public class IndexModel : PageModel
 		{
 			ClientId = default,
 			Accounts = (await context.MyAccounts.ToListAsync()),
-			OutStandingWorkItems = OutStandingWorkItems,
-			SelectedWorkItems = []
+			OutStandingHours = OutStandingHours,
+			SelectedHours = []
 		};
 
 		var model = new IndexViewModel
 		{
 			Invoices = invoices,
-			OutstandingWorkItems = workItems,
-			NewWorkItem = wi,
+			OutstandingHours = workItems,
+			NewHours = wi,
 			NewInvoice = inv
 		};
 
@@ -90,11 +90,11 @@ public class IndexModel : PageModel
 	public async Task<ActionResult> OnPostAddHours()
 	{
 		logger.LogInformation(IndexViewModel.ToJson());
-		var hours = IndexViewModel.NewWorkItem;
+		var hours = IndexViewModel.NewHours;
 
-		var wi = hours.Adapt<WorkItem>();
+		var wi = hours.Adapt<Entities.Hours>();
 		wi.Id = NewId.NextSequentialGuid();
-		context.WorkItems.Add(wi);
+		context.Hours.Add(wi);
 		await context.SaveChangesAsync();
 		return RedirectToPage("Index");
 	}
@@ -109,8 +109,8 @@ public class IndexModel : PageModel
 			return RedirectToPage("Index");
 		}
 
-		List<Guid> ids = vm.OutStandingWorkItems.Where(c => c.IsSelected).Select(c => c.Id).ToList();
-		List<WorkItem> wi = await context.WorkItems
+		List<Guid> ids = vm.OutStandingHours.Where(c => c.IsSelected).Select(c => c.Id).ToList();
+		List<Entities.Hours> wi = await context.Hours
 			.Include(c => c.Client)
 			.Where(c => ids.Any(h => h == c.Id))
 			.ToListAsync();
@@ -144,9 +144,9 @@ public class IndexModel : PageModel
 					InvoiceStatus = InvoiceStatus.Created,
 					Account = account,
 				};
-				foreach (WorkItem? item in wi.Where(c => c.Client == client))
+				foreach (Entities.Hours? item in wi.Where(c => c.Client == client))
 				{
-					invoice.AddWorkItem(item);
+					invoice.AddHours(item);
 					context.Invoices.Add(invoice);
 				}
 			}

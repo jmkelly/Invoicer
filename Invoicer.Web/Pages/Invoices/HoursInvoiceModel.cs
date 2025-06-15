@@ -1,6 +1,6 @@
 namespace Invoicer.Web.Pages.Invoices
 {
-	public class WorkItemInvoiceModel
+	public class HoursInvoiceModel
 	{
 		public Guid Id { get; set; }
 		public string? Description { get; set; }

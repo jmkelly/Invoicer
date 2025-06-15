@@ -4,8 +4,8 @@ using Invoicer.Web.Pages.Clients.Models;
 using Invoicer.Web.Pages.Invoices;
 using Invoicer.Web.Pages.MyAccount;
 using Invoicer.Web.Pages.Settings;
-using Invoicer.Web.Pages.WorkItems;
 using Microsoft.EntityFrameworkCore;
+using Invoicer.Web.Entities;
 
 public class DataContext : DbContext
 {
@@ -25,6 +25,6 @@ public class DataContext : DbContext
 	public DbSet<Client> Clients { get; set; }
 	public DbSet<MyAccount> MyAccounts { get; set; }
 	public DbSet<Setting> Settings { get; set; }
-	public DbSet<WorkItem> WorkItems { get; set; }
+	public DbSet<Hours> Hours { get; set; }
 	public DbSet<Invoice> Invoices { get; set; }
 }

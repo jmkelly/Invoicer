@@ -1,4 +1,3 @@
-using Invoicer.Web.Pages.WorkItems;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Invoicer.Web.Pages.Invoices
@@ -9,7 +8,7 @@ namespace Invoicer.Web.Pages.Invoices
 		{
 			Hours = [];
 		}
-		public List<WorkItem> Hours { get; set; }
+		public List<Entities.Hours> Hours { get; set; }
 		public List<SelectListItem> Statuses { get; set; }
 	}
 }

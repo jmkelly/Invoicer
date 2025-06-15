@@ -1,5 +1,6 @@
+using Invoicer.Web.Entities;
 using Invoicer.Web.Pages.Clients.Models;
-using Invoicer.Web.Pages.WorkItems;
+using Invoicer.Web.Pages.Hours;
 using MassTransit;
 
 namespace Invoicer.Web;
@@ -16,9 +17,9 @@ public class SeedDataGenerator
 	private static readonly string[] Cities = ["Sydney", "Melbourne", "Brisbane", "Perth", "Adelaide", "Gold Coast", "Canberra", "Newcastle", "Wollongong", "Hobart", "Darwin", "Cairns", "Toowoomba", "Geelong", "Ballarat", "Bendigo", "Albury", "Launceston", "Townsville", "Rockhampton"];
 	private static readonly string[] States = ["NSW", "VIC", "QLD", "SA", "WA", "TAS", "NT", "ACT"];
 
-	public static List<WorkItem> GenerateWorkItems(int count, List<Client> clients)
+	public static List<Hours> GenerateHours(int count, List<Client> clients)
 	{
-		List<WorkItem> workItems = [];
+		List<Hours> workItems = [];
 		for (int i = 0; i < count; i++) // Seed at least 1000
 		{
 			Guid randomClientId = clients[random.Next(clients.Count)].Id;
@@ -28,12 +29,12 @@ public class SeedDataGenerator
 			decimal randomRate = random.Next(50, 201);
 			RateUnits randomRateUnits = (RateUnits)random.Next(0, 2);
 
-			var wi = new WorkItem
+			var wi = new Hours
 			{
 				Id = NewId.NextSequentialGuid(), // Assign a unique ID
 				Date = randomDate,
 				DateRecorded = randomDateRecorded,
-				Hours = randomHours,
+				NumberOfHours = randomHours,
 				Description = $"Work item {i + 1} for project {random.Next(1, 5)}",
 				Rate = randomRate,
 				RateUnits = randomRateUnits,

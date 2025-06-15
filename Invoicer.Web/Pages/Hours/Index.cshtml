@@ -9,7 +9,7 @@ ViewData["Title"] = "Home page";
 
 <form class="inline-button-bar">
 	<div class="form-group inline">
-	<button class="btn btn-primary" asp-page="/WorkItems/Create" title="Log Hours" aria-label="Log Hours">
+	<button class="btn btn-primary" asp-page="/Hours/Create" title="Log Hours" aria-label="Log Hours">
 		<i data-lucide="clock"></i>
 		<span>Log Hours</span>
 	</button>
@@ -20,7 +20,7 @@ ViewData["Title"] = "Home page";
 	</button>
 	</div>
 	<div class="form-group inline">
-		<partial name="_WorkItemsSearch" model="Model"/>
+		<partial name="_HoursSearch" model="Model"/>
 	</div>
 </form>
 <table class="table" id="table">
@@ -34,6 +34,6 @@ ViewData["Title"] = "Home page";
 		<th></th>
 	</thead> 
 	<tbody>
-		<partial name="_WorkItemsRows" model="Model"/>
+		<partial name="_HoursRows" model="Model"/>
 	</tbody>
 </table>

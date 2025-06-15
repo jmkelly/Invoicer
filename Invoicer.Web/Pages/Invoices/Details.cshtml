@@ -37,13 +37,13 @@ Layout="_Print";
 		<td>Amount</td>
 	</thead>
 	<tbody>
-		@foreach (var wi in @Model.Invoice.WorkItems) {
+		@foreach (var wi in @Model.Invoice.Hours) {
 		<tr>
 			<td>
 				@wi.Description
 			</td>
 			<td>
-				@wi.Hours
+				@wi.NumberOfHours
 			</td>
 			<td>
 				$@wi.Rate

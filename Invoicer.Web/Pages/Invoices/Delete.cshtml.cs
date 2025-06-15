@@ -32,7 +32,7 @@ namespace Invoicer.Web.Pages.Invoices
 		{
 			var entity = await context.Invoices
 							.Include(i => i.Client)
-							.Include(i => i.WorkItems)
+							.Include(i => i.Hours)
 							.FirstOrDefaultAsync(i => i.Id == id);
 
 			if (entity == null)

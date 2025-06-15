@@ -12,12 +12,12 @@
 <form class="form-container" method="post">
 	<h2>Create Invoice</h2>
 
-		@for (int i=0;i < @Model.OutStandingWorkItems.Count;i++)
+		@for (int i=0;i < @Model.OutStandingHours.Count;i++)
 		{
 	<div class="form-group">
-			<label>@Model.OutStandingWorkItems[i].Label()</label>
-			<input hidden asp-for=@Model.OutStandingWorkItems[i].Id/>  
-			<input type="checkbox" asp-for=@Model.OutStandingWorkItems[i].IsSelected/>
+			<label>@Model.OutStandingHours[i].Label()</label>
+			<input hidden asp-for=@Model.OutStandingHours[i].Id/>  
+			<input type="checkbox" asp-for=@Model.OutStandingHours[i].IsSelected/>
 	</div>
 		}
 

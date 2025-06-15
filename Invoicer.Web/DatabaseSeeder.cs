@@ -20,10 +20,10 @@ namespace Invoicer.Web
 				clients = await context.Clients.ToListAsync();
 			}
 
-			if (!context.WorkItems.Any())
+			if (!context.Hours.Any())
 			{
-				var workItems = SeedDataGenerator.GenerateWorkItems(1000, clients);
-				context.WorkItems.AddRange(workItems);
+				var hours = SeedDataGenerator.GenerateHours(1000, clients);
+				context.Hours.AddRange(hours);
 			}
 
 

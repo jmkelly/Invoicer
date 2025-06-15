@@ -7,8 +7,8 @@ namespace Invoicer.Web.Pages.Invoices
 		public Guid ClientId { get; set; }
 		public DateTime CreatedAt { get; set; }
 		public DateTime UpddatedAt { get; set; }
-		public required List<WorkItemInvoiceModel> SelectedWorkItems { get; set; }
-		public required List<WorkItemInvoiceModel> OutStandingWorkItems { get; set; }
+		public required List<InvoiceHoursModel> SelectedHours { get; set; }
+		public required List<InvoiceHoursModel> OutStandingHours { get; set; }
 		public required List<MyAccount.MyAccount> Accounts { get; set; }
 		public Guid SelectedAccountId { get; set; }
 	}

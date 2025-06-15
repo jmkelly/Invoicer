@@ -1,20 +1,19 @@
 namespace Invoicer.Web.Pages;
 
-using Invoicer.Web.Migrations;
 using Invoicer.Web.Pages.Invoices;
-using Invoicer.Web.Pages.WorkItems;
+using Invoicer.Web.Pages.Hours;
 
 public class IndexViewModel
 {
 	public IndexViewModel()
 	{
 		Invoices = new List<Invoice>();
-		OutstandingWorkItems = new List<WorkItem>();
+		OutstandingHours = [];
 	}
 
 	public List<Invoice> Invoices { get; set; }
-	public List<WorkItem> OutstandingWorkItems { get; set; }
-	public CreateWorkItemModel NewWorkItem { get; set; }
+	public List<Entities.Hours> OutstandingHours { get; set; }
+	public CreateHoursModel NewHours { get; set; }
 	public InvoiceAddModel NewInvoice { get; set; }
 }
 

@@ -3,19 +3,19 @@ using Mapster;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace Invoicer.Web.Pages.WorkItems;
+namespace Invoicer.Web.Pages.Hours;
 
 public class IndexModel(ILogger<IndexModel> logger, DataContext context) : PagedModel
 {
 	private readonly DataContext context = context;
 
-	public required List<WorkItemIndexModel> Hours { get; set; }
+	public required List<HoursIndexModel> Hours { get; set; }
 
 	public async Task<IActionResult> OnGet(string? search, int? pageNum, int? pageSize)
 	{
 		SetPaging(search, pageNum, pageSize);
 
-		var hours = context.WorkItems.Include(w => w.Client).AsQueryable();
+		var hours = context.Hours.Include(w => w.Client).AsQueryable();
 
 		if (!string.IsNullOrWhiteSpace(Search))
 		{
@@ -29,28 +29,24 @@ public class IndexModel(ILogger<IndexModel> logger, DataContext context) : Paged
 
 		var hoursPaged = await hours.OrderBy(c => c.Date).Skip(Skip).Take(PageSize).ToListAsync();
 
-		Hours = hoursPaged.Adapt<List<WorkItemIndexModel>>();
+		Hours = hoursPaged.Adapt<List<HoursIndexModel>>();
 
 		return Request.IsHtmx()
-			? Partial("_WorkItemsRows", this)
+			? Partial("_HoursRows", this)
 			: Page();
 
 	}
 
 	public async Task<ActionResult> OnGetDelete(Guid id)
 	{
-		var wi = await context.WorkItems.FirstOrDefaultAsync(w => w.Id == id);
+		var wi = await context.Hours.FirstOrDefaultAsync(w => w.Id == id);
 		if (wi is null)
 		{
 			return new NoContentResult();
 		}
-		context.WorkItems.Remove(wi);
+		context.Hours.Remove(wi);
 		await context.SaveChangesAsync();
 		return new OkResult();
 	}
-
-}
-public class WorkItemIndexModel : WorkItem
-{
 
 }
