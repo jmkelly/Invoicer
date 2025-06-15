@@ -1,0 +1,9 @@
+@model Pages.Clients.IndexModel
+<form method="get">
+	<div class="form-group inline">
+		<input type="text" name="Search" class="form-control" placeholder="Search Clients" asp-for="@Model.Search"
+			hx-get="Clients?pageNum=@Model.PageNum&pageSize=@Model.PageSize"
+			hx-trigger="input changed delay:200ms, keyup[key=='Enter'], load"
+			hx-target="next tbody">
+	</div>
+</form>

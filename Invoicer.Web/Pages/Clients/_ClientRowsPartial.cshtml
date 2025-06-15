@@ -6,7 +6,7 @@
 	{
 	end++;
 	if (end == Model.Clients.Count) {
-	@:<tr hx-get="Clients?pageNum=@(Model.PageNum+1)&pageSize=@Model.PageSize"
+	@:<tr hx-get="Clients?pageNum=@(Model.PageNum+1)&pageSize=@Model.PageSize&search=@Model.Search"
 		@:hx-trigger="revealed"
 		@:hx-swap="afterend">
 		} else {
