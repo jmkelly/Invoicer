@@ -417,3 +417,44 @@ td {
   justify-content: center;
 }
 
+/* Filter Badge Styles */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.35rem 0.75rem;
+    background-color: var(--input-bg);
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--text-color);
+    margin: 0.25rem;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    border: 1px solid var(--table-border);
+    box-shadow: 0 1px 2px var(--card-shadow);
+}
+
+.badge.delete {
+    padding-right: 2rem;
+    position: relative;
+}
+
+.badge.delete:hover {
+    background-color: var(--table-header-bg);
+    border-color: var(--link-color);
+}
+
+.badge.delete::after {
+    content: '×';
+    position: absolute;
+    right: 0.75rem;
+    font-size: 1.1rem;
+    color: var(--text-color);
+    opacity: 0.6;
+    font-weight: 500;
+}
+
+.badge.delete:hover::after {
+    color: var(--link-color);
+    opacity: 1;
+}
+
