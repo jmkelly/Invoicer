@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Invoicer.Web
 {
-	public class DatabaseSeeder(DataContext context)
+	public class DatabaseSeeder(SqliteContext context)
 	{
-		private readonly DataContext context = context;
+		private readonly SqliteContext context = context;
 
 		public async Task SeedDataAsync()
 		{

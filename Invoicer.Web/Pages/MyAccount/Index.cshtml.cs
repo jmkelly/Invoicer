@@ -7,9 +7,9 @@ namespace Invoicer.Web.Pages.MyAccount
 {
 	public class Index : PageModel
 	{
-		private readonly DataContext context;
+		private readonly SqliteContext context;
 
-		public Index(DataContext context)
+		public Index(SqliteContext context)
 		{
 			this.context = context;
 		}

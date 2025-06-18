@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Invoicer.Web.Pages.Clients
 {
-	public class IndexModel(DataContext context, ILogger<IndexModel> logger) : PagedModel
+	public class IndexModel(SqliteContext context, ILogger<IndexModel> logger) : PagedModel
 	{
-		private readonly DataContext context = context;
+		private readonly SqliteContext context = context;
 		private readonly ILogger<IndexModel> logger = logger;
 
 		public required List<ClientIndexModel> Clients { get; set; }

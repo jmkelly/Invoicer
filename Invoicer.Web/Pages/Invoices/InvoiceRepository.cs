@@ -1,14 +1,13 @@
 using Microsoft.EntityFrameworkCore;
-using Invoicer.Web.Pages.Hours;
 
 namespace Invoicer.Web.Pages.Invoices
 {
 	public class InvoiceRepository : IInvoiceRepository
 	{
-		private readonly DataContext context;
+		private readonly SqliteContext context;
 		private readonly ILogger<InvoiceRepository> logger;
 
-		public InvoiceRepository(DataContext context, ILogger<InvoiceRepository> logger)
+		public InvoiceRepository(SqliteContext context, ILogger<InvoiceRepository> logger)
 		{
 			this.context = context;
 			this.logger = logger;

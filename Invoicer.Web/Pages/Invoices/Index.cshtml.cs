@@ -24,9 +24,9 @@ namespace Invoicer.Web.Pages.Invoices
 
 	public class IndexViewModel : PageModel
 	{
-		private readonly DataContext context;
+		private readonly SqliteContext context;
 
-		public IndexViewModel(DataContext context)
+		public IndexViewModel(SqliteContext context)
 		{
 			this.context = context;
 			Invoices = new List<InvoiceIndexModel>();

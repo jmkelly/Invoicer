@@ -3,61 +3,93 @@ using System;
 using Invoicer.Web;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Invoicer.Web.Migrations
+namespace Invoicer.Web.Migrations.Sqlite
 {
-    [DbContext(typeof(DataContext))]
-    [Migration("20240106045054_AddMyAccountToInvoice")]
-    partial class AddMyAccountToInvoice
+    [DbContext(typeof(SqliteContext))]
+    partial class SqliteContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.10")
-                .HasAnnotation("Relational:MaxIdentifierLength", 63);
+            modelBuilder.HasAnnotation("ProductVersion", "8.0.17");
 
-            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+            modelBuilder.Entity("Invoicer.Web.Entities.Hours", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("ClientId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateOnly>("Date")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("DateRecorded")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid?>("InvoiceId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("NumberOfHours")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("Rate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("RateUnits")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClientId");
+
+                    b.HasIndex("InvoiceId");
+
+                    b.ToTable("Hours");
+                });
 
             modelBuilder.Entity("Invoicer.Web.Pages.Clients.Models.Client", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("AccountNo")
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("BSB")
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("City")
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("CompanyName")
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Postcode")
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("State")
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Street")
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("StreetNumber")
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -68,26 +100,29 @@ namespace Invoicer.Web.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("TEXT");
 
                     b.Property<Guid>("AccountId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("TEXT");
 
                     b.Property<Guid>("ClientId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("InvoiceCode")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("InvoiceDate")
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("InvoiceStatus")
-                        .HasColumnType("integer");
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("UpddatedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -102,42 +137,52 @@ namespace Invoicer.Web.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ABN")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("AccountNo")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("BSB")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("BankName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("City")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("CompanyName")
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PayId")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Postcode")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("State")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Street")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("StreetNumber")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -148,54 +193,34 @@ namespace Invoicer.Web.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("TEXT");
 
                     b.Property<bool>("AddTax")
-                        .HasColumnType("boolean");
+                        .HasColumnType("INTEGER");
 
                     b.Property<decimal>("TaxRate")
-                        .HasColumnType("numeric");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
                     b.ToTable("Settings");
                 });
 
-            modelBuilder.Entity("Invoicer.Web.Pages.WorkItems.WorkItem", b =>
+            modelBuilder.Entity("Invoicer.Web.Entities.Hours", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                    b.HasOne("Invoicer.Web.Pages.Clients.Models.Client", "Client")
+                        .WithMany()
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Property<Guid>("ClientId")
-                        .HasColumnType("uuid");
+                    b.HasOne("Invoicer.Web.Pages.Invoices.Invoice", "Invoice")
+                        .WithMany("Hours")
+                        .HasForeignKey("InvoiceId");
 
-                    b.Property<DateOnly>("Date")
-                        .HasColumnType("date");
+                    b.Navigation("Client");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<decimal>("Hours")
-                        .HasColumnType("numeric");
-
-                    b.Property<Guid?>("InvoiceId")
-                        .HasColumnType("uuid");
-
-                    b.Property<decimal>("Rate")
-                        .HasColumnType("numeric");
-
-                    b.Property<int>("RateUnits")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ClientId");
-
-                    b.HasIndex("InvoiceId");
-
-                    b.ToTable("WorkItems");
+                    b.Navigation("Invoice");
                 });
 
             modelBuilder.Entity("Invoicer.Web.Pages.Invoices.Invoice", b =>
@@ -217,26 +242,9 @@ namespace Invoicer.Web.Migrations
                     b.Navigation("Client");
                 });
 
-            modelBuilder.Entity("Invoicer.Web.Pages.WorkItems.WorkItem", b =>
-                {
-                    b.HasOne("Invoicer.Web.Pages.Clients.Models.Client", "Client")
-                        .WithMany()
-                        .HasForeignKey("ClientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Invoicer.Web.Pages.Invoices.Invoice", "Invoice")
-                        .WithMany("WorkItems")
-                        .HasForeignKey("InvoiceId");
-
-                    b.Navigation("Client");
-
-                    b.Navigation("Invoice");
-                });
-
             modelBuilder.Entity("Invoicer.Web.Pages.Invoices.Invoice", b =>
                 {
-                    b.Navigation("WorkItems");
+                    b.Navigation("Hours");
                 });
 #pragma warning restore 612, 618
         }

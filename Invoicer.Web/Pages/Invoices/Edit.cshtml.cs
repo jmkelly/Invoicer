@@ -8,11 +8,11 @@ namespace Invoicer.Web.Pages.Invoices
 {
 	public class EditModel : PageModel
 	{
-		private readonly DataContext context;
+		private readonly SqliteContext context;
 		private readonly ILogger<EditModel> logger;
 		private readonly IInvoiceRepository invoiceRepository;
 
-		public EditModel(IInvoiceRepository invoiceRepository, DataContext context, ILogger<EditModel> logger)
+		public EditModel(IInvoiceRepository invoiceRepository, SqliteContext context, ILogger<EditModel> logger)
 		{
 			this.invoiceRepository = invoiceRepository;
 			this.context = context;

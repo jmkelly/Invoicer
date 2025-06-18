@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Invoicer.Web.Pages.Hours;
 
-public class IndexModel(ILogger<IndexModel> logger, DataContext context) : PagedModel
+public class IndexModel(ILogger<IndexModel> logger, SqliteContext context) : PagedModel
 {
-	private readonly DataContext context = context;
+	private readonly SqliteContext context = context;
 
 	public required List<HoursIndexModel> Hours { get; set; }
 

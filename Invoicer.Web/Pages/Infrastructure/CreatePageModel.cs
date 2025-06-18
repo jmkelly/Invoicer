@@ -14,9 +14,9 @@ namespace Invoicer.Web.Pages
 	where TEntity : Entity
 	where TModel : IModel
 	{
-		public readonly DataContext Context;
+		public readonly SqliteContext Context;
 
-		public CreatePageModel(DataContext context, ILogger<CreatePageModel<TModel, TEntity>> logger)
+		public CreatePageModel(SqliteContext context, ILogger<CreatePageModel<TModel, TEntity>> logger)
 		{
 			Context = context;
 			Logger = logger;

@@ -7,10 +7,10 @@ namespace Invoicer.Web.Pages.Invoices
 {
 	public class DeleteModel : PageModel
 	{
-		private readonly DataContext context;
+		private readonly SqliteContext context;
 		private readonly IInvoiceRepository invoiceRepository;
 
-		public DeleteModel(IInvoiceRepository invoiceRepository, DataContext context)
+		public DeleteModel(IInvoiceRepository invoiceRepository, SqliteContext context)
 		{
 			this.invoiceRepository = invoiceRepository;
 			this.context = context;

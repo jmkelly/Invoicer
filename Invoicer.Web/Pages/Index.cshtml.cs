@@ -13,11 +13,11 @@ namespace Invoicer.Web.Pages;
 public class IndexModel : PageModel
 {
 	private readonly ILogger<IndexModel> logger;
-	private readonly DataContext context;
+	private readonly SqliteContext context;
 	[BindProperty]
 	public required IndexViewModel IndexViewModel { get; set; }
 
-	public IndexModel(ILogger<IndexModel> logger, DataContext context)
+	public IndexModel(ILogger<IndexModel> logger, SqliteContext context)
 	{
 		this.logger = logger;
 		this.context = context;

@@ -11,13 +11,13 @@ namespace Invoicer.Web.Pages.Settings
 		[BindProperty]
 		public required SettingModel Model { get; set; }
 
-		public Index(DataContext context, ILogger<Index> logger)
+		public Index(SqliteContext context, ILogger<Index> logger)
 		{
 			Context = context;
 			Logger = logger;
 		}
 
-		public DataContext Context { get; }
+		public SqliteContext Context { get; }
 		public ILogger<Index> Logger { get; }
 
 		public async Task<IActionResult> OnGet()

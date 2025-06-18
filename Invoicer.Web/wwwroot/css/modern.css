@@ -265,8 +265,19 @@ td {
 }
 
 .btn-primary:hover,
-.btn-small:hover {
-	background: var(--btn-hover-bg);
+.btn-primary:focus {
+    background-color: var(--btn-hover-bg);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px var(--card-shadow);
+}
+
+.btn-primary:disabled {
+    background-color: var(--table-header-bg);
+    color: var(--table-border);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+    opacity: 0.7;
 }
 
 .btn-small {

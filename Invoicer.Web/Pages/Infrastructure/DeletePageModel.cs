@@ -11,9 +11,9 @@ namespace Invoicer.Web.Pages
 	where TEntity : Entity
 	where TModel : IModel
 	{
-		private readonly DataContext context;
+		private readonly SqliteContext context;
 
-		public DeletePageModel(DataContext context, ILogger<DeletePageModel<TModel, TEntity>> logger)
+		public DeletePageModel(SqliteContext context, ILogger<DeletePageModel<TModel, TEntity>> logger)
 		{
 			this.context = context;
 			Logger = logger;

@@ -5,26 +5,29 @@ using Invoicer.Web.Pages.Invoices;
 using Invoicer.Web.Pages.MyAccount;
 using Invoicer.Web.Pages.Settings;
 using Microsoft.EntityFrameworkCore;
-using Invoicer.Web.Entities;
 
-public class DataContext : DbContext
+public class SqliteContext : DbContext
 {
-	protected readonly IConfiguration Configuration;
 
-	public DataContext(IConfiguration configuration)
+	public SqliteContext(IConfiguration configuration)
 	{
-		Configuration = configuration;
+		var folder = Environment.SpecialFolder.LocalApplicationData;
+		var path = Environment.GetFolderPath(folder);
+		DbPath = Path.Join(path, "invoicer.db");
 	}
+
+	public string DbPath { get; }
 
 	protected override void OnConfiguring(DbContextOptionsBuilder options)
 	{
-		// connect to postgres with connection string from app settings
-		options.UseNpgsql(Configuration.GetConnectionString("Default"));
+		options.UseSqlite($"Data Source={DbPath}");
 	}
 
 	public DbSet<Client> Clients { get; set; }
 	public DbSet<MyAccount> MyAccounts { get; set; }
 	public DbSet<Setting> Settings { get; set; }
-	public DbSet<Hours> Hours { get; set; }
+	public DbSet<Entities.Hours> Hours { get; set; }
 	public DbSet<Invoice> Invoices { get; set; }
+
 }
+

@@ -9,7 +9,7 @@ namespace Invoicer.Web.Pages
 	where TEntity : Entity
 	where TModel : IModel
 	{
-		public EditPageModel(DataContext context, ILogger<CreatePageModel<TModel, TEntity>> logger) : base(context, logger)
+		public EditPageModel(SqliteContext context, ILogger<CreatePageModel<TModel, TEntity>> logger) : base(context, logger)
 		{
 		}
 

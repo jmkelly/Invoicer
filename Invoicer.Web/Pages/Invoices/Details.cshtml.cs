@@ -19,9 +19,9 @@ namespace Invoicer.Web.Pages.Invoices
 
 	public class DetailsModel : PageModel
 	{
-		private readonly DataContext context;
+		private readonly SqliteContext context;
 
-		public DetailsModel(DataContext context)
+		public DetailsModel(SqliteContext context)
 		{
 			this.context = context;
 		}

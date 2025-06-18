@@ -1,0 +1,6 @@
+@model Invoicer.Web.Pages.NotInvoicedHours.IndexModel
+
+<input type="text" name="Search" class="form-control" placeholder="Search by client or description" asp-for=@Model.Search
+    hx-get="NotInvoicedHours?pageNum=@Model.PageNum&pageSize=@Model.PageSize"
+    hx-trigger="input changed delay:200ms, keyup[key=='Enter']"
+    hx-target="next tbody"> 

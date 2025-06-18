@@ -7,10 +7,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-builder.Services.AddDbContext<DataContext>(options =>
+builder.Services.AddDbContext<SqliteContext>(options =>
 		{
 			options.EnableSensitiveDataLogging();
-			options.UseNpgsql(builder.Configuration.GetConnectionString("Default"));
 		});
 
 builder.Services.AddDbContext<UserContext>(options =>

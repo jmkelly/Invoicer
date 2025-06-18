@@ -9,10 +9,10 @@ namespace Invoicer.Web.Pages.Hours;
 
 public class Create : PageModel
 {
-	private readonly DataContext context;
+	private readonly SqliteContext context;
 	private readonly ILogger<Create> logger;
 
-	public Create(DataContext context, ILogger<Create> logger)
+	public Create(SqliteContext context, ILogger<Create> logger)
 	{
 		this.context = context;
 		this.logger = logger;

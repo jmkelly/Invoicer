@@ -6,9 +6,9 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Invoicer.Web.Pages.Clients
 {
-	public class Create(DataContext context) : PageModel
+	public class Create(SqliteContext context) : PageModel
 	{
-		private readonly DataContext context = context;
+		private readonly SqliteContext context = context;
 
 		[BindProperty]
 		public required ClientAddModel Model { get; set; }

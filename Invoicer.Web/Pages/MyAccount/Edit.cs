@@ -2,7 +2,7 @@ namespace Invoicer.Web.Pages.MyAccount
 {
 	public class Edit : EditPageModel<MyAccountEditModel, MyAccount>
 	{
-		public Edit(DataContext context, ILogger<EditPageModel<MyAccountEditModel, MyAccount>> logger) : base(context, logger)
+		public Edit(SqliteContext context, ILogger<EditPageModel<MyAccountEditModel, MyAccount>> logger) : base(context, logger)
 		{
 			logger.LogInformation("Edit Account");
 		}
