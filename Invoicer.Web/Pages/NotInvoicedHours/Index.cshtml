@@ -4,14 +4,9 @@
     ViewData["Title"] = "Outstanding Hours";
 }
 
-<h2>@ViewData["Title"]</h2> 
-TODO:-- only allow Create to be clicked if createInvoiceForm is valid
-TODO:-- only show same Client once a client is selected
-TODO:-- fix title style
-
 <form method="post" asp-page-handler="CreateInvoice" id="createInvoiceForm">
     <div class="form-group">
-        <select class="form-select" id="SelectedAccountId" name="SelectedAccountId" required
+        <select class="form-select" id="SelectedAccountId" name="SelectedAccountId" required>
             <option value="">-- Select Account --</option>
             @foreach (var account in Model.Accounts)
             {
@@ -30,23 +25,27 @@ TODO:-- fix title style
         <partial name="_NotInvoicedHoursSearch" />
     </div>
 
-        <table class="table" >
-            <thead>
-                <tr>
-                    <th>Select</th>
-                    <th>Client</th>
-                    <th>Date</th>
-                    <th>Description</th>
-                    <th>Hours</th>
-                    <th>Rate</th>
-                    <th>Total</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <partial name="_NotInvoicedHoursRows" />
-            </tbody>
-        </table>
+    <div>
+        @Model.SelectedClient.ClientName
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Select</th>
+                <th>Client</th>
+                <th>Date</th>
+                <th>Description</th>
+                <th>Hours</th>
+                <th>Rate</th>
+                <th>Total</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <partial name="_NotInvoicedHoursRows" />
+        </tbody>
+    </table>
 </form>
 
 @section Scripts {
