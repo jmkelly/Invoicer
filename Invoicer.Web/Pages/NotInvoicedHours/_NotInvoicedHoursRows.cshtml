@@ -8,25 +8,16 @@
         end++;
         if (end == Model.NotInvoicedHours.Count)
         {
-            @:<tr data-client-id="@hour.Client?.Id"
-                @:hx-get="NotInvoicedHours?pageNum=@(Model.PageNum+1)&pageSize=@Model.PageSize&search=@Model.Search"
+            @:<tr hx-get="NotInvoicedHours?pageNum=@(Model.PageNum+1)&pageSize=@Model.PageSize&search=@Model.Search"
                 @:hx-trigger="revealed"
                 @:hx-swap="afterend">
         }
         else
         {
-            @:<tr data-client-id="@hour.Client?.Id">
+            @:<tr>
         }
             <td>
-                <input type="checkbox" 
-                       class="form-check-input hour-checkbox" 
-                       name="selectedHours" 
-                       value="@hour.Id" 
-                       data-client-id="@hour.Client?.Id"
-                       hx-get="NotInvoicedHours"
-                       hx-include="[name='selectedClients']"
-                       hx-trigger="change"
-                       hx-target="tbody" />
+                <input type="checkbox" class="form-check-input hour-checkbox" name="selectedHours" value="@hour.Id" />
             </td>
             <td>@hour.Client?.Name</td>
             <td>@hour.Date.ToShortDateString()</td>

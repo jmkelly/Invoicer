@@ -24,9 +24,6 @@ namespace Invoicer.Web.Pages.NotInvoicedHours
         [BindProperty]
         public Guid SelectedAccountId { get; set; }
 
-        [BindProperty(SupportsGet = true)]
-        public string? SelectedClients { get; set; }
-
         public async Task<IActionResult> OnGetAsync(string? search, int? pageNum, int? pageSize)
         {
             SetPaging(search, pageNum, pageSize);
@@ -42,20 +39,6 @@ namespace Invoicer.Web.Pages.NotInvoicedHours
                     (h.Description != null && h.Description.ToLower().Contains(searchLower)));
             }
 
-            // Filter by selected clients if any are specified
-            if (!string.IsNullOrWhiteSpace(SelectedClients))
-            {
-                var selectedClientIds = SelectedClients.Split(',')
-                    .Where(id => !string.IsNullOrWhiteSpace(id))
-                    .Select(id => Guid.Parse(id))
-                    .ToList();
-
-                if (selectedClientIds.Any())
-                {
-                    query = query.Where(h => selectedClientIds.Contains(h.ClientId));
-                }
-            }
-
             NotInvoicedHours = await query
                 .OrderBy(h => h.Client.Name)
                 .ThenBy(h => h.Date)
@@ -67,6 +50,8 @@ namespace Invoicer.Web.Pages.NotInvoicedHours
             return Request.IsHtmx()
                         ? Partial("_NotInvoicedHoursRows", this)
                         : Page();
+
+
         }
 
         public async Task<IActionResult> OnPostDeleteAsync(Guid id)

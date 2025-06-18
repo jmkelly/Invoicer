@@ -11,7 +11,7 @@ TODO:-- fix title style
 
 <form method="post" asp-page-handler="CreateInvoice" id="createInvoiceForm">
     <div class="form-group">
-        <select class="form-select" id="SelectedAccountId" name="SelectedAccountId" required>
+        <select class="form-select" id="SelectedAccountId" name="SelectedAccountId" required
             <option value="">-- Select Account --</option>
             @foreach (var account in Model.Accounts)
             {
@@ -30,51 +30,27 @@ TODO:-- fix title style
         <partial name="_NotInvoicedHoursSearch" />
     </div>
 
-    <input type="hidden" name="selectedClients" id="selectedClients" value="" />
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Select</th>
-                <th>Client</th>
-                <th>Date</th>
-                <th>Description</th>
-                <th>Hours</th>
-                <th>Rate</th>
-                <th>Total</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <partial name="_NotInvoicedHoursRows" />
-        </tbody>
-    </table>
+        <table class="table" >
+            <thead>
+                <tr>
+                    <th>Select</th>
+                    <th>Client</th>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Hours</th>
+                    <th>Rate</th>
+                    <th>Total</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <partial name="_NotInvoicedHoursRows" />
+            </tbody>
+        </table>
 </form>
 
 @section Scripts {
     <script>
         lucide.createIcons();
-
-        document.addEventListener('change', function(e) {
-            if (e.target.matches('.hour-checkbox')) {
-                const clientId = e.target.getAttribute('data-client-id');
-                const selectedClientsInput = document.getElementById('selectedClients');
-                let selectedClients = selectedClientsInput.value ? selectedClientsInput.value.split(',') : [];
-                
-                if (e.target.checked) {
-                    if (!selectedClients.includes(clientId)) {
-                        selectedClients.push(clientId);
-                    }
-                } else {
-                    // Check if any other checkboxes for this client are still checked
-                    const stillChecked = Array.from(document.querySelectorAll('.hour-checkbox[data-client-id="' + clientId + '"]:checked')).length > 0;
-                    if (!stillChecked) {
-                        selectedClients = selectedClients.filter(id => id !== clientId);
-                    }
-                }
-                
-                selectedClientsInput.value = selectedClients.join(',');
-            }
-        });
     </script>
 }
