@@ -24,7 +24,9 @@ namespace Invoicer.Web.Pages.NotInvoicedHours
         [BindProperty]
         public Guid SelectedAccountId { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(string? search, int? pageNum, int? pageSize)
+        [BindProperty(SupportsGet = true)]
+        public SelectedClientIdModel SelectedClient { get; set; } = new();
+        public async Task<IActionResult> OnGetAsync(string? search, int? pageNum, int? pageSize, Guid? clientId)
         {
             SetPaging(search, pageNum, pageSize);
             var query = _context.Hours
@@ -39,6 +41,11 @@ namespace Invoicer.Web.Pages.NotInvoicedHours
                     (h.Description != null && h.Description.ToLower().Contains(searchLower)));
             }
 
+            if (clientId.HasValue)
+            {
+                query = query.Where(h => h.ClientId == clientId.Value);
+            }
+
             NotInvoicedHours = await query
                 .OrderBy(h => h.Client.Name)
                 .ThenBy(h => h.Date)
@@ -46,12 +53,16 @@ namespace Invoicer.Web.Pages.NotInvoicedHours
                 .Take(PageSize)
                 .ToListAsync();
 
+            if (clientId.HasValue && NotInvoicedHours.Count > 0)
+            {
+                SelectedClient.SelectedClientId = clientId.Value;
+                SelectedClient.ClientName = NotInvoicedHours[0].Client?.Name ?? string.Empty;
+            }
+
             Accounts = await _context.MyAccounts.ToListAsync();
             return Request.IsHtmx()
                         ? Partial("_NotInvoicedHoursRows", this)
                         : Page();
-
-
         }
 
         public async Task<IActionResult> OnPostDeleteAsync(Guid id)
@@ -132,5 +143,16 @@ namespace Invoicer.Web.Pages.NotInvoicedHours
             TempData["Success"] = "Invoice created successfully.";
             return RedirectToPage("/Invoices/Index");
         }
+
+        public async Task<IActionResult> OnGetClearClientFilterAsync(string? search, int? pageNum, int? pageSize)
+        {
+            return await OnGetAsync(search, pageNum, pageSize, null);
+        }
+    }
+
+    public class SelectedClientIdModel
+    {
+        public Guid? SelectedClientId { get; set; }
+        public string ClientName { get; set; } = string.Empty;
     }
 }
