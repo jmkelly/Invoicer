@@ -125,7 +125,7 @@ namespace Invoicer.Web.Pages.NotInvoicedHours
                 CreatedAt = createdAt,
                 InvoiceDate = createdAt,
                 InvoiceStatus = InvoiceStatus.Created,
-                InvoiceCode = Invoice.CreateInvoiceCode(client.Name, createdAt),
+                InvoiceCode = InvoiceCodeGenerator.CreateInvoiceCode(client.ClientCode, createdAt),
                 Account = account,
                 UpddatedAt = createdAt
             };
