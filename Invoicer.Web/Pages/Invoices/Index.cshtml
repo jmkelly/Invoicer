@@ -5,37 +5,30 @@
 }
 
 <section>
-	<form>
-		<button class="btn btn-primary" asp-page="./Create" class="btn btn-primary"><i data-lucide="file-plus-2" ></i>Create Invoice</button>
+	<form class="inline-button-bar">
+		<div class="form-group inline">
+			<button class="btn btn-primary" asp-page="/NotInvoicedHours/Index"><i data-lucide="file-plus-2"></i>Create Invoice</button>
+		</div>
+		<div class="form-group inline">
+			<partial name="_InvoiceSearchPartial" model="Model"/>
+		</div>
 	</form>
 </section>
-<h2>TODO: Add search here</h2>
-<table> 
+
+<table class="table"> 
     <thead>
-        <th>Invoice Code</th>
-				<th>Total</th>
-        <th>Client</th>
-        <th>Created At</th>
-        <th>Status</th>
-        <th>Account</th>
-        <th></th>
+        <tr>
+            <th>Invoice Code</th>
+            <th>Total</th>
+            <th>Client</th>
+            <th>Created At</th>
+            <th>Invoice Date</th>
+            <th>Status</th>
+            <th>Account</th>
+            <th></th>
+        </tr>
     </thead>
     <tbody>
-        @foreach (var invoice in Model.Invoices) {
-            <tr>
-                <td>@invoice.InvoiceCode</td>
-                <td>@invoice.Total</td>
-                <td>@invoice.Client.Name</td>
-                <td>@invoice.CreatedAt.Humanize()</td>
-                <td>@invoice.InvoiceDate.ToShortDateString()</td>
-                <td>@invoice.InvoiceStatus</td>
-                <td>@invoice.AccountLabel</td>
-                <td>
-                    <a class="btn" asp-page="./Edit" asp-route-id="@invoice.Id"><i data-lucide="edit"></i></a>
-                    <a class="btn" asp-page="./Details" asp-route-id="@invoice.Id"><i data-lucide="printer"></i></a>
-                    <a class="btn btn-delete" asp-page="./Delete" asp-route-id="@invoice.Id"><i data-lucide="trash"></i></a>
-                </td>
-            </tr>
-        }
+        <partial name="_InvoiceRowsPartial" model="Model"/>
     </tbody>
 </table>
