@@ -36,46 +36,63 @@
 	</div>
 	<div class="form-group">
 		<label class="form-label" for="createdAtInput">Invoice Date</label>
-		<input type="date" class="form-control" asp-for="@Model.Invoice.InvoiceDate" disabled="@isReadOnly" />
+		@if (isReadOnly)
+		{
+			<input type="date" class="form-control" asp-for="@Model.Invoice.InvoiceDate" disabled />
+		}
+		else
+		{
+			<input type="date" class="form-control" asp-for="@Model.Invoice.InvoiceDate" />
+		}
 	</div>
 	<div class="form-group">
 		<label class="form-label" for="statusInput">Status</label>
-		<select asp-for="@Model.Invoice.InvoiceStatus" asp-items="@Model.Invoice.Statuses" disabled="@isReadOnly"></select>
+		@if (isReadOnly)
+		{
+			<select asp-for="@Model.Invoice.InvoiceStatus" asp-items="@Model.Invoice.Statuses" disabled></select>
+		}
+		else
+		{
+			<select asp-for="@Model.Invoice.InvoiceStatus" asp-items="@Model.Invoice.Statuses"></select>
+		}
 	</div>
-	
-	<fieldset>
-		<legend>Hours</legend>
-		@foreach (var (item, index) in Model.Invoice.Hours.Select((item, index) => (item, index)))
-        {
-            <div class="hour-row">
-                <div class="form-group hours-input">
-                    <label class="form-label" for="hours_@index">Hours</label>
-                    <input type="text" id="hours_@index" class="form-control" asp-for="@item.NumberOfHours" disabled="@isReadOnly" />
-                </div>
-                <div class="form-group">
-                    <label class="form-label" for="description_@index">Description</label>
-                    <input type="text" id="description_@index" class="form-control" asp-for="@item.Description" disabled="@isReadOnly" />
-                </div>
-
-                <input type="hidden" asp-for="@item.Id"/>
-
-                @if (canRemoveHours)
-                {
-                    <div>
-                        <button type="submit" class="btn btn-delete " asp-page-handler="RemoveHour" asp-route-id="@Model.Invoice.Id" asp-route-hourId="@item.Id" onclick="return confirm('Are you sure you want to remove this hour entry?')" title="Remove Hour">
-                            <i data-lucide="trash-2"></i>
-                        </button>
-                    </div>
-                }
-            </div>
-        }
-	</fieldset>
-
+	<div class="form-group">
+		@foreach (var item in Model.Invoice.Hours)
+		{
+		<div class="column">
+			<label class="form-label" for="hours">Hours</label>
+			@if (isReadOnly)
+			{
+				<input type="text" class="form-control" asp-for="@item.NumberOfHours" disabled />
+			}
+			else
+			{
+				<input type="text" class="form-control" asp-for="@item.NumberOfHours" />
+			}
+			<label class="form-label" for="description">Description</label>
+			@if (isReadOnly)
+			{
+				<input type="text" class="form-control" asp-for="@item.Description" disabled />
+			}
+			else
+			{
+				<input type="text" class="form-control" asp-for="@item.Description" />
+			}
+			<input type="hidden" asp-for="@item.Id"/>
+			@if (canRemoveHours)
+			{
+				<button type="submit" class="btn btn-danger"  asp-page-handler="RemoveHour" asp-route-hourId="@item.Id" onclick="return confirm('Are you sure you want to remove this hour entry?')">
+					<i data-lucide="trash-2"></i> Remove
+				</button>
+			}
+		</div>
+		}
+	</div>
 	<input type="hidden" asp-for="@Model.Invoice.Id"/>
 	<div class="form-group">
 		@if (!isReadOnly)
 		{
-			<button class="btn btn-delete" type="submit"><i data-lucide="save"></i> Save</button>
+			<button class="btn btn-danger" type="submit"><i data-lucide="save"></i> Save</button>
 		}
 		<a asp-page="./Index" class="btn">Back</a>
 	</div>
