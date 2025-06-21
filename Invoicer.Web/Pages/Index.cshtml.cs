@@ -190,7 +190,7 @@ public class IndexModel : PageModel
 					CreatedAt = DateTime.UtcNow,
 					InvoiceDate = DateTime.UtcNow,
 					UpddatedAt = DateTime.UtcNow,
-					InvoiceCode = Invoice.CreateInvoiceCode(client.Name, DateTime.UtcNow),
+					InvoiceCode = InvoiceCodeGenerator.CreateInvoiceCode(client.ClientCode, DateTime.UtcNow),
 					InvoiceStatus = InvoiceStatus.Created,
 					Account = account,
 				};
