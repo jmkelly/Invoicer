@@ -56,36 +56,52 @@
 			<select asp-for="@Model.Invoice.InvoiceStatus" asp-items="@Model.Invoice.Statuses"></select>
 		}
 	</div>
-	<div class="form-group">
-		@foreach (var item in Model.Invoice.Hours)
+	<div class="hours-section">
+		<h3 class="hours-title">Hours</h3>
+		@if (Model.Invoice.Hours != null && Model.Invoice.Hours.Any())
 		{
-		<div class="column">
-			<label class="form-label" for="hours">Hours</label>
-			@if (isReadOnly)
-			{
-				<input type="text" class="form-control" asp-for="@item.NumberOfHours" disabled />
-			}
-			else
-			{
-				<input type="text" class="form-control" asp-for="@item.NumberOfHours" />
-			}
-			<label class="form-label" for="description">Description</label>
-			@if (isReadOnly)
-			{
-				<input type="text" class="form-control" asp-for="@item.Description" disabled />
-			}
-			else
-			{
-				<input type="text" class="form-control" asp-for="@item.Description" />
-			}
-			<input type="hidden" asp-for="@item.Id"/>
-			@if (canRemoveHours)
-			{
-				<button type="submit" class="btn btn-danger"  asp-page-handler="RemoveHour" asp-route-hourId="@item.Id" onclick="return confirm('Are you sure you want to remove this hour entry?')">
-					<i data-lucide="trash-2"></i> Remove
-				</button>
-			}
-		</div>
+			<div class="hours-grid">
+				<div class="hours-header">Hours</div>
+				<div class="hours-header">Description</div>
+				<div class="hours-header"></div>
+
+				@for (var i = 0; i < Model.Invoice.Hours.Count; i++)
+				{
+					<div class="hour-cell form-group">
+						@if (isReadOnly)
+						{
+							<input type="text" class="form-control" asp-for="Invoice.Hours[i].NumberOfHours" disabled />
+						}
+						else
+						{
+							<input type="text" class="form-control" asp-for="Invoice.Hours[i].NumberOfHours" />
+						}
+						<span asp-validation-for="Invoice.Hours[i].NumberOfHours" class="text-danger"></span>
+					</div>
+
+					<div class="hour-cell form-group">
+						@if (isReadOnly)
+						{
+							<input type="text" class="form-control" asp-for="Invoice.Hours[i].Description" disabled />
+						}
+						else
+						{
+							<input type="text" class="form-control" asp-for="Invoice.Hours[i].Description" />
+						}
+						<span asp-validation-for="Invoice.Hours[i].Description" class="text-danger"></span>
+					</div>
+
+					<div class="delete-cell form-group">
+						<input type="hidden" asp-for="Invoice.Hours[i].Id" />
+						@if (canRemoveHours)
+						{
+							<button type="submit" class="btn btn-danger" asp-page-handler="RemoveHour" asp-route-hourId="@Model.Invoice.Hours[i].Id" onclick="return confirm('Are you sure you want to remove this hour entry?')">
+								<i data-lucide="trash-2"></i> Remove
+							</button>
+						}
+					</div>
+				}
+			</div>
 		}
 	</div>
 	<input type="hidden" asp-for="@Model.Invoice.Id"/>

@@ -485,18 +485,31 @@ td {
   align-items: start;
 }
 
+.hours-grid .form-group {
+  flex-direction: column;
+  align-items: stretch;
+  margin-bottom: 0;
+  min-height: 60px;
+  display: flex;
+  justify-content: flex-end;
+}
+
 .hours-header {
   font-weight: 600;
   font-size: 0.875rem;
   color: var(--text-color);
   padding-bottom: 0.5rem;
   border-bottom: 1px solid var(--table-border);
+  min-height: 60px;
+  display: flex;
+  align-items: flex-end;
 }
 
 .hour-cell {
   position: relative;
   display: flex;
   flex-direction: column;
+  justify-content: flex-end;
 }
 
 .hour-cell input {
@@ -505,17 +518,27 @@ td {
 
 .delete-cell {
   justify-self: end;
-  align-self: center;
+  align-self: end;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  min-height: 60px;
 }
 
-.hour-cell .btn-delete {
-  padding: 0.5rem;
-  line-height: 1;
+.delete-cell .form-group {
+  margin-bottom: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  min-height: 60px;
 }
 
 .hour-cell .text-danger {
   font-size: 0.875rem;
   margin-top: 0.25rem;
+  position: absolute;
+  top: 100%;
+  left: 0;
 }
 
 /* Filter Badge Styles */
@@ -557,5 +580,20 @@ td {
 .badge.delete:hover::after {
     color: var(--link-color);
     opacity: 1;
+}
+
+@media (max-width: 767px) {
+  .hours-grid {
+    grid-template-columns: 1fr; /* Stack the grid items on small screens */
+  }
+
+  .hours-header {
+    display: none; /* Hide headers on small screens as they don't align */
+  }
+
+  .delete-cell {
+    justify-self: start; /* Align delete button to the left */
+    margin-top: 0.5rem;
+  }
 }
 
