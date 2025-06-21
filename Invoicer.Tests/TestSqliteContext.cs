@@ -5,15 +5,23 @@ namespace Invoicer.Tests;
 
 public class TestSqliteContext : SqliteContext
 {
-    private readonly string _databaseName;
-
-    public TestSqliteContext(string databaseName) : base(new Microsoft.Extensions.Configuration.ConfigurationBuilder().Build())
+    public TestSqliteContext(DbContextOptions<SqliteContext> options) : base(options)
     {
-        _databaseName = databaseName;
     }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder options)
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        options.UseInMemoryDatabase(_databaseName);
+        // Don't call base.OnConfiguring for in-memory testing
+        if (!optionsBuilder.IsConfigured)
+        {
+            optionsBuilder.UseInMemoryDatabase("TestDatabase");
+        }
+    }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+        
+        // Add any test-specific configurations here if needed
     }
 } 

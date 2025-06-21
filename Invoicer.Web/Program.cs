@@ -7,26 +7,51 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+// Configure Sqlite database
 builder.Services.AddDbContext<SqliteContext>(options =>
-		{
-			options.EnableSensitiveDataLogging();
-		});
+{
+	var folder = Environment.SpecialFolder.LocalApplicationData;
+	var path = Environment.GetFolderPath(folder);
+	var dbPath = Path.Join(path, "invoicer.db");
+	options.UseSqlite($"Data Source={dbPath}");
+	
+	if (builder.Environment.IsDevelopment())
+	{
+		options.EnableSensitiveDataLogging();
+	}
+});
 
+// Configure PostgreSQL database for Identity
 builder.Services.AddDbContext<UserContext>(options =>
-		{
-			options.EnableSensitiveDataLogging();
-			options.UseNpgsql(builder.Configuration.GetConnectionString("Default"));
-		});
+{
+	options.UseNpgsql(builder.Configuration.GetConnectionString("Default"));
+	
+	if (builder.Environment.IsDevelopment())
+	{
+		options.EnableSensitiveDataLogging();
+	}
+});
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<UserContext>();
+// Configure Identity
+builder.Services.AddDefaultIdentity<IdentityUser>(options => 
+{
+	options.SignIn.RequireConfirmedAccount = true;
+	options.Password.RequireDigit = true;
+	options.Password.RequireLowercase = true;
+	options.Password.RequireUppercase = true;
+	options.Password.RequireNonAlphanumeric = true;
+	options.Password.RequiredLength = 8;
+})
+.AddEntityFrameworkStores<UserContext>();
 
-builder.Services.AddRazorPages();
-
+// Register repositories and services
 builder.Services.AddScoped<IInvoiceRepository, InvoiceRepository>();
 builder.Services.AddScoped<DatabaseSeeder>();
 
 var app = builder.Build();
 
+// Seed database
 using (var scope = app.Services.CreateScope())
 {
 	var services = scope.ServiceProvider;
@@ -42,8 +67,6 @@ using (var scope = app.Services.CreateScope())
 		// Consider graceful shutdown or specific error handling here
 	}
 }
-
-
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

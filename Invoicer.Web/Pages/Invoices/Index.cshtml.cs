@@ -26,13 +26,13 @@ namespace Invoicer.Web.Pages.Invoices
 
 	public class IndexViewModel : PagedModel
 	{
-		private readonly SqliteContext context;
-		private readonly ILogger<IndexViewModel> logger;
+		private readonly IInvoiceRepository _invoiceRepository;
+		private readonly ILogger<IndexViewModel> _logger;
 
-		public IndexViewModel(SqliteContext context, ILogger<IndexViewModel> logger)
+		public IndexViewModel(IInvoiceRepository invoiceRepository, ILogger<IndexViewModel> logger)
 		{
-			this.context = context;
-			this.logger = logger;
+			_invoiceRepository = invoiceRepository ?? throw new ArgumentNullException(nameof(invoiceRepository));
+			_logger = logger ?? throw new ArgumentNullException(nameof(logger));
 			Invoices = new List<InvoiceIndexModel>();
 		}
 
@@ -40,47 +40,38 @@ namespace Invoicer.Web.Pages.Invoices
 
 		public async Task<IActionResult> OnGetAsync(string? search, int? pageNum, int? pageSize)
 		{
-			SetPaging(search, pageNum, pageSize);
-
-			var query = context.Invoices
-				.Include(i => i.Client)
-				.Include(i => i.Hours)
-				.Include(i => i.Account)
-				.AsQueryable();
-
-			if (!string.IsNullOrWhiteSpace(Search))
+			try
 			{
-				logger.LogInformation("searching for {Search}", Search);
-				var searchLower = Search.ToLower();
-					query = query.Where(i =>
-						i.InvoiceCode.ToLower().Contains(searchLower) ||
-						i.Client.Name.ToLower().Contains(searchLower) 
-					);
+				SetPaging(search, pageNum, pageSize);
+
+				var entities = await _invoiceRepository.SearchAsync(Search, Skip, PageSize);
+
+				Invoices = entities.Select(i =>
+					new InvoiceIndexModel
+					{
+						Id = i.Id.ToString(),
+						InvoiceCode = i.InvoiceCode,
+						Client = i.Client.Adapt<ClientIndexModel>(),
+						Total = i.Total(),
+						InvoiceStatus = i.InvoiceStatus,
+						CreatedAt = i.CreatedAt,
+						InvoiceDate = i.InvoiceDate,
+						AccountLabel = i.Account.Label()
+					})
+					.ToList();
+
+				_logger.LogInformation("Retrieved {Count} invoices for search term '{SearchTerm}'", Invoices.Count, Search);
+
+				return Request.IsHtmx()
+					? Partial("_InvoiceRowsPartial", this)
+					: Page();
 			}
-
-			var entities = await query
-				.OrderByDescending(i => i.CreatedAt)
-				.Skip(Skip)
-				.Take(PageSize)
-				.ToListAsync();
-
-			Invoices = entities.Select(i =>
-				new InvoiceIndexModel
-				{
-					Id = i.Id.ToString(),
-					InvoiceCode = i.InvoiceCode,
-					Client = i.Client.Adapt<ClientIndexModel>(),
-					Total = i.Total(),
-					InvoiceStatus = i.InvoiceStatus,
-					CreatedAt = i.CreatedAt,
-					InvoiceDate = i.InvoiceDate,
-					AccountLabel = i.Account.Label()
-				})
-				.ToList();
-
-			return Request.IsHtmx()
-				? Partial("_InvoiceRowsPartial", this)
-				: Page();
+			catch (Exception ex)
+			{
+				_logger.LogError(ex, "Error retrieving invoices for search term '{SearchTerm}'", Search);
+				ModelState.AddModelError("", "An error occurred while retrieving invoices. Please try again.");
+				return Page();
+			}
 		}
 	}
 }

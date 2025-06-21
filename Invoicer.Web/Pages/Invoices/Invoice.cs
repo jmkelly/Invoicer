@@ -1,5 +1,6 @@
 using Invoicer.Web.Pages.Clients.Models;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace Invoicer.Web.Pages.Invoices;
 
@@ -10,42 +11,51 @@ public class Invoice : Entity
 		Hours = [];
 		CreatedAt = DateTime.UtcNow;
 		InvoiceDate = DateTime.UtcNow;
+		UpdatedAt = DateTime.UtcNow;
 	}
 	public List<Entities.Hours> Hours { get; set; }
+	[Required]
+	[StringLength(50)]
 	public required string InvoiceCode { get; set; }
+	[Required]
 	public required Client Client { get; set; }
+	[Required]
 	public required DateTime CreatedAt { get; set; }
+	[Required]
 	public required DateTime InvoiceDate { get; set; }
-	public DateTime UpddatedAt { get; set; }
+	public DateTime UpdatedAt { get; set; }
 
+	[Required]
 	public required InvoiceStatus InvoiceStatus { get; set; }
+	[Required]
 	public required MyAccount.MyAccount Account { get; set; }
 
 	public decimal Total()
 	{
-		if (Hours == null)
+		if (Hours == null || !Hours.Any())
 			return 0;
 		return Hours.Sum(c => c.Total());
 	}
 	public bool IsAllowedToBeDeleted()
 	{
-		if (InvoiceStatus == InvoiceStatus.Created)
-			return true;
-		return false;
+		return InvoiceStatus == InvoiceStatus.Created;
 	}
 
 	public void RemoveAllHours()
 	{
-		Hours.Clear();
+		Hours?.Clear();
 	}
 
 	public Result AddHours(Entities.Hours hours)
 	{
+		if (hours == null)
+			return Result.Failure("Hours cannot be null");
+			
 		if (hours.ClientId != Client.Id)
-			return Result.Failure("Work client differs from the invoice client, muliple clients cannot be on same invoice.  Create a seperate invoice for each client.");
+			return Result.Failure("Work client differs from the invoice client, multiple clients cannot be on same invoice. Create a separate invoice for each client.");
 
 		Hours.Add(hours);
-		UpddatedAt = DateTime.UtcNow;
+		UpdatedAt = DateTime.UtcNow;
 		return Result.Success();
 	}
 }

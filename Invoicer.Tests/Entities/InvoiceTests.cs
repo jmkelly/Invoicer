@@ -45,13 +45,13 @@ public class InvoiceTests
         var invoice = CreateTestInvoice();
         invoice.Hours.Add(CreateTestHours(5.0m, 100.0m, RateUnits.PerHour)); // $500
         invoice.Hours.Add(CreateTestHours(8.0m, 75.0m, RateUnits.PerHour));  // $600
-        invoice.Hours.Add(CreateTestHours(4.0m, 200.0m, RateUnits.PerDay));  // $4.166... (see calculation)
+        invoice.Hours.Add(CreateTestHours(8.0m, 200.0m, RateUnits.PerDay));  // $200 (8 hours = 1 day)
 
         // Act
         var result = invoice.Total();
 
         // Assert
-        result.ShouldBe(1104.1666666666667m, 0.0000000000001m);
+        result.ShouldBe(1300.0m); // $500 + $600 + $200 = $1300
     }
 
     [Fact]
@@ -60,6 +60,20 @@ public class InvoiceTests
         // Arrange
         var invoice = CreateTestInvoice();
         invoice.Hours = null!;
+
+        // Act
+        var result = invoice.Total();
+
+        // Assert
+        result.ShouldBe(0.0m);
+    }
+
+    [Fact]
+    public void Total_WithEmptyHours_ShouldReturnZero()
+    {
+        // Arrange
+        var invoice = CreateTestInvoice();
+        invoice.Hours.Clear();
 
         // Act
         var result = invoice.Total();
@@ -140,6 +154,17 @@ public class InvoiceTests
     }
 
     [Fact]
+    public void RemoveAllHours_WithNullHours_ShouldNotThrow()
+    {
+        // Arrange
+        var invoice = CreateTestInvoice();
+        invoice.Hours = null!;
+
+        // Act & Assert - should not throw
+        invoice.RemoveAllHours();
+    }
+
+    [Fact]
     public void AddHours_WithMatchingClient_ShouldAddHoursSuccessfully()
     {
         // Arrange
@@ -174,11 +199,26 @@ public class InvoiceTests
     }
 
     [Fact]
+    public void AddHours_WithNullHours_ShouldReturnFailure()
+    {
+        // Arrange
+        var invoice = CreateTestInvoice();
+
+        // Act
+        var result = invoice.AddHours(null!);
+
+        // Assert
+        result.IsSuccess.ShouldBeFalse();
+        result.Error.ShouldContain("Hours cannot be null");
+        invoice.Hours.Count.ShouldBe(0);
+    }
+
+    [Fact]
     public void AddHours_ShouldUpdateUpdatedAt()
     {
         // Arrange
         var invoice = CreateTestInvoice();
-        var originalUpdatedAt = invoice.UpddatedAt;
+        var originalUpdatedAt = invoice.UpdatedAt;
         var hours = CreateTestHours(5.0m, 100.0m, RateUnits.PerHour);
         hours.ClientId = invoice.Client.Id;
 
@@ -187,7 +227,21 @@ public class InvoiceTests
 
         // Assert
         result.IsSuccess.ShouldBeTrue();
-        invoice.UpddatedAt.ShouldBeGreaterThan(originalUpdatedAt);
+        invoice.UpdatedAt.ShouldBeGreaterThan(originalUpdatedAt);
+    }
+
+    [Fact]
+    public void Constructor_ShouldSetDefaultValues()
+    {
+        // Act
+        var invoice = new Invoice();
+
+        // Assert
+        invoice.Hours.ShouldNotBeNull();
+        invoice.Hours.ShouldBeEmpty();
+        invoice.CreatedAt.ShouldBeGreaterThan(DateTime.UtcNow.AddSeconds(-1));
+        invoice.InvoiceDate.ShouldBeGreaterThan(DateTime.UtcNow.AddSeconds(-1));
+        invoice.UpdatedAt.ShouldBeGreaterThan(DateTime.UtcNow.AddSeconds(-1));
     }
 
     private Invoice CreateTestInvoice()
@@ -203,7 +257,7 @@ public class InvoiceTests
             ClientCode = "TEST"
         };
 
-        var account = new MyAccount
+        var account = new MyAccount.MyAccount
         {
             Id = accountId,
             Name = "Test Account",
@@ -220,12 +274,13 @@ public class InvoiceTests
         return new Invoice
         {
             Id = Guid.NewGuid(),
-            InvoiceCode = "TEST-001",
+            InvoiceCode = "INV-001",
             Client = client,
-            InvoiceDate = DateTime.Now,
-            InvoiceStatus = InvoiceStatus.Created,
             Account = account,
-            CreatedAt = DateTime.UtcNow
+            InvoiceStatus = InvoiceStatus.Created,
+            CreatedAt = DateTime.UtcNow,
+            InvoiceDate = DateTime.UtcNow,
+            UpdatedAt = DateTime.UtcNow
         };
     }
 
@@ -234,13 +289,13 @@ public class InvoiceTests
         return new Invoicer.Web.Entities.Hours
         {
             Id = Guid.NewGuid(),
+            Date = DateOnly.FromDateTime(DateTime.Today),
             NumberOfHours = numberOfHours,
+            Description = "Test work",
             Rate = rate,
             RateUnits = rateUnits,
-            Description = "Test work",
-            Date = DateOnly.FromDateTime(DateTime.Now),
-            DateRecorded = DateTime.Now,
-            ClientId = Guid.NewGuid()
+            ClientId = Guid.NewGuid(),
+            DateRecorded = DateTime.UtcNow
         };
     }
 } 

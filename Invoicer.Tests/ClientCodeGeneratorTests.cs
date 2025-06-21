@@ -12,8 +12,11 @@ public class ClientCodeGeneratorTests
 {
     private SqliteContext CreateInMemoryContext()
     {
-        var databaseName = Guid.NewGuid().ToString();
-        var context = new TestSqliteContext(databaseName);
+        var options = new DbContextOptionsBuilder<Invoicer.Web.SqliteContext>()
+            .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+            .Options;
+        
+        var context = new TestSqliteContext(options);
         context.Database.EnsureCreated();
         return context;
     }

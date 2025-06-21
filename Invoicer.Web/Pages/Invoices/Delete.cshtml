@@ -8,26 +8,26 @@
 <form class="alert alert-danger" method="post">
 	<div class="form-group">
 		<label class="form-label" for="invoiceCodeInput">Invoice Code</label>
-		<input type="text" class="form-control" disabled id="invoiceCodeInput" value="@Model.Invoice.InvoiceCode" />
+		<input type="text" class="form-control" disabled id="invoiceCodeInput" value="@Model.Model.InvoiceCode" />
 	</div>
 	<div class="form-group">
 		<label for="invoiceTotalInput" class="form-label">Total</label>
-		<input type="text" class="form-control" disabled id="invoiceTotalInput" value="$@Model.Invoice.Total"/>
+		<input type="text" class="form-control" disabled id="invoiceTotalInput" value="$@Model.Model.Total"/>
 	</div>
 	<div class="form-group">
 		<label for="clientNameInput">Client</label>
-		<input type="text" class="form-control" disabled id="clientNameInput" value="@Model.Invoice.Client.Name"/>
+		<input type="text" class="form-control" disabled id="clientNameInput" value="@Model.Model.ClientName"/>
 	</div>
 	<div class="form-group">
 		<label class="form-label" for="createdAtInput">Created At</label>
-		<input type="text" disabled class="form-control" id="createdAtInput" value="@Model.Invoice.CreatedAt.ToShortDateString()"/>
+		<input type="text" disabled class="form-control" id="createdAtInput" value="@Model.Model.CreatedAt.ToShortDateString()"/>
 	</div>
 	<div class="form-group">
 		<label class="form-label" for="statusInput">Status</label>
-		<input type="text" disabled id="statusInput" class="form-control" value="@Model.Invoice.InvoiceStatus"/>
+		<input type="text" disabled id="statusInput" class="form-control" value="@Model.Model.InvoiceStatus"/>
 	</div>
 	<hr/>
-	<input type="hidden" asp-for="@Model.Invoice.Id"/>
+	<input type="hidden" asp-for="@Model.Model.Id"/>
 	<div class="form-group">
 		<input class="btn btn-delete" type="submit" value="Delete"/>
 		<a asp-page="./Index" class="btn btn-primary">Back</a>

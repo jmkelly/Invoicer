@@ -5,9 +5,9 @@ namespace Invoicer.Web.Pages.Invoices
 	public class InvoiceAddModel
 	{
 		public Guid ClientId { get; set; }
-		public DateTime CreatedAt { get; set; }
-		public DateTime UpddatedAt { get; set; }
-		public required List<InvoiceHoursModel> SelectedHours { get; set; }
+		public Guid AccountId { get; set; }
+		public DateTime UpdatedAt { get; set; }
+		public List<HoursAddModel> SelectedHours { get; set; } = [];
 		public required List<InvoiceHoursModel> OutStandingHours { get; set; }
 		public required List<MyAccount.MyAccount> Accounts { get; set; }
 		public Guid SelectedAccountId { get; set; }
