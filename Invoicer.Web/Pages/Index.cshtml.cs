@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Invoicer.Web.Extensions;
 using Mapster;
 using MassTransit;
-
+using Htmx;
 
 namespace Invoicer.Web.Pages;
 
@@ -25,6 +25,11 @@ public class IndexModel : PageModel
 
 	public async Task OnGet()
 	{
+		await LoadData();
+	}
+
+	private async Task LoadData()
+	{
 		var invoices = await context
 			.Invoices
 			.Include(c => c.Client)
@@ -38,7 +43,6 @@ public class IndexModel : PageModel
 			.ToListAsync())
 			.Where(w => !w.HasInvoice()).ToList();
 
-
 		var clients = await context.Clients.ToListAsync();
 
 		var wi = new CreateHoursModel
@@ -51,7 +55,6 @@ public class IndexModel : PageModel
 			Clients = clients,
 			RateUnits = RateUnits.PerHour,
 		};
-
 
 		var outStandingHours = await context.Hours
 			.Include(c => c.Client)
@@ -83,8 +86,55 @@ public class IndexModel : PageModel
 			NewInvoice = inv
 		};
 
-
 		IndexViewModel = model;
+	}
+
+	public async Task<IActionResult> OnGetSearchOutstandingHoursAsync(string? search)
+	{
+		await LoadData();
+		
+		if (!string.IsNullOrWhiteSpace(search))
+		{
+			var searchLower = search.ToLower();
+			IndexViewModel.OutstandingHours = IndexViewModel.OutstandingHours
+				.Where(h => 
+					(h.Client?.Name?.ToLower().Contains(searchLower) ?? false) ||
+					(h.Description?.ToLower().Contains(searchLower) ?? false))
+				.ToList();
+		}
+
+		return Partial("_OutstandingHoursRows", this);
+	}
+
+	public async Task<IActionResult> OnGetFilterByClientAsync(Guid? clientId)
+	{
+		await LoadData();
+		
+		if (clientId.HasValue)
+		{
+			IndexViewModel.OutstandingHours = IndexViewModel.OutstandingHours
+				.Where(h => h.ClientId == clientId.Value)
+				.ToList();
+		}
+
+		return Partial("_OutstandingHoursRows", this);
+	}
+
+	public async Task<IActionResult> OnGetDeleteHourAsync(Guid id)
+	{
+		var hour = await context.Hours.FindAsync(id);
+
+		if (hour == null)
+		{
+			return NotFound();
+		}
+
+		context.Hours.Remove(hour);
+		await context.SaveChangesAsync();
+
+		logger.LogInformation("Deleted hour entry with ID: {Id}", id);
+
+		return new EmptyResult();
 	}
 
 	public async Task<ActionResult> OnPostAddHours()
@@ -154,6 +204,5 @@ public class IndexModel : PageModel
 
 		await context.SaveChangesAsync();
 		return RedirectToPage("Index");
-
 	}
 }

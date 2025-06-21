@@ -10,8 +10,29 @@ ViewData["Title"] = "Home page";
 </div>
 <div class="column">
 	<h2>Step 2. Create an Invoice</h2>
-	<h3>SEARCH HERE + centered</h3>
-	<partial name="_InvoicesCreate" model="Model.IndexViewModel">
+	<form method="post" asp-page="/NotInvoicedHours/Index" asp-page-handler="CreateInvoice" id="createInvoiceForm">
+		<div class="form-group">
+			<select class="form-select" id="SelectedAccountId" name="SelectedAccountId" required>
+				<option value="">-- Select Account --</option>
+				@foreach (var account in Model.IndexViewModel.NewInvoice.Accounts)
+				{
+					<option value="@account.Id">@account.Label()</option>
+				}
+			</select>
+		</div>
+		<div class="form-group">
+			<button type="submit" class="btn btn-primary" id="createInvoiceBtn">
+				<i data-lucide="file-plus-2"></i>
+				Create Invoice from Selected
+			</button>
+		</div>
+
+		<div class="form-group">
+			<partial name="_OutstandingHoursSearch" model="Model"/>
+		</div>
+
+		<partial name="_OutstandingHoursTable" model="Model"/>
+	</form>
 </div>
 <div class="column">
 	<h2>Step 3. Print and Track</h2>

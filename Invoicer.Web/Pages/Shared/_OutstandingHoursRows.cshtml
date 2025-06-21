@@ -1,0 +1,35 @@
+@model Invoicer.Web.Pages.IndexModel
+@using Humanizer
+
+@foreach (var hour in Model.IndexViewModel.OutstandingHours)
+{
+    <tr>
+        <td>
+            <input type="checkbox" 
+                   class="form-check-input hour-checkbox" 
+                   name="selectedHours" 
+                   value="@hour.Id" 
+                   id="hour-@hour.Id"
+                   data-client-id="@hour.ClientId"
+                   hx-preserve
+                   hx-trigger="change"
+                   hx-get="Index?handler=FilterByClient&clientId=@hour.ClientId"
+                   hx-target="#outstanding-hours-table tbody">
+        </td>
+        <td>@hour.Client?.Name</td>
+        <td>@hour.Date.ToShortDateString()</td>
+        <td>@hour.Description</td>
+        <td>@hour.NumberOfHours</td>
+        <td>@hour.Rate @hour.RateUnits.Humanize()</td>
+        <td>@hour.Total().ToString("C")</td>
+        <td>
+            <button class="btn btn-danger btn-sm" 
+                hx-get="Index?handler=DeleteHour&id=@hour.Id" 
+                hx-confirm="Are you sure you want to delete this entry?"
+                hx-target="closest tr"
+                hx-swap="outerHTML">
+                <i data-lucide="trash-2"></i>
+            </button>
+        </td>
+    </tr>
+} 

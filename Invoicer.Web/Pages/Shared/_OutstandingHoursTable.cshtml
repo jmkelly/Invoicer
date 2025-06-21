@@ -1,0 +1,20 @@
+@model Invoicer.Web.Pages.IndexModel
+@using Humanizer
+
+<table class="table" id="outstanding-hours-table">
+    <thead>
+        <tr>
+            <th>Select</th>
+            <th>Client</th>
+            <th>Date</th>
+            <th>Description</th>
+            <th>Hours</th>
+            <th>Rate</th>
+            <th>Total</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <partial name="_OutstandingHoursRows" model="Model"/>
+    </tbody>
+</table> 

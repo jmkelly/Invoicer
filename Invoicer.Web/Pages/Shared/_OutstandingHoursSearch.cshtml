@@ -1,0 +1,6 @@
+@model Invoicer.Web.Pages.IndexModel
+
+<input type="text" name="Search" class="form-control" placeholder="Search by client or description" 
+    hx-get="Index?handler=SearchOutstandingHours"
+    hx-trigger="input changed delay:200ms, keyup[key=='Enter']"
+    hx-target="#outstanding-hours-table tbody"> 
