@@ -4,6 +4,7 @@ namespace Invoicer.Web.Pages.Clients.Models
 	{
 		public string? CompanyName { get; set; }
 		public required string Name { get; set; }
+		public required string ClientCode { get; set; }
 		public string? BSB { get; set; }
 		public string? AccountNo { get; set; }
 		public string? StreetNumber { get; set; }

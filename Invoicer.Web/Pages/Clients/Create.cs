@@ -23,9 +23,17 @@ namespace Invoicer.Web.Pages.Clients
 			{
 				return Page();
 			}
+			
+			// Generate unique client code first
+			var clientCode = await ClientCodeGenerator.GenerateUniqueClientCodeAsync(context, Model.CompanyName, Model.Name);
+			
 			var Client = Model.Adapt<Client>();
 			//create a sequential uuid
 			Client.Id = NewId.NextSequentialGuid();
+			
+			// Set the generated client code
+			Client.ClientCode = clientCode;
+			
 			context.Add(Client);
 			await context.SaveChangesAsync();
 
