@@ -23,7 +23,7 @@
         <td>@hour.Rate @hour.RateUnits.Humanize()</td>
         <td>@hour.Total().ToString("C")</td>
         <td>
-            <button class="btn btn-danger btn-sm" 
+            <button class="btn btn-delete " 
                 hx-get="Index?handler=DeleteHour&id=@hour.Id" 
                 hx-confirm="Are you sure you want to delete this entry?"
                 hx-target="closest tr"
