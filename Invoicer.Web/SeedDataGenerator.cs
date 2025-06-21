@@ -1,4 +1,5 @@
 using Invoicer.Web.Entities;
+using Invoicer.Web.Pages.Clients;
 using Invoicer.Web.Pages.Clients.Models;
 using Invoicer.Web.Pages.Hours;
 using MassTransit;
@@ -49,7 +50,7 @@ public class SeedDataGenerator
 	}
 
 
-	public static List<Client> GenerateClients(int count)
+	public static async Task<List<Client>> GenerateClientsAsync(SqliteContext context, int count)
 	{
 		List<Client> clients = new List<Client>();
 
@@ -59,12 +60,17 @@ public class SeedDataGenerator
 			string lastName = GetRandom(LastNames);
 			string clientName = $"{firstName} {lastName}";
 			bool isCompany = random.Next(2) == 0; // 50% chance of being a company
+			string? companyName = isCompany ? $"{GetRandomCompanyName()} {GetRandom(CompanySuffixes)}" : null;
+
+			// Generate unique client code
+			string clientCode = await ClientCodeGenerator.GenerateUniqueClientCodeAsync(context, companyName, clientName);
 
 			Client client = new Client
 			{
 				Id = NewId.NextSequentialGuid(), // Assign a unique ID
 				Name = clientName,
-				CompanyName = isCompany ? $"{GetRandomCompanyName()} {GetRandom(CompanySuffixes)}" : null,
+				CompanyName = companyName,
+				ClientCode = clientCode,
 				BSB = GetRandomBSB(),
 				AccountNo = GenerateRandomAccountNumber(),
 				StreetNumber = random.Next(1, 200).ToString(),
@@ -77,6 +83,13 @@ public class SeedDataGenerator
 		}
 
 		return clients;
+	}
+
+	// Keep the old synchronous method for backward compatibility
+	public static List<Client> GenerateClients(int count)
+	{
+		// This method is now deprecated - use GenerateClientsAsync instead
+		throw new NotSupportedException("Use GenerateClientsAsync instead to ensure proper ClientCode generation.");
 	}
 
 	private static T GetRandom<T>(T[] array)
