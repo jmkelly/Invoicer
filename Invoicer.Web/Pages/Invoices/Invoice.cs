@@ -34,12 +34,6 @@ public class Invoice : Entity
 		return false;
 	}
 
-	public static string CreateInvoiceCode(string clientName, DateTime dateTime)
-	{
-		//create a code based on the year, date, day
-		return $"{clientName}:{dateTime.Year:D2}{dateTime.Month:D2}{dateTime.Day:D2}";
-	}
-
 	public void RemoveAllHours()
 	{
 		Hours.Clear();

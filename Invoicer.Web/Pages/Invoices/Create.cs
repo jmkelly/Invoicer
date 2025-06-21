@@ -135,8 +135,8 @@ namespace Invoicer.Web.Pages.Invoices
 				CreatedAt = createdAt,
 				InvoiceDate = createdAt,
 				InvoiceStatus = InvoiceStatus.Created,
-				InvoiceCode = Invoice.CreateInvoiceCode(
-					client.Name,
+				InvoiceCode = InvoiceCodeGenerator.CreateInvoiceCode(
+					client.ClientCode,
 					createdAt
 				),
 				Account = account

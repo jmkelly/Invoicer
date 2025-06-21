@@ -20,11 +20,11 @@ Layout="_Print";
 
 	<address>
 		@Model.Invoice.Account.Name.ToUpper()<br/>
-		@Model.Invoice.Account.CompanyName.ToUpper()<br/>
-		@Model.Invoice.Account.StreetNumber @Model.Invoice.Account.Street.ToUpper()<br/> @Model.Invoice.Account.City @Model.Invoice.Account.State @Model.Invoice.Account.Postcode<br/> ABN: @Model.Invoice.Account.ABN<br/> </address> <p>Email: james@locationsolve.com</p> </div> <div>
+		@(Model.Invoice.Account.CompanyName?.ToUpper() ?? "")<br/>
+		@Model.Invoice.Account.StreetNumber @Model.Invoice.Account.Street.ToUpper()<br/> @Model.Invoice.Account.City @Model.Invoice.Account.State @Model.Invoice.Account.Postcode<br/> ABN: @(Model.Invoice.Account.ABN ?? "")<br/> </address> <p>Email: james@locationsolve.com</p> </div> <div>
 	<address>
 		@Model.Invoice.Client.Name.ToUpper()<br/>
-		@Model.Invoice.Client.CompanyName.ToUpper()<br/>
+		@(Model.Invoice.Client.CompanyName?.ToUpper() ?? "")<br/>
 	</address>
 </div>
 
@@ -37,21 +37,23 @@ Layout="_Print";
 		<td>Amount</td>
 	</thead>
 	<tbody>
-		@foreach (var wi in @Model.Invoice.Hours) {
-		<tr>
-			<td>
-				@wi.Description
-			</td>
-			<td>
-				@wi.NumberOfHours
-			</td>
-			<td>
-				$@wi.Rate
-			</td>
-			<td>
-				$@wi.Total().ToString("###0.00")
-			</td>
-		</tr>
+		@if (Model.Invoice.Hours != null) {
+			@foreach (var wi in @Model.Invoice.Hours) {
+			<tr>
+				<td>
+					@wi.Description
+				</td>
+				<td>
+					@wi.NumberOfHours
+				</td>
+				<td>
+					$@wi.Rate
+				</td>
+				<td>
+					$@wi.Total().ToString("###0.00")
+				</td>
+			</tr>
+			}
 		}
 		<tr>
 		<th>
@@ -83,7 +85,7 @@ Layout="_Print";
 	BSB: <span class="fw-bold">@Model.Invoice.Account.BSB</span><br/>
 	Account No: <span class="fw-bold">@Model.Invoice.Account.AccountNo</span><br/>
 	Account Holder: <span class="fw-bold">@Model.Invoice.Account.Name</span><br/>
-	PayID: <span class="fw-bold">@Model.Invoice.Account.PayId</span><br/>
+	PayID: <span class="fw-bold">@(Model.Invoice.Account.PayId ?? "")</span><br/>
 </address>
 
 

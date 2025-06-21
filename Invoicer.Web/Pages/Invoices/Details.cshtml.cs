@@ -42,6 +42,17 @@ namespace Invoicer.Web.Pages.Invoices
 				return NotFound();
 			}
 
+			// Check for null related entities
+			if (entity.Client == null)
+			{
+				return NotFound("Client not found for this invoice");
+			}
+
+			if (entity.Account == null)
+			{
+				return NotFound("Account not found for this invoice");
+			}
+
 			Invoice = new InvoiceDetailsModel
 			{
 				Id = entity.Id.ToString(),
@@ -50,7 +61,7 @@ namespace Invoicer.Web.Pages.Invoices
 				Total = entity.Total(),
 				InvoiceStatus = entity.InvoiceStatus,
 				CreatedAt = entity.CreatedAt,
-				Hours = entity.Hours,
+				Hours = entity.Hours ?? new List<Entities.Hours>(),
 				Account = entity.Account
 			};
 			return Page();

@@ -12,6 +12,16 @@ namespace Invoicer.Web.Pages.Invoices
             tempData["errors"] = messages;
         }
 
+        public static void AddSuccessMessage(this ITempDataDictionary tempData, string message)
+        {
+            tempData["SuccessMessage"] = message;
+        }
+
+        public static void AddErrorMessage(this ITempDataDictionary tempData, string message)
+        {
+            tempData["ErrorMessage"] = message;
+        }
+
         public static string GetErrorsAsHtml(this ITempDataDictionary tempData)
         {
             var messages = tempData["errors"] as List<string> ?? new List<string>();
