@@ -12,6 +12,8 @@ namespace Invoicer.Web.Pages.Clients.Models
 		public string? City { get; set; }
 		public string? State { get; set; }
 		public string? Postcode { get; set; }
+		public DateTimeOffset CreatedAt { get; set; }
+		public DateTimeOffset UpdatedAt { get; set; }
 
 		public string SearchString => $"{CompanyName} {Name} {BSB} {AccountNo} {StreetNumber} {Street} {City} {State} {Postcode}".ToLowerInvariant();
 	}

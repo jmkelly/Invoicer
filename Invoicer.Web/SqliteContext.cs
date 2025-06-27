@@ -67,6 +67,8 @@ public class SqliteContext : DbContext
 			entity.HasKey(e => e.Id);
 			entity.Property(e => e.Name).IsRequired().HasMaxLength(100);
 			entity.Property(e => e.CompanyName).IsRequired().HasMaxLength(100);
+			entity.Property(e => e.CreatedAt).IsRequired();
+			entity.Property(e => e.UpdatedAt).IsRequired();
 		});
 	}
 }
