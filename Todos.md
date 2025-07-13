@@ -10,13 +10,13 @@
 8. [x] show selected account details on invoice
 9. [x] Create a pdf from invoice information
 
-11. [ ] Add ability to edit and delete unsent invoice
-12. [ ] Add ability to update sent invoice to paid
-13. [ ] Sqlite backend
-    1. [ ] Add migrations for sqlite
+11. [x] Add ability to edit and delete unsent invoice
+12. [x] Add ability to update sent invoice to paid
+13. [x] Sqlite backend
+    1. [x] Add migrations for sqlite
 
 ## Nice to haves
-1. [ ] Make site look nicer
+1. [x] Make site look nicer
 2. [ ] Make a docs markdown folder
 3. [ ] Make docs
 
